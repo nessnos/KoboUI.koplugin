@@ -618,7 +618,10 @@ function M.attach(fc, path)
     local FileChooser = require("ui/widget/filechooser")
     local saved_status = FileChooser.show_filter and FileChooser.show_filter.status
     if saved_status then FileChooser.show_filter.status = nil end
+    local KH = package.loaded["features/library/kbo_library_header"]
+    if KH then KH._filter_off = KH._filter_off + 1 end -- KoboUI: the bookcase is never filtered
     local ok, groups = pcall(buildGroups, fc, path)
+    if KH then KH._filter_off = KH._filter_off - 1 end
     if saved_status then FileChooser.show_filter.status = saved_status end
     if not ok then
         logger.warn("kindleui: series shelf failed:", groups)

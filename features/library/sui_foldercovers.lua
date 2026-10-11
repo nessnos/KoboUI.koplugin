@@ -204,6 +204,34 @@ function M.setHideSpine(v) SUISettings:saveSetting(SK.hide_spine, v) end
 
 -- Title/author strip below mosaic covers. Requires restart to take effect.
 function M.getShowTitleStrip()   return SUISettings:isTrue(SK.show_title_strip)   end
+
+-- KoboUI: which Library views show the title / name under the covers.
+-- kind = "books" (book covers, folders and series stacks in Books),
+-- "author", "series", "collections", "tags". Default: everywhere except Books.
+M.TITLE_VIEWS = { "books", "author", "series", "collections", "tags" }
+function M.showTitlesIn(kind)
+    local v = SUISettings:readSetting("koboui_titles_" .. tostring(kind))
+    if v ~= nil then return v and true or false end
+    if kind == "books" then return M.getShowTitleStrip() end
+    return true
+end
+function M.setShowTitlesIn(kind, on) SUISettings:saveSetting("koboui_titles_" .. tostring(kind), on and true or false) end
+
+--- Which of those views a mosaic cell belongs to.
+function M.itemViewKind(item)
+    local e = item and item.entry or {}
+    if e.is_file or item.is_file then return "books" end
+    if e.kui_collection then return "collections" end
+    if e.is_virtual_meta_leaf then
+        local menu = item.menu
+        local ok, VP = pcall(require, "features/library/sui_virtual_path")
+        if ok and menu and menu.path then
+            local _b, _fs, dim = VP.parse(menu.path)
+            if dim == "author" or dim == "series" or dim == "tags" or dim == "collections" then return dim end
+        end
+    end
+    return "books"
+end
 function M.setShowTitleStrip(v)  SUISettings:saveSetting(SK.show_title_strip, v)  end
 function M.getShowAuthorStrip()  return SUISettings:isTrue(SK.show_author_strip)  end
 function M.setShowAuthorStrip(v) SUISettings:saveSetting(SK.show_author_strip, v) end
@@ -827,7 +855,7 @@ local function _installStripPatch(MosaicMenuItem, BookInfoManager, _STRIP_H,
     local _strip_paintTo_patched  = false
 
     local function _stripPaintFn(w, tmp_bb, tx, ty)
-        tmp_bb:blitFrom(w._simpleui_strip_bb, tx, ty, 0, 0, w.width, _module_strip_h)
+        tmp_bb:blitFrom(w._simpleui_strip_bb, tx, ty, 0, 0, w.width, w._kbo_strip_h or 0)
     end
 
     FileManager_strip.setupLayout = function(fm, ...)
@@ -859,6 +887,10 @@ local function _installStripPatch(MosaicMenuItem, BookInfoManager, _STRIP_H,
 
         function MosaicMenuItem:paintTo(bb, x, y)
             x = math.floor(x); y = math.floor(y)
+            -- KoboUI: this cell's own strip (0 = no title under the cover here)
+            local _STRIP_H = self._kbo_strip_h or 0
+            local _show_title_strip = self._kbo_strip_t
+            local _show_author_strip = self._kbo_strip_a
             -- Temporarily shrink self.height so the badge paintTo chain computes
             -- the cover area as ending above the strip (keeps native progress bar
             -- and dog-ear inside the cover zone).
@@ -1068,32 +1100,35 @@ function M.install()
     MosaicMenuItem._simpleui_fc_orig_init    = orig_init
     MosaicMenuItem._simpleui_fc_orig_paintTo = orig_paintTo
 
-    -- ── Title/Author strip height (fixed for this session; requires restart) ──
-    local _show_title_strip  = M.getShowTitleStrip()
-    local _show_author_strip = M.getShowAuthorStrip()
-    local _STRIP_H = 0
-
-    if _show_title_strip or _show_author_strip then
+    -- ── Title/Author strip under the covers ──────────────────────────────
+    -- KoboUI: decided per cell (per Library view, see M.showTitlesIn), not
+    -- once per session.
+    local _STRIP_PAD, _STRIP_GAP, _TITLE_LINE, _AUTHOR_LINE
+    do
         local Screen_     = require("device").screen
         local Font_       = require("ui/font")
         local TextWidget_ = require("ui/widget/textwidget")
-        local _PAD = Screen_:scaleBySize(3)
-        local _GAP = Screen_:scaleBySize(2)
+        _STRIP_PAD = Screen_:scaleBySize(3)
+        _STRIP_GAP = Screen_:scaleBySize(2)
         local function _mh(fs, bold)
             local tw = TextWidget_:new{ text="Ag", face=Font_:getFace(SUIStyle.FACE_REGULAR,fs),
                 bold=bold, padding=0 }
             local h = tw:getSize().h; tw:free(); return h
         end
-        local TITLE_LINE  = _mh(SUIStyle.FS_DETAIL, true)
-        local AUTHOR_LINE = _mh(SUIStyle.FS_CAPTION, false)
-        _STRIP_H = _PAD
-        if _show_title_strip  then _STRIP_H = _STRIP_H + TITLE_LINE end
-        if _show_title_strip and _show_author_strip then _STRIP_H = _STRIP_H + _GAP end
-        if _show_author_strip then _STRIP_H = _STRIP_H + AUTHOR_LINE end
-        _STRIP_H = _STRIP_H + _PAD
+        _TITLE_LINE  = _mh(SUIStyle.FS_DETAIL, true)
+        _AUTHOR_LINE = _mh(SUIStyle.FS_CAPTION, false)
     end
-    _module_strip_h                    = _STRIP_H
-    MosaicMenuItem._simpleui_strip_h   = _STRIP_H
+    local function _stripFor(item)
+        local kind = M.itemViewKind(item)
+        if not M.showTitlesIn(kind) then return 0, false, false end
+        local is_book = (item.entry and item.entry.is_file) or item.is_file
+        local author = is_book and M.getShowAuthorStrip() or false
+        local h = _STRIP_PAD + _TITLE_LINE + (author and (_STRIP_GAP + _AUTHOR_LINE) or 0) + _STRIP_PAD
+        return h, true, author
+    end
+    M._stripFor = _stripFor
+    local _STRIP_H = 1 -- KoboUI: the strip patch is always installed; heights are per cell
+    MosaicMenuItem._simpleui_strip_h = 0
 
     -- Guard flag: prevents the update() wrapper from double-shrinking self.height
     -- when init() calls orig_init (which calls update internally).
@@ -1102,8 +1137,11 @@ function M.install()
     function MosaicMenuItem:init()
         -- Shrink cell height so orig_init lays out the cover within the reduced
         -- space, leaving the strip area free below.
-        if _STRIP_H > 0 and self.height then
-            self.height = self.height - _STRIP_H
+        local ok_sf, sh, st, sa = pcall(_stripFor, self)
+        if not ok_sf then sh, st, sa = 0, false, false end
+        self._kbo_strip_h, self._kbo_strip_t, self._kbo_strip_a = sh, st, sa
+        if sh > 0 and self.height then
+            self.height = self.height - sh
         end
         if self.width and self.height then
             local border_size = Size.border.thin
@@ -1114,8 +1152,8 @@ function M.install()
         if orig_init then orig_init(self) end
         _in_strip_init = false
         -- Restore so the cell occupies its full grid slot.
-        if _STRIP_H > 0 and self.height then
-            self.height = self.height + _STRIP_H
+        if (self._kbo_strip_h or 0) > 0 and self.height then
+            self.height = self.height + self._kbo_strip_h
         end
     end
 
@@ -1133,12 +1171,13 @@ function M.install()
         -- Shrink height before calling original_update so cover calculations
         -- stay within the reduced space. Skipped when called from within init()
         -- because init already shrank self.height.
-        if not _in_strip_init and _STRIP_H > 0 and self.height then
-            self.height = self.height - _STRIP_H
+        local sh = self._kbo_strip_h or 0
+        if not _in_strip_init and sh > 0 and self.height then
+            self.height = self.height - sh
         end
         original_update(self, ...)
-        if not _in_strip_init and _STRIP_H > 0 and self.height then
-            self.height = self.height + _STRIP_H
+        if not _in_strip_init and sh > 0 and self.height then
+            self.height = self.height + sh
             -- KOReader evaluated show_progress_bar with the reduced height and
             -- may have set it to false incorrectly. Re-apply the exact condition
             -- from mosaicmenu.lua; only force true, never false.
@@ -1354,7 +1393,7 @@ function M.install()
         }
         -- When the strip is active it already shows the folder name below
         -- the cover — suppress the overlay label to avoid redundancy.
-        if _STRIP_H > 0 then display.label_mode = "hidden" end
+        if (self._kbo_strip_h or 0) > 0 then display.label_mode = "hidden" end
 
         local folder_style = _resolveStyle(self.menu, dir_path, self.entry)
 
@@ -1573,7 +1612,7 @@ function M.install()
                     position = M.getBadgePosition(),
                 },
             }
-            if _STRIP_H > 0 then display.label_mode = "hidden" end
+            if (self._kbo_strip_h or 0) > 0 then display.label_mode = "hidden" end
         end
         self._foldercover_processed = true
         local border, spine_w, max_img_w, max_img_h = CoverWidgets.computeCellGeometry(self, M.getHideSpine())
@@ -1624,7 +1663,7 @@ function M.install()
                     position = M.getBadgePosition(),
                 },
             }
-            if _STRIP_H > 0 then display.label_mode = "hidden" end
+            if (self._kbo_strip_h or 0) > 0 then display.label_mode = "hidden" end
         end
         self._foldercover_processed = true
         local border, spine_w, max_img_w, max_img_h = CoverWidgets.computeCellGeometry(self, M.getHideSpine())
@@ -1996,8 +2035,7 @@ function M.install()
 
     -- Strip paintTo patch — must be outermost so it wraps the badge paintTo.
     if _STRIP_H > 0 then
-        _installStripPatch(MosaicMenuItem, BookInfoManager, _STRIP_H,
-                           _show_title_strip, _show_author_strip)
+        _installStripPatch(MosaicMenuItem, BookInfoManager, _STRIP_H, nil, nil)
     end
 
     -- ── ListMenuItem patch — folder covers in list_image_meta view ────────────

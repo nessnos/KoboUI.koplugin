@@ -186,6 +186,8 @@ local _tb_installed = false
 function M.installTitleBar()
     if _tb_installed then return end
     _tb_installed = true
+    pcall(M.installFilter)
+    pcall(M.installModes)
     local TitleBar = require("ui/widget/titlebar")
     local orig_getHeight = TitleBar.getHeight
     local orig_getSize   = TitleBar.getSize
@@ -245,13 +247,32 @@ local function sameSet(a, b)
     return true
 end
 
+-- KoboUI: Kobo's reading states, worked out from the book itself rather than
+-- KOReader's status alone. KOReader calls any book with a sidecar file
+-- "reading" (even one never really started), and "Finished" is its
+-- "complete" status:
+--   finished = status complete (Finished)
+--   reading  = status On hold, or started (progress above 0)
+--   unread   = everything else (never opened, or opened at 0%)
+function M.classify(fp)
+    local BookList = require("ui/widget/booklist")
+    local ok, info = pcall(BookList.getBookInfo, fp)
+    if not ok or type(info) ~= "table" then return "unread" end
+    if not info.been_opened then return "unread" end
+    if info.status == "complete" then return "finished" end
+    if info.status == "abandoned" then return "reading" end
+    local pf = tonumber(info.percent_finished)
+    if pf and pf > 0 then return "reading" end
+    return "unread"
+end
+
+M.FILTER_KEY = "koboui_lib_filter"
+M._filter_off = 0   -- > 0 while something needs every book (counts, bookshelf)
+
 function M.currentFilter()
-    local st = FC().show_filter and FC().show_filter.status
-    if not st then return "all" end
-    for _i, f in ipairs(FILTERS) do
-        if f.set and sameSet(f.set, st) then return f.id end
-    end
-    return "custom"
+    local f = SUISettings:readSetting(M.FILTER_KEY)
+    if f == "unread" or f == "reading" or f == "finished" then return f end
+    return "all"
 end
 
 local function refreshLibrary(fc)
@@ -266,21 +287,119 @@ local function refreshLibrary(fc)
 end
 
 function M.setFilter(id)
-    local FileChooser = FC()
-    FileChooser.show_filter = FileChooser.show_filter or {}
-    local st
-    for _i, f in ipairs(FILTERS) do
-        if f.id == id and f.set then
-            st = {}
-            for k in pairs(f.set) do st[k] = true end
-        end
-    end
-    FileChooser.show_filter.status = st
-    G_reader_settings:saveSetting("show_filter", FileChooser.show_filter)
+    if id == "all" then SUISettings:delSetting(M.FILTER_KEY) else SUISettings:saveSetting(M.FILTER_KEY, id) end
     pcall(function() require("features/library/kui_status_filter").invalidate() end)
     M.invalidateCounts()
     local fm = fmInstance()
     refreshLibrary(fm and fm.file_chooser)
+end
+
+--- Runs fn with the Kobo filter (and KOReader's status filter) switched off.
+function M.unfiltered(fn)
+    local FileChooser = FC()
+    local saved = FileChooser.show_filter and FileChooser.show_filter.status
+    if saved then FileChooser.show_filter.status = nil end
+    M._filter_off = M._filter_off + 1
+    local ok, res = pcall(fn)
+    M._filter_off = M._filter_off - 1
+    if saved then FileChooser.show_filter.status = saved end
+    if not ok then logger.warn("koboui: unfiltered:", res) end
+    return res
+end
+
+-- FileChooser:show_file → also apply the Kobo filter (Library only).
+local _filter_installed = false
+function M.installFilter()
+    if _filter_installed then return end
+    _filter_installed = true
+    local FileChooser = FC()
+    local orig = FileChooser.show_file
+    FileChooser.show_file = function(self, filename, fullpath)
+        if not orig(self, filename, fullpath) then return false end
+        if fullpath and self.name == "filemanager" and M._filter_off == 0 and M.isEnabled() then
+            local f = M.currentFilter()
+            if f ~= "all" and M.classify(fullpath) ~= f then return false end
+        end
+        return true
+    end
+    -- The Kobo filter replaces KOReader's status filter when it was set by
+    -- an older KoboUI (Unread = {new} etc.).
+    pcall(function()
+        if M.isEnabled() and FileChooser.show_filter and FileChooser.show_filter.status then
+            FileChooser.show_filter.status = nil
+            G_reader_settings:saveSetting("show_filter", FileChooser.show_filter)
+        end
+    end)
+end
+
+-- ---------------------------------------------------------------------------
+-- Grid / list per tab
+-- ---------------------------------------------------------------------------
+-- KoboUI: each tab remembers its own view style (koboui_display_<kind>):
+-- Books (and the books inside an author / series / collection / folder),
+-- Authors, Series, Collections, Tags.
+M.GRID, M.LIST = "mosaic_image", "list_image_meta"
+
+--- "books", "author", "series", "collections" or "tags" for a file chooser.
+function M.viewKind(fc)
+    local vp = VP()
+    if fc and fc.path and vp.isVirtual(fc.path) then
+        local _b, fs, dim, level = vp.parse(fc.path)
+        local trail = fs and fs.trail or {}
+        if level == "dim_list" and dim and #trail == 0 then return dim end
+    end
+    return "books"
+end
+
+local DEFAULT_MODE = { author = "list", collections = "list", tags = "list", series = "grid" }
+
+function M.modeFor(kind)
+    local v = SUISettings:readSetting("koboui_display_" .. kind)
+    if v == "grid" or v == "list" then return v end
+    if DEFAULT_MODE[kind] then return DEFAULT_MODE[kind] end
+    local ok, bim = pcall(require, "bookinfomanager")
+    local cur = ok and bim:getSetting("filemanager_display_mode") or ""
+    return (cur and cur:find("^list")) and "list" or "grid"
+end
+
+function M.setModeFor(kind, mode) SUISettings:saveSetting("koboui_display_" .. kind, mode) end
+
+local function currentMode()
+    local ok, bim = pcall(require, "bookinfomanager")
+    local cur = ok and bim:getSetting("filemanager_display_mode") or ""
+    return cur and cur:find("^list") and "list" or (cur and cur:find("^mosaic") and "grid" or "other")
+end
+
+-- Switches CoverBrowser's file-browser mode quietly (no refresh of its own:
+-- the caller is about to lay the list out anyway).
+local function applyMode(fm, mode)
+    local cb = fm and fm.coverbrowser
+    if not cb then return end
+    local had = rawget(cb, "refreshFileManagerInstance")
+    cb.refreshFileManagerInstance = function() end
+    local ok, err = pcall(cb.setupFileManagerDisplayMode, cb, mode == "list" and M.LIST or M.GRID)
+    cb.refreshFileManagerInstance = had
+    if not ok then logger.warn("koboui: display mode:", err) end
+end
+
+local _mode_installed = false
+function M.installModes()
+    if _mode_installed then return end
+    _mode_installed = true
+    local FileChooser = FC()
+    local orig = FileChooser.switchItemTable
+    FileChooser.switchItemTable = function(self, ...)
+        -- Kobo-style list rows (installed late, so it wraps the folder-cover patch)
+        pcall(function() require("features/library/kbo_list_view").install() end)
+        if self.name == "filemanager" and M.isEnabled() then
+            local want = M.modeFor(M.viewKind(self))
+            local cur = currentMode()
+            if cur ~= "other" and want ~= cur then
+                applyMode(fmInstance(), want)
+            end
+        end
+        return orig(self, ...)
+    end
 end
 
 local _counts
@@ -289,15 +408,11 @@ function M.invalidateCounts() _counts = nil end
 local function counts(fc)
     if _counts then return _counts end
     local c = { all = 0, unread = 0, reading = 0, finished = 0 }
-    pcall(function()
+    M.unfiltered(function()
         local lfs = require("libs/libkoreader-lfs")
         local home = G_reader_settings:readSetting("home_dir")
         local bim = require("bookinfomanager")
         local MS = require("features/library/sui_metadata_source")
-        local BookList = require("ui/widget/booklist")
-        local FileChooser = FC()
-        local saved = FileChooser.show_filter.status
-        FileChooser.show_filter.status = nil
         local ok, rows = pcall(function()
             return (home and MS.getMatchingFiles(bim, home, nil, { recursive = true })) or {}
         end)
@@ -305,13 +420,10 @@ local function counts(fc)
             local fp, fname = r[1], r[2]
             if lfs.attributes(fp, "mode") == "file" and fc:show_file(fname, fp) then
                 c.all = c.all + 1
-                local st = BookList.getBookStatus(fp)
-                if st == "complete" then c.finished = c.finished + 1
-                elseif st == "reading" or st == "abandoned" then c.reading = c.reading + 1
-                else c.unread = c.unread + 1 end
+                local k = M.classify(fp)
+                c[k] = (c[k] or 0) + 1
             end
         end
-        FileChooser.show_filter.status = saved
     end)
     _counts = c
     return c
@@ -351,7 +463,7 @@ local function controlsFor(view, fc)
     local shelf = fc and fc._kui_shelf_on
     if not shelf then
         local f = M.currentFilter()
-        local flabel = f == "custom" and _("Custom") or nil
+        local flabel
         for _i, d in ipairs(FILTERS) do if d.id == f then flabel = d.label end end
         ctl[#ctl + 1] = { id = "filter", text = string.format(_("Filter: %s"), flabel) }
     end
@@ -519,7 +631,7 @@ local function moreRows(row)
     local fm = fmInstance()
     local function act(text, fn, opts)
         opts = opts or {}
-        rows[#rows + 1] = Dd.itemRow{ text = text, face = "italic", check = opts.check, height = S(64),
+        rows[#rows + 1] = Dd.itemRow{ text = text, face = "italic", check = opts.check or false, height = S(64),
             tap = function(dd)
                 dd:close()
                 UIManager:nextTick(function()
@@ -543,7 +655,15 @@ local function moreRows(row)
         local mode = bim:getSetting("filemanager_display_mode")
         local grid = mode and mode:find("^mosaic") ~= nil
         act(grid and _("List view") or _("Grid view"), function()
-            fm.coverbrowser:setDisplayMode(grid and "list_image_meta" or "mosaic_image")
+            -- KoboUI: only for this tab
+            local kind = (view == "normal") and "books" or view
+            M.setModeFor(kind, grid and "list" or "grid")
+            applyMode(fm, grid and "list" or "grid")
+            local fc = fm.file_chooser
+            if fc then
+                pcall(function() fc:_recalculateDimen() end)
+                refreshLibrary(fc)
+            end
         end)
     end
     if view == "normal" then
@@ -565,6 +685,18 @@ local function moreRows(row)
         act(_("Manage collections"), function()
             require("features/library/kui_collections_view").showStockList(fm.collections)
         end)
+    end
+    do
+        local FCv = require("features/library/sui_foldercovers")
+        local kind = (view == "normal") and "books" or view
+        local grid_ok, bim2 = pcall(require, "bookinfomanager")
+        local mode2 = grid_ok and bim2:getSetting("filemanager_display_mode") or ""
+        if FCv.showTitlesIn and mode2:find("^mosaic") and not (fm and fm.file_chooser and fm.file_chooser._kui_shelf_on) then
+            act(_("Titles under covers"), function()
+                FCv.setShowTitlesIn(kind, not FCv.showTitlesIn(kind))
+                refreshLibrary(fm and fm.file_chooser)
+            end, { check = FCv.showTitlesIn(kind) })
+        end
     end
     act(M.showTags() and _("Hide Tags tab") or _("Show Tags tab"), function()
         SUISettings:saveSetting("koboui_tab_tags", not M.showTags())

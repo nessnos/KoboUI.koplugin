@@ -1,0 +1,5367 @@
+# Simple UI — KOReader plugin
+# Translation template
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: simpleui\n"
+"POT-Creation-Date: 2026-09-09 10:54\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: modules/module_reading_goals.lua:1325
+msgid "  Set Goal  (%d hr/month)"
+msgstr "  Đặt mục tiêu  (%d giờ/tháng)"
+
+#: modules/module_reading_goals.lua:1345
+msgid "  Set Goal  (%d min/day)"
+msgstr "  Đặt mục tiêu  (%d phút/ngày)"
+
+#: modules/module_reading_goals.lua:1305
+msgid "  Set Goal  (%s)"
+msgstr "  Đặt mục tiêu  (%s)"
+
+#: modules/module_reading_goals.lua:1324 modules/module_reading_goals.lua:1344
+msgid "  Set Goal  (disabled)"
+msgstr "  Đặt mục tiêu  (đã tắt)"
+
+#: modules/module_coverdeck.lua:110 modules/module_currently.lua:347
+msgid " et al."
+msgstr " và cộng sự"
+
+#: engines/sui_book_grid.lua:480 features/library/sui_foldercovers.lua:1222
+msgid " p."
+msgstr " tr."
+
+#: modules/module_feat_coll.lua:169 modules/module_tbr.lua:307
+msgid "% Read (ascending)"
+msgstr "% đã đọc (tăng dần)"
+
+#: modules/module_feat_coll.lua:170 modules/module_tbr.lua:308
+msgid "% Read (descending)"
+msgstr "% đã đọc (giảm dần)"
+
+#: modules/module_heatmap.lua:222
+msgid "%1 weeks"
+msgstr "%1 tuần"
+
+#: engines/sui_book_grid.lua:1823 engines/sui_book_grid.lua:1828
+msgid "%1 × %2"
+msgstr "%1 × %2"
+
+#: features/sui_backup.lua:665
+#, fuzzy
+msgid "%d files (%s)"
+msgstr "Mô-đun (%d)"
+
+#: modules/module_reading_goals.lua:1424
+msgid "%d hr/month"
+msgstr "%d giờ/tháng"
+
+#: modules/module_reading_goals.lua:1439
+msgid "%d min/day"
+msgstr "%d phút/ngày"
+
+#: features/sui_backup.lua:663
+#, fuzzy
+msgid "%d settings"
+msgstr "Cài đặt"
+
+#: engines/sui_book_grid.lua:888
+msgid "%d%%"
+msgstr "%d%%"
+
+#: modules/module_coverdeck.lua:1075 modules/module_new_books.lua:138
+#: modules/module_currently.lua:833 modules/module_currently.lua:842
+#: engines/sui_book_grid.lua:947 engines/sui_book_grid.lua:959
+msgid "%d%% Read"
+msgstr "Đã đọc %d%%"
+
+#: screens/sui_stats_windows.lua:3419
+msgid "%d/%d days · %d/%d min to next freeze"
+msgstr "%d/%d ngày · %d/%d phút đến lượt đóng băng tiếp theo"
+
+#: modules/module_currently.lua:938
+msgid "%s left"
+msgstr "%s còn lại"
+
+#: modules/module_reading_goals.lua:835 modules/module_reading_goals.lua:855
+#: modules/module_coverdeck.lua:1080 modules/module_currently.lua:876
+#: modules/module_currently.lua:877 modules/module_currently.lua:936
+#: modules/module_currently.lua:950
+msgid "%s read"
+msgstr "Đã đọc %s"
+
+#: modules/module_coverdeck.lua:1086 modules/module_currently.lua:899
+#: modules/module_currently.lua:903
+msgid "%s remaining"
+msgstr "Còn lại %s"
+
+#: modules/module_reading_stats.lua:386 modules/module_quick_actions.lua:485
+msgid "(%d/%d — at limit)"
+msgstr "(%d/%d — đã đạt giới hạn)"
+
+#: modules/module_feat_coll.lua:95
+msgid "(collection not found)"
+msgstr "(không tìm thấy bộ sưu tập)"
+
+#: modules/module_collections.lua:1347
+msgid "4-Cover Grid"
+msgstr "Lưới 4 bìa"
+
+#: screens/sui_menu.lua:2888
+msgid "4-Cover Grid (Mosaic View Only)"
+msgstr "Lưới 4 bìa (Dạng lưới so le)"
+
+#: screens/sui_stats_windows.lua:3094
+msgid ""
+"A freeze can only bridge a single missed day right after an active one — "
+"yesterday doesn't qualify."
+msgstr ""
+"Đóng băng chỉ có thể bù cho một ngày bị bỏ lỡ ngay sau một ngày có hoạt động "
+"— hôm qua không đủ điều kiện."
+
+#: features/sui_presets.lua:936 features/sui_presets.lua:1022
+#: screens/sui_menu.lua:4084 screens/sui_menu.lua:4169
+msgid "A preset named \"%s\" already exists."
+msgstr "Thiết lập có tên \"%s\" đã tồn tại."
+
+#: features/sui_presets.lua:877 screens/sui_menu.lua:4030
+msgid ""
+"A preset named \"%s\" already exists.\n"
+"Overwrite it?"
+msgstr ""
+"Thiết lập có tên \"%s\" đã tồn tại.\n"
+"Bạn có muốn ghi đè không?"
+
+#: screens/sui_menu.lua:1056 screens/sui_menu.lua:1333
+msgid ""
+"A restart is required to apply the new bar size across all layouts.\n"
+"\n"
+"Restart now?"
+msgstr ""
+"Cần khởi động lại để áp dụng kích thước thanh mới cho tất cả bố cục.\n"
+"\n"
+"Khởi động lại ngay?"
+
+#: screens/sui_menu.lua:4340
+msgid ""
+"A restart is required to apply the new text size everywhere.\n"
+"\n"
+"Restart now?"
+msgstr ""
+"Cần khởi động lại để áp dụng kích thước chữ mới ở mọi nơi.\n"
+"\n"
+"Khởi động lại ngay?"
+
+#: _meta.lua:6
+msgid "A simple UI for KOReader"
+msgstr ""
+
+#: screens/sui_stats_windows.lua:2694
+msgid "ALL TIME"
+msgstr "TOÀN THỜI GIAN"
+
+#: screens/sui_menu.lua:4593 screens/sui_settings_window.lua:365
+#: screens/sui_settings_window.lua:1082
+msgid "About"
+msgstr "Giới thiệu"
+
+#: features/sui_quickactions.lua:2496 features/sui_quickactions.lua:2542
+msgid "Action"
+msgstr "Thao tác"
+
+#: modules/module_action_list.lua:219
+msgid "Action List"
+msgstr "Danh sách thao tác"
+
+#: features/sui_quickactions.lua:2746
+msgid "Action Type"
+msgstr "Loại thao tác"
+
+#: features/sui_quickactions.lua:1202
+msgid "Action error: %s"
+msgstr "Lỗi thao tác: %s"
+
+#: features/sui_quickactions.lua:2518
+msgid "Action name…"
+msgstr "Tên thao tác…"
+
+#: features/sui_quickactions.lua:1195
+msgid "Action not available: %s"
+msgstr "Thao tác không khả dụng: %s"
+
+#: screens/sui_quicksettings_bar.lua:1168
+#: screens/sui_quicksettings_bar.lua:1193
+msgid "Add Action"
+msgstr "Thêm thao tác"
+
+#: screens/sui_menu.lua:1598 screens/sui_menu.lua:1636
+msgid "Add Button"
+msgstr "Thêm nút"
+
+#: modules/module_action_list.lua:387 modules/module_action_list.lua:417
+#: modules/module_reading_stats.lua:749 modules/module_reading_stats.lua:778
+#: modules/module_reading_goals.lua:1370 modules/module_reading_goals.lua:1399
+#: modules/module_coverdeck.lua:1528 modules/module_coverdeck.lua:1550
+#: modules/module_coverdeck.lua:1665 modules/module_coverdeck.lua:1683
+#: modules/module_currently.lua:1647 modules/module_currently.lua:1694
+#: modules/module_quick_actions.lua:439 modules/module_quick_actions.lua:469
+#: engines/sui_screen_engine.lua:2165 engines/sui_window.lua:850
+#: screens/sui_menu.lua:978 screens/sui_menu.lua:1015 screens/sui_menu.lua:1207
+#: screens/sui_menu.lua:1247 screens/sui_menu.lua:2034
+#: screens/sui_menu.lua:2064 screens/sui_quicksettings_bar.lua:978
+#: screens/sui_settings_window.lua:1090
+msgid "Add Item"
+msgstr "Thêm mục"
+
+#: screens/sui_settings_window.lua:1087 screens/sui_settings_window.lua:1230
+msgid "Add Module"
+msgstr "Thêm mô-đun"
+
+#: screens/sui_settings_window.lua:1193
+msgid "Add Page"
+msgstr "Thêm trang"
+
+#: modules/module_action_list.lua:298 modules/module_quick_actions.lua:344
+#: screens/sui_menu.lua:1954 screens/sui_quicksettings_bar.lua:1046
+msgid "Add at least 2 actions to arrange."
+msgstr "Thêm ít nhất 2 thao tác để sắp xếp."
+
+#: modules/module_feat_coll.lua:217 modules/module_tbr.lua:363
+msgid "Add at least 2 books to arrange."
+msgstr "Thêm ít nhất 2 cuốn sách để sắp xếp."
+
+#: modules/module_reading_stats.lua:698
+msgid "Add at least 2 stats to arrange."
+msgstr "Thêm ít nhất 2 thống kê để sắp xếp."
+
+#: modules/module_tbr.lua:589
+msgid "Add to To Be Read"
+msgstr "Thêm vào danh sách cần đọc"
+
+#: modules/module_quote.lua:1554 modules/module_action_list.lua:460
+#: modules/module_reading_stats.lua:846 modules/module_clock.lua:1193
+#: modules/module_quick_actions.lua:645
+msgid "Alignment"
+msgstr "Căn chỉnh"
+
+#: engines/sui_window.lua:3409 screens/sui_settings_window.lua:852
+msgid "All items have already been added."
+msgstr "Tất cả mục đã được thêm."
+
+#: screens/sui_settings_window.lua:830
+msgid "All modules have already been added."
+msgstr "Tất cả mô-đun đã được thêm."
+
+#: features/sui_quickactions.lua:3527
+msgid "All recent books are finished."
+msgstr "Tất cả sách gần đây đã đọc xong."
+
+#: modules/module_reading_stats.lua:118
+msgid "All time — Books"
+msgstr "Tổng cộng — Sách"
+
+#: modules/module_reading_stats.lua:117
+msgid "All time — Time"
+msgstr "Tổng cộng — Thời gian"
+
+#: screens/sui_menu.lua:2560
+msgid "Always"
+msgstr "Luôn luôn"
+
+#: modules/module_clock.lua:1165 modules/module_clock.lua:1184
+msgid "Analogue"
+msgstr "Kim đồng hồ"
+
+#: modules/module_reading_goals.lua:1292 modules/module_reading_goals.lua:1358
+#: modules/module_reading_goals.lua:1395 modules/module_reading_goals.lua:1412
+msgid "Annual Goal"
+msgstr "Mục tiêu năm"
+
+#: modules/module_reading_goals.lua:743
+msgid "Annual Reading Goal"
+msgstr "Mục tiêu đọc năm"
+
+#: modules/module_heatmap.lua:352 modules/module_reading_goals.lua:1507
+#: modules/module_currently.lua:1925 modules/module_quick_actions.lua:571
+#: engines/sui_book_grid.lua:1888 screens/sui_menu.lua:1814
+#: screens/sui_menu.lua:1817
+msgid "Appearance"
+msgstr "Giao diện"
+
+#: features/sui_backup.lua:104
+#, fuzzy
+msgid "Appearance & Style"
+msgstr "Giao diện"
+
+#: modules/module_clock.lua:1237 infra/sui_config.lua:938
+#: infra/sui_config.lua:972 infra/sui_config.lua:1087 infra/sui_config.lua:1160
+#: screens/sui_menu.lua:1040 screens/sui_menu.lua:1317
+#: screens/sui_menu.lua:2406 screens/sui_menu.lua:2478
+#: screens/sui_menu.lua:2510 screens/sui_menu.lua:2936
+#: screens/sui_menu.lua:3297 screens/sui_menu.lua:4334
+msgid "Apply"
+msgstr "Áp dụng"
+
+#: infra/sui_core.lua:1125
+#, fuzzy
+msgid "Applying preset…"
+msgstr "Áp dụng bảng màu…"
+
+#: engines/sui_heatmap_widgets.lua:87
+msgid "Apr"
+msgstr "th4"
+
+#: modules/module_clock.lua:62 screens/sui_stats_windows.lua:2815
+msgid "April"
+msgstr "Tháng Tư"
+
+#: modules/module_feat_coll.lua:204 modules/module_feat_coll.lua:278
+#: modules/module_feat_coll.lua:297 modules/module_tbr.lua:352
+#: modules/module_tbr.lua:424 modules/module_tbr.lua:447
+msgid "Arrange"
+msgstr "Sắp xếp"
+
+#: modules/module_action_list.lua:318 modules/module_quick_actions.lua:362
+#: screens/sui_menu.lua:1958
+msgid "Arrange %s"
+msgstr "Sắp xếp %s"
+
+#: screens/sui_menu.lua:1554 screens/sui_menu.lua:1561
+#: screens/sui_menu.lua:1738 screens/sui_menu.lua:1753
+msgid "Arrange Buttons"
+msgstr "Sắp xếp nút"
+
+#: modules/module_feat_coll.lua:212 modules/module_feat_coll.lua:246
+msgid "Arrange Collection"
+msgstr "Sắp xếp bộ sưu tập"
+
+#: modules/module_action_list.lua:291 modules/module_coverdeck.lua:1605
+#: modules/module_coverdeck.lua:1611 modules/module_currently.lua:1520
+#: modules/module_currently.lua:1563 modules/module_quick_actions.lua:337
+#: engines/sui_screen_engine.lua:2164 screens/sui_menu.lua:694
+#: screens/sui_menu.lua:761 screens/sui_menu.lua:768 screens/sui_menu.lua:1948
+#: screens/sui_topbar.lua:507 screens/sui_bottombar.lua:820
+#: screens/sui_quicksettings_bar.lua:977 screens/sui_quicksettings_bar.lua:1038
+#: screens/sui_settings_window.lua:1111
+msgid "Arrange Items"
+msgstr "Sắp xếp mục"
+
+#: screens/sui_quicksettings_bar.lua:1062
+msgid "Arrange Quick Settings"
+msgstr "Sắp xếp cài đặt nhanh"
+
+#: modules/module_reading_stats.lua:709
+msgid "Arrange Reading Stats"
+msgstr "Sắp xếp thống kê đọc"
+
+#: modules/module_coverdeck.lua:1626
+msgid "Arrange Statistics"
+msgstr "Sắp xếp thống kê"
+
+#: screens/sui_menu.lua:306 screens/sui_menu.lua:324
+msgid "Arrange Tabs"
+msgstr "Sắp xếp tab"
+
+#: modules/module_tbr.lua:357 modules/module_tbr.lua:394
+msgid "Arrange To Be Read List"
+msgstr "Sắp xếp danh sách cần đọc"
+
+#: features/sui_presets.lua:137
+msgid "At a Glance"
+msgstr "Tổng quan"
+
+#: engines/sui_heatmap_widgets.lua:88
+msgid "Aug"
+msgstr "th8"
+
+#: modules/module_clock.lua:63 screens/sui_stats_windows.lua:2816
+msgid "August"
+msgstr "Tháng Tám"
+
+#: modules/module_coverdeck.lua:156 modules/module_currently.lua:280
+msgid "Author"
+msgstr "Tác giả"
+
+#: modules/module_library.lua:213 modules/module_feat_coll.lua:168
+#: modules/module_tbr.lua:306
+msgid "Author (A–Z)"
+msgstr "Tác giả (A-Z)"
+
+#: screens/sui_menu.lua:4396
+msgid "Author: %s"
+msgstr "Tác giả: %s"
+
+#: features/sui_quickactions.lua:990 infra/sui_config.lua:132
+#: features/library/sui_library_browse.lua:58
+msgid "Authors"
+msgstr "Tác giả"
+
+#: modules/module_collections.lua:1356 screens/sui_menu.lua:2899
+msgid "Auto (Single ↔ 4-Cover Grid)"
+msgstr "Tự động (Đơn ↔ Lưới 4 bìa)"
+
+#: modules/module_collections.lua:339 features/library/sui_group_actions.lua:48
+msgid "Auto (first book)"
+msgstr "Tự động (sách đầu tiên)"
+
+#: screens/sui_menu.lua:2363
+msgid "Auto-rotate"
+msgstr "Tự động xoay"
+
+#: screens/sui_menu.lua:4401
+msgid "Automatic Update Check"
+msgstr "Kiểm tra cập nhật tự động"
+
+#: screens/sui_stats_windows.lua:1205 screens/sui_stats_windows.lua:2410
+#: screens/sui_stats_windows.lua:3879
+msgid "Average per day"
+msgstr "Trung bình mỗi ngày"
+
+#: screens/sui_stats_windows.lua:1207 screens/sui_stats_windows.lua:3881
+msgid "Average per page"
+msgstr "Trung bình mỗi trang"
+
+#: screens/sui_titlebar.lua:103 screens/sui_titlebar.lua:109
+msgid "Back"
+msgstr "Quay lại"
+
+#: features/sui_style.lua:93
+msgid "Back Button"
+msgstr "Nút quay lại"
+
+#: features/sui_quickactions.lua:978
+#, fuzzy
+msgid "Backup"
+msgstr "Quay lại"
+
+#: screens/sui_menu.lua:4423
+msgid "Backup & Restore"
+msgstr ""
+
+#: features/sui_backup.lua:641
+msgid "Backup created"
+msgstr ""
+
+#: features/sui_backup.lua:890 features/sui_backup.lua:1111
+msgid "Backup created:"
+msgstr ""
+
+#: features/sui_backup.lua:887 features/sui_backup.lua:1114
+msgid "Backup failed."
+msgstr ""
+
+#: features/sui_backup.lua:949
+msgid "Backup loaded. Choose what to import, then tap \"Restore Selected…\"."
+msgstr ""
+
+#: features/sui_backup.lua:1007
+msgid ""
+"Backup restored.\n"
+"Restart KOReader now to finish applying all changes?"
+msgstr ""
+
+#: features/sui_backup.lua:583
+msgid ""
+"Backup was made by a newer SimpleUI version. Please update this plugin first."
+msgstr ""
+
+#: modules/module_collections.lua:1378 engines/sui_book_grid.lua:2057
+#: screens/sui_menu.lua:3201 screens/sui_menu.lua:3210
+#: screens/sui_menu.lua:3216
+msgid "Badge"
+msgstr "Huy hiệu"
+
+#: modules/module_collections.lua:1422 modules/module_collections.lua:1425
+#: engines/sui_book_grid.lua:1990 engines/sui_book_grid.lua:1992
+#: screens/sui_menu.lua:2929
+msgid "Badge Size"
+msgstr "Kích thước huy hiệu"
+
+#: screens/sui_menu.lua:2917
+msgid "Badges"
+msgstr "Huy hiệu"
+
+#: screens/sui_menu.lua:3134 screens/sui_menu.lua:3143
+#: screens/sui_menu.lua:3149 features/library/sui_foldercovers.lua:309
+msgid "Banner"
+msgstr "Biểu ngữ"
+
+#: engines/sui_book_grid.lua:1939
+msgid "Bar"
+msgstr "Thanh"
+
+#: engines/sui_book_grid.lua:1941
+msgid "Bar + Text"
+msgstr "Thanh + chữ"
+
+#: screens/sui_menu.lua:560 screens/sui_menu.lua:1303
+msgid "Bar Size"
+msgstr "Kích thước thanh"
+
+#: screens/sui_menu.lua:1261
+msgid "Bar Style"
+msgstr "Kiểu thanh"
+
+#: modules/module_quick_actions.lua:597 screens/sui_menu.lua:1288
+#: screens/sui_quicksettings_bar.lua:1270
+msgid "Bare"
+msgstr "Trơn"
+
+#: features/sui_backup.lua:114 screens/sui_menu.lua:4555
+#: screens/sui_settings_window.lua:330 screens/sui_settings_window.lua:1079
+msgid "Bars"
+msgstr "Thanh"
+
+#: modules/module_clock.lua:239 infra/sui_config.lua:170
+msgid "Battery"
+msgstr "Pin"
+
+#: modules/module_clock.lua:1031 modules/module_clock.lua:1033
+#, fuzzy
+msgid "Battery Size"
+msgstr "Kích thước thanh"
+
+#: screens/sui_menu.lua:2764 screens/sui_settings_window.lua:414
+#: screens/sui_settings_window.lua:1092
+msgid "Behaviour"
+msgstr "Hành vi"
+
+#: screens/sui_stats_windows.lua:2180 screens/sui_stats_windows.lua:2200
+msgid "Best streak"
+msgstr "Chuỗi tốt nhất"
+
+#: screens/sui_menu.lua:2603
+msgid "Book Cover Transition"
+msgstr "Hiệu ứng chuyển bìa sách"
+
+#: features/sui_quickactions.lua:2268
+msgid "Book Info"
+msgstr "Thông tin sách"
+
+#: infra/sui_config.lua:1276
+msgid "Book Menu"
+msgstr "Menu sách"
+
+#: screens/sui_stats_windows.lua:3932
+msgid "Book Statistics"
+msgstr "Thống kê sách"
+
+#: main.lua:1134
+msgid "Book statistics"
+msgstr "Thống kê sách"
+
+#: screens/sui_settings_window.lua:338
+msgid "Book-browser settings"
+msgstr "Cài đặt trình duyệt sách"
+
+#: features/sui_quickactions.lua:490
+msgid "Bookmark browser"
+msgstr "Trình duyệt dấu trang"
+
+#: features/sui_quickactions.lua:424
+msgid "Bookmark browser not available."
+msgstr "Trình duyệt dấu trang không khả dụng."
+
+#: features/sui_quickactions.lua:848 infra/sui_config.lua:124
+msgid "Bookmarks"
+msgstr "Dấu trang"
+
+#: modules/module_library.lua:293 modules/module_feat_coll.lua:254
+msgid "Books"
+msgstr "Sách"
+
+#: modules/module_reading_goals.lua:744
+msgid "Books to read in %s:"
+msgstr "Sách cần đọc trong %s:"
+
+#: modules/module_collections.lua:1399 screens/sui_menu.lua:2952
+#: screens/sui_menu.lua:2959 screens/sui_menu.lua:2974
+#: screens/sui_menu.lua:3365 screens/sui_menu.lua:3384
+msgid "Bottom"
+msgstr "Dưới"
+
+#: screens/sui_menu.lua:1372 screens/sui_menu.lua:1373
+msgid "Bottom Margin"
+msgstr "Lề dưới"
+
+#: screens/sui_menu.lua:2604
+msgid ""
+"Briefly show the book cover full-screen when opening or closing a book, "
+"masking the page-layout flash. Normally requires the book to already be "
+"indexed by the cover browser (its cover must have been seen at least once in "
+"a grid/list view) — see \"High-Quality Cover\" below to also cover un-"
+"indexed books."
+msgstr ""
+"Hiển thị bìa sách toàn màn hình trong chốc lát khi mở hoặc đóng sách, che đi "
+"hiện tượng nhấp nháy bố cục trang. Thông thường yêu cầu sách đã được lập chỉ "
+"mục bởi trình duyệt bìa (bìa của sách phải đã được xem ít nhất một lần ở chế "
+"độ xem lưới/danh sách) — xem \"Bìa chất lượng cao\" bên dưới để bao gồm cả "
+"sách chưa được lập chỉ mục."
+
+#: features/sui_quickactions.lua:914 infra/sui_config.lua:127
+#: infra/sui_config.lua:169
+msgid "Brightness"
+msgstr "Độ sáng"
+
+#: screens/sui_titlebar.lua:105
+msgid "Browse"
+msgstr "Duyệt"
+
+#: features/sui_style.lua:108
+msgid "Browse Button (author)"
+msgstr "Nút duyệt (tác giả)"
+
+#: features/sui_style.lua:102
+msgid "Browse Button (default)"
+msgstr "Nút duyệt (mặc định)"
+
+#: features/sui_style.lua:114
+msgid "Browse Button (series)"
+msgstr "Nút duyệt (bộ sách)"
+
+#: features/sui_style.lua:120
+msgid "Browse Button (tags)"
+msgstr "Nút duyệt (thẻ)"
+
+#: features/sui_style.lua:1293
+msgid "Browse Icons"
+msgstr "Biểu tượng duyệt"
+
+#: features/library/sui_library_browse.lua:416
+msgid "Browse by"
+msgstr "Duyệt theo"
+
+#: features/sui_quickactions.lua:997 features/sui_quickactions.lua:1015
+#: features/sui_quickactions.lua:1033
+msgid "Browse by Authors/Series/Tags not available."
+msgstr "Duyệt theo Tác giả/Bộ sách/Thẻ không khả dụng."
+
+#: screens/sui_titlebar.lua:1000
+msgid "Browse library"
+msgstr "Duyệt thư viện"
+
+#: features/sui_quickactions.lua:2209 screens/sui_menu.lua:2256
+#: screens/sui_menu.lua:3796
+#, fuzzy
+msgid "Browse…"
+msgstr "Duyệt"
+
+#: modules/module_quick_actions.lua:609 screens/sui_quicksettings_bar.lua:1283
+msgid "Button Background"
+msgstr "Nền nút"
+
+#: screens/sui_menu.lua:1825
+msgid "Button Size"
+msgstr "Kích thước nút"
+
+#: modules/module_quick_actions.lua:574 screens/sui_quicksettings_bar.lua:1247
+msgid "Button Type"
+msgstr "Loại nút"
+
+#: screens/sui_titlebar.lua:1004
+msgid "By author"
+msgstr "Theo tác giả"
+
+#: screens/sui_menu.lua:2643
+msgid ""
+"By default the cover is stretched to fill the whole screen, which can "
+"distort it if its proportions don't match your screen's. When on, the cover "
+"keeps its original proportions instead, centered over a black background."
+msgstr ""
+"Theo mặc định, bìa được kéo giãn để lấp đầy toàn màn hình, có thể làm biến "
+"dạng bìa nếu tỷ lệ không khớp với màn hình. Khi bật, bìa sẽ giữ nguyên tỷ lệ "
+"gốc và được căn giữa trên nền đen."
+
+#: screens/sui_titlebar.lua:1005
+msgid "By series"
+msgstr "Theo bộ sách"
+
+#: screens/sui_titlebar.lua:1006
+msgid "By tags"
+msgstr "Theo thẻ"
+
+#: screens/sui_heatmap_popup.lua:140 screens/sui_stats_windows.lua:3115
+msgid "CALENDAR"
+msgstr "LỊCH"
+
+#: modules/module_heatmap.lua:342
+msgid "Calendar"
+msgstr "Lịch"
+
+#: modules/module_quote.lua:1300 modules/module_collections.lua:365
+#: modules/module_reading_goals.lua:731 modules/module_clock.lua:1238
+#: features/sui_quickactions.lua:515 features/sui_quickactions.lua:1632
+#: features/sui_quickactions.lua:1965 features/sui_quickactions.lua:2117
+#: features/sui_quickactions.lua:2138 features/sui_quickactions.lua:2248
+#: features/sui_quickactions.lua:2533 features/sui_quickactions.lua:2604
+#: features/sui_quickactions.lua:2630 features/sui_quickactions.lua:2655
+#: features/sui_quickactions.lua:2733 features/sui_quickactions.lua:2757
+#: features/sui_quickactions.lua:3070 features/sui_quickactions.lua:3465
+#: features/sui_backup.lua:995 features/sui_backup.lua:1094
+#: features/sui_style.lua:1311 features/sui_presets.lua:849
+#: features/sui_presets.lua:879 features/sui_presets.lua:909
+#: features/sui_presets.lua:926 features/sui_presets.lua:954
+#: features/sui_presets.lua:994 features/sui_presets.lua:1012
+#: features/sui_presets.lua:1041 infra/sui_config.lua:939
+#: infra/sui_config.lua:973 infra/sui_config.lua:1088 infra/sui_config.lua:1161
+#: infra/sui_updater.lua:500 infra/sui_updater.lua:517
+#: screens/sui_titlebar.lua:1007 screens/sui_menu.lua:650
+#: screens/sui_menu.lua:911 screens/sui_menu.lua:1041 screens/sui_menu.lua:1318
+#: screens/sui_menu.lua:2407 screens/sui_menu.lua:2479
+#: screens/sui_menu.lua:2511 screens/sui_menu.lua:2937
+#: screens/sui_menu.lua:3298 screens/sui_menu.lua:4004
+#: screens/sui_menu.lua:4032 screens/sui_menu.lua:4061
+#: screens/sui_menu.lua:4078 screens/sui_menu.lua:4104
+#: screens/sui_menu.lua:4145 screens/sui_menu.lua:4163
+#: screens/sui_menu.lua:4190 screens/sui_menu.lua:4335
+#: screens/sui_menu.lua:4440 screens/sui_stats_windows.lua:649
+#: screens/sui_stats_windows.lua:772 screens/sui_settings_window.lua:483
+#: screens/sui_settings_window.lua:1170
+#: features/library/sui_library_browse.lua:826
+#: features/library/sui_series_grouping.lua:377
+#: features/library/sui_library_search.lua:70
+#: features/library/sui_library_search.lua:207
+#: features/library/sui_group_actions.lua:71
+#: features/library/sui_group_actions.lua:101
+msgid "Cancel"
+msgstr "Hủy bỏ"
+
+#: modules/module_reading_stats.lua:804
+msgid "Cards"
+msgstr "Thẻ"
+
+#: modules/module_reading_stats.lua:814
+msgid "Cards - Transparent"
+msgstr "Thẻ - Trong suốt"
+
+#: modules/module_quote.lua:127 modules/module_quote.lua:1564
+#: modules/module_action_list.lua:68 modules/module_action_list.lua:470
+#: modules/module_reading_stats.lua:93 modules/module_reading_stats.lua:860
+#: modules/module_reading_goals.lua:121 modules/module_reading_goals.lua:1573
+#: modules/module_clock.lua:168 modules/module_clock.lua:1205
+#: screens/sui_menu.lua:710 screens/sui_menu.lua:941 screens/sui_menu.lua:3364
+#: screens/sui_menu.lua:3377
+msgid "Center"
+msgstr "Giữa"
+
+#: screens/sui_menu.lua:4412
+msgid "Check for Updates"
+msgstr "Kiểm tra cập nhật"
+
+#: infra/sui_updater.lua:633
+msgid "Checking for updates…"
+msgstr "Đang kiểm tra cập nhật…"
+
+#: features/sui_backup.lua:964
+msgid "Choose backup file"
+msgstr ""
+
+#: features/sui_backup.lua:1140
+msgid "Choose backup file…"
+msgstr ""
+
+#: engines/sui_asset_browser.lua:91
+msgid "Choose file"
+msgstr ""
+
+#: features/sui_quickactions.lua:2222
+msgid "Choose icon"
+msgstr ""
+
+#: screens/sui_menu.lua:3806
+msgid "Choose icon pack"
+msgstr ""
+
+#: screens/sui_menu.lua:2263
+#, fuzzy
+msgid "Choose wallpaper"
+msgstr "Làm sáng tường nền"
+
+#: screens/sui_onboarding.lua:55
+msgid "Choose your initial layout"
+msgstr "Chọn bố cục ban đầu"
+
+#: modules/module_clock.lua:237 modules/module_clock.lua:740
+#: features/sui_presets.lua:150 features/sui_presets.lua:215
+#: infra/sui_config.lua:167
+msgid "Clock"
+msgstr "Đồng hồ"
+
+#: modules/module_clock.lua:1013 modules/module_clock.lua:1015
+#, fuzzy
+msgid "Clock Size"
+msgstr "Kiểu đồng hồ"
+
+#: modules/module_clock.lua:1161
+msgid "Clock Style"
+msgstr "Kiểu đồng hồ"
+
+#: screens/sui_titlebar.lua:108
+msgid "Close"
+msgstr "Đóng"
+
+#: screens/sui_menu.lua:2556
+msgid "Closing Book Notice"
+msgstr "Thông báo đóng sách"
+
+#: main.lua:1891
+msgid "Closing book…"
+msgstr "Đang đóng sách…"
+
+#: features/sui_quickactions.lua:2163
+msgid "Codepoint out of valid Unicode range (0–10FFFF)."
+msgstr "Mã ký tự ngoài phạm vi của Unicode (0–10FFFF)."
+
+#: features/sui_quickactions.lua:2606 features/sui_quickactions.lua:2749
+msgid "Collection"
+msgstr "Bộ sưu tập"
+
+#: modules/module_collections.lua:1486
+msgid "Collection Menu"
+msgstr "Menu bộ sưu tập"
+
+#: features/library/sui_group_actions.lua:127
+msgid "Collection \"%1\" created with %2 books."
+msgstr "Bộ sưu tập \"%1\" đã tạo với %2 cuốn sách."
+
+#: features/library/sui_group_actions.lua:113
+msgid "Collection already exists: %1"
+msgstr "Bộ sưu tập đã tồn tại: %1"
+
+#: modules/module_collections.lua:326 modules/module_collections.lua:332
+msgid "Collection is empty."
+msgstr "Bộ sưu tập trống."
+
+#: features/sui_quickactions.lua:3159
+msgid "Collection not available: %s"
+msgstr "Bộ sưu tập không khả dụng: %s"
+
+#: modules/module_feat_coll.lua:125
+msgid "Collection: "
+msgstr "Bộ sưu tập: "
+
+#: modules/module_feat_coll.lua:125
+msgid "Collection: (none)"
+msgstr "Bộ sưu tập: (không có)"
+
+#: modules/module_collections.lua:1188 modules/module_collections.lua:1207
+#: modules/module_collections.lua:1216 modules/module_collections.lua:1269
+#: modules/module_collections.lua:1477 modules/module_collections.lua:1478
+#: modules/module_coverdeck.lua:1452 features/sui_quickactions.lua:501
+#: features/sui_quickactions.lua:737 features/sui_quickactions.lua:2270
+#: infra/sui_config.lua:118
+msgid "Collections"
+msgstr "Bộ sưu tập"
+
+#: infra/sui_patches.lua:1409
+msgid "Collections (%1)"
+msgstr "Bộ sưu tập (%1)"
+
+#: features/sui_quickactions.lua:744
+msgid "Collections not available."
+msgstr "Bộ sưu tập không khả dụng."
+
+#: features/sui_style.lua:170
+msgid "Collections: Back Button"
+msgstr "Bộ sưu tập: Nút quay lại"
+
+#: screens/sui_menu.lua:2997 screens/sui_menu.lua:3051
+#: screens/sui_menu.lua:3105 screens/sui_menu.lua:3172
+#: screens/sui_menu.lua:3239 screens/sui_menu.lua:3393
+msgid "Color"
+msgstr "Màu sắc"
+
+#: infra/sui_config.lua:1145 infra/sui_config.lua:1153
+msgid "Column Width (Bento Grid)"
+msgstr ""
+
+#: engines/sui_book_grid.lua:1834
+msgid "Columns"
+msgstr "Cột"
+
+#: modules/module_reading_goals.lua:1519 modules/module_currently.lua:1967
+#: screens/sui_menu.lua:1828
+msgid "Compact"
+msgstr "Nhỏ gọn"
+
+#: features/sui_quickactions.lua:2116
+msgid "Confirm"
+msgstr "Xác nhận"
+
+#: features/sui_quickactions.lua:770 infra/sui_config.lua:121
+#: screens/sui_onboarding.lua:254 screens/sui_onboarding.lua:260
+#: screens/sui_onboarding.lua:266
+msgid "Continue"
+msgstr "Tiếp tục"
+
+#: features/sui_backup.lua:1112
+msgid "Copy this file somewhere safe (e.g. over USB)."
+msgstr ""
+
+#: engines/sui_book_grid.lua:1943
+msgid "Corner Badge"
+msgstr "Huy hiệu góc"
+
+#: features/sui_backup.lua:881 features/sui_backup.lua:956
+#: features/sui_backup.lua:1083
+#, fuzzy
+msgid "Could not determine backup folder."
+msgstr "Không thể xác định thư mục gói"
+
+#: features/sui_style.lua:1991
+msgid "Could not determine packs folder"
+msgstr "Không thể xác định thư mục gói"
+
+#: features/sui_backup.lua:528
+#, fuzzy
+msgid "Could not open backup file for writing"
+msgstr "Không thể mở tệp zip (định dạng không hợp lệ hoặc bị hỏng)"
+
+#: screens/sui_stats_windows.lua:172
+msgid "Could not open statistics database."
+msgstr "Không thể mở cơ sở dữ liệu thống kê."
+
+#: features/sui_style.lua:1993
+msgid "Could not open zip (invalid format or corrupted)"
+msgstr "Không thể mở tệp zip (định dạng không hợp lệ hoặc bị hỏng)"
+
+#: features/sui_backup.lua:540
+#, fuzzy
+msgid "Could not write backup file"
+msgstr "Không thể xác định thư mục gói"
+
+#: modules/module_coverdeck.lua:637 features/sui_presets.lua:170
+#: features/sui_presets.lua:188
+msgid "Cover Deck"
+msgstr "Bộ bìa"
+
+#: screens/sui_menu.lua:2869
+msgid "Cover Settings"
+msgstr "Cài đặt bìa"
+
+#: modules/module_coverdeck.lua:1348 modules/module_coverdeck.lua:1349
+#: modules/module_currently.lua:1424 modules/module_currently.lua:1425
+#: engines/sui_book_grid.lua:1787 engines/sui_book_grid.lua:1789
+msgid "Cover Size"
+msgstr "Kích thước bìa"
+
+#: modules/module_currently.lua:1451 modules/module_currently.lua:1452
+msgid "Cover Spacing"
+msgstr "Khoảng cách bìa"
+
+#: modules/module_collections.lua:1333
+msgid "Cover Style"
+msgstr "Kiểu bìa"
+
+#: modules/module_collections.lua:369
+msgid "Cover for \"%s\""
+msgstr "Bìa cho \"%s\""
+
+#: modules/module_coverdeck.lua:154
+msgid "Covers"
+msgstr "Bìa sách"
+
+#: screens/sui_settings_window.lua:1175
+#: features/library/sui_group_actions.lua:106
+msgid "Create"
+msgstr "Tạo"
+
+#: features/sui_quickactions.lua:1668 features/sui_quickactions.lua:2977
+msgid "Create Quick Action"
+msgstr "Tạo thao tác nhanh"
+
+#: screens/sui_settings_window.lua:1158
+msgid "Create Screen"
+msgstr "Tạo màn hình"
+
+#: features/library/sui_foldercovers.lua:726
+#: features/library/sui_library_browse.lua:819
+#: features/library/sui_series_grouping.lua:369
+msgid "Create collection"
+msgstr "Tạo bộ sưu tập"
+
+#: screens/sui_settings_window.lua:1165
+msgid "Create screen"
+msgstr "Tạo màn hình"
+
+#: features/sui_backup.lua:878 features/sui_backup.lua:1108
+#, fuzzy
+msgid "Creating backup…"
+msgstr "Đang tải dấu trang…"
+
+#: screens/sui_stats_windows.lua:2178 screens/sui_stats_windows.lua:2198
+msgid "Current streak"
+msgstr "Chuỗi hiện tại"
+
+#: modules/module_currently.lua:355 modules/module_currently.lua:356
+#: modules/module_currently.lua:487 modules/module_currently.lua:1928
+#: features/sui_presets.lua:138 features/sui_presets.lua:150
+#: features/sui_presets.lua:215
+msgid "Currently Reading"
+msgstr "Đang đọc"
+
+#: infra/sui_config.lua:2105
+msgid "Custom"
+msgstr "Tùy chỉnh"
+
+#: features/sui_quickactions.lua:1934 features/sui_quickactions.lua:1937
+msgid "Custom Actions"
+msgstr "Thao tác tùy chỉnh"
+
+#: modules/module_quote.lua:1451
+msgid "Custom File"
+msgstr "Tệp tùy chỉnh"
+
+#: modules/module_quote.lua:1500
+msgid "Custom File + My Highlights"
+msgstr "Tệp tùy chỉnh + Đoạn đánh dấu của tôi"
+
+#: features/sui_quickactions.lua:1561 features/sui_quickactions.lua:1665
+msgid "Custom Quick Actions"
+msgstr "Thao tác nhanh tùy chỉnh"
+
+#: infra/sui_custom_screens.lua:158
+msgid "Custom Screen"
+msgstr "Màn hình tùy chỉnh"
+
+#: features/sui_quickactions.lua:1944 features/sui_quickactions.lua:1947
+msgid "Custom Screens"
+msgstr "Màn hình tùy chỉnh"
+
+#: screens/sui_settings_window.lua:434
+msgid "Custom Screens unavailable."
+msgstr "Màn hình tùy chỉnh không khả dụng."
+
+#: infra/sui_config.lua:173 screens/sui_menu.lua:642 screens/sui_menu.lua:904
+msgid "Custom Text"
+msgstr "Văn bản tùy chỉnh"
+
+#: features/sui_backup.lua:125
+msgid "Custom actions, rows and dispatcher bindings"
+msgstr ""
+
+#: features/sui_backup.lua:146
+#, fuzzy
+msgid "Custom icons"
+msgstr "Thao tác tùy chỉnh"
+
+#: features/sui_backup.lua:140
+#, fuzzy
+msgid "Custom quotes"
+msgstr "Thao tác tùy chỉnh"
+
+#: screens/sui_onboarding.lua:173
+msgid "Custom wallpapers and icons"
+msgstr "Tùy chỉnh hình nền và biểu tượng"
+
+#: screens/sui_onboarding.lua:165
+msgid "Customize even more"
+msgstr "Tùy chỉnh thêm"
+
+#: screens/sui_stats_windows.lua:2725 screens/sui_stats_windows.lua:3357
+msgid "DAY STREAK"
+msgstr "CHUỖI NGÀY DUY TRÌ"
+
+#: modules/module_reading_goals.lua:1332 modules/module_reading_goals.lua:1360
+#: modules/module_reading_goals.lua:1397 modules/module_reading_goals.lua:1442
+msgid "Daily Goal"
+msgstr "Mục tiêu hàng ngày"
+
+#: modules/module_reading_goals.lua:777
+msgid "Daily Reading Goal"
+msgstr "Mục tiêu đọc hàng ngày"
+
+#: modules/module_reading_stats.lua:114
+msgid "Daily avg — Pages"
+msgstr "Trung bình hàng ngày — Trang"
+
+#: modules/module_reading_stats.lua:113
+msgid "Daily avg — Time"
+msgstr "Trung bình hàng ngày — Thời gian"
+
+#: modules/module_collections.lua:1408 modules/module_coverdeck.lua:1736
+#: engines/sui_book_grid.lua:1914 screens/sui_menu.lua:2999
+#: screens/sui_menu.lua:3004 screens/sui_menu.lua:3053
+#: screens/sui_menu.lua:3058 screens/sui_menu.lua:3107
+#: screens/sui_menu.lua:3112 screens/sui_menu.lua:3174
+#: screens/sui_menu.lua:3179 screens/sui_menu.lua:3241
+#: screens/sui_menu.lua:3246 screens/sui_menu.lua:3395
+#: screens/sui_menu.lua:3407
+msgid "Dark"
+msgstr "Tối"
+
+#: features/sui_presets.lua:214
+msgid "Dashboard"
+msgstr ""
+
+#: modules/module_clock.lua:238
+#, fuzzy
+msgid "Date"
+msgstr "Hiện ngày"
+
+#: modules/module_clock.lua:1022 modules/module_clock.lua:1024
+#, fuzzy
+msgid "Date Size"
+msgstr "Kích thước huy hiệu"
+
+#: modules/module_library.lua:214
+msgid "Date added (newest)"
+msgstr "Ngày thêm (mới nhất)"
+
+#: modules/module_library.lua:215
+msgid "Date added (oldest)"
+msgstr "Ngày thêm (cũ nhất)"
+
+#: screens/sui_stats_windows.lua:724
+msgid "Date finished"
+msgstr "Ngày hoàn thành"
+
+#: screens/sui_stats_windows.lua:717
+msgid "Date started"
+msgstr "Ngày bắt đầu"
+
+#: screens/sui_stats_windows.lua:945 screens/sui_stats_windows.lua:3648
+msgid "Days"
+msgstr "Ngày"
+
+#: modules/module_coverdeck.lua:144 modules/module_currently.lua:285
+msgid "Days of reading"
+msgstr "Ngày đọc sách"
+
+#: engines/sui_heatmap_widgets.lua:88
+msgid "Dec"
+msgstr "th12"
+
+#: modules/module_clock.lua:64 screens/sui_stats_windows.lua:2817
+msgid "December"
+msgstr "Tháng Mười Hai"
+
+#: modules/module_reading_goals.lua:1511 modules/module_currently.lua:1475
+#: modules/module_currently.lua:1965 features/sui_quickactions.lua:2187
+#: features/sui_quickactions.lua:2473 screens/sui_titlebar.lua:1003
+#: screens/sui_menu.lua:459 screens/sui_menu.lua:588 screens/sui_menu.lua:1264
+#: screens/sui_menu.lua:1829
+msgid "Default"
+msgstr "Mặc định"
+
+#: features/sui_quickactions.lua:2474
+msgid "Default (Folder)"
+msgstr "Mặc định (Thư mục)"
+
+#: features/sui_quickactions.lua:2475
+msgid "Default (Plugin)"
+msgstr "Mặc định (Plugin)"
+
+#: features/sui_quickactions.lua:2476
+msgid "Default (System)"
+msgstr "Mặc định (Hệ thống)"
+
+#: modules/module_quote.lua:1387
+msgid "Default Quotes"
+msgstr "Trích dẫn mặc định"
+
+#: features/sui_style.lua:177
+msgid "Default: Folder"
+msgstr "Mặc định: Thư mục"
+
+#: features/sui_style.lua:195
+msgid "Default: Group"
+msgstr "Mặc định: Nhóm"
+
+#: features/sui_style.lua:183
+msgid "Default: Plugin"
+msgstr "Mặc định: Plugin"
+
+#: features/sui_style.lua:189
+msgid "Default: System"
+msgstr "Mặc định: Hệ thống"
+
+#: engines/sui_window.lua:1941 engines/sui_window.lua:2870
+#: features/sui_quickactions.lua:1631 features/sui_quickactions.lua:3064
+#: features/sui_quickactions.lua:3069 features/sui_presets.lua:950
+#: features/sui_presets.lua:953 features/sui_presets.lua:993
+#: screens/sui_menu.lua:4100 screens/sui_menu.lua:4103
+#: screens/sui_menu.lua:4144 screens/sui_settings_window.lua:510
+#: screens/sui_settings_window.lua:555 screens/sui_settings_window.lua:685
+#: features/library/sui_book_hold_dialog.lua:151
+msgid "Delete"
+msgstr "Xóa"
+
+#: screens/sui_menu.lua:4439
+msgid "Delete Settings"
+msgstr "Xóa cài đặt"
+
+#: screens/sui_settings_window.lua:508
+msgid "Delete \"%s\"? This removes its layout, modules and Quick Action."
+msgstr ""
+"Xóa \"%s\"? Thao tác này sẽ xóa bố cục, mô-đun và thao tác nhanh của nó."
+
+#: features/sui_presets.lua:952 features/sui_presets.lua:992
+#: screens/sui_menu.lua:4102 screens/sui_menu.lua:4143
+msgid "Delete preset \"%s\"?"
+msgstr "Xóa thiết lập \"%s\"?"
+
+#: features/sui_quickactions.lua:1630 features/sui_quickactions.lua:3068
+msgid "Delete quick action \"%s\"?"
+msgstr "Xóa thao tác nhanh \"%s\"?"
+
+#: modules/module_currently.lua:282
+msgid "Description"
+msgstr "Mô tả"
+
+#: modules/module_reading_goals.lua:1541 modules/module_reading_goals.lua:1553
+msgid "Detail Below Ring"
+msgstr ""
+
+#: modules/module_reading_goals.lua:1541 modules/module_reading_goals.lua:1545
+msgid "Detail Inside Ring"
+msgstr ""
+
+#: features/sui_quickactions.lua:2273
+msgid "Dictionary Lookup"
+msgstr "Tra cứu từ điển"
+
+#: modules/module_clock.lua:1166 modules/module_clock.lua:1170
+msgid "Digital"
+msgstr "Kỹ thuật số"
+
+#: screens/sui_menu.lua:2497
+msgid "Disable \"Lock Scale\" first to set a custom label scale."
+msgstr "Tắt \"Khóa tỷ lệ\" trước để đặt tỷ lệ nhãn tùy chỉnh."
+
+#: infra/sui_config.lua:924
+msgid "Disable \"Lock Scale\" first to set a per-module scale."
+msgstr "Tắt \"Khóa tỷ lệ\" trước để đặt tỷ lệ cho từng mô-đun."
+
+#: infra/sui_config.lua:171
+msgid "Disk Usage"
+msgstr "Sử dụng đĩa"
+
+#: features/sui_quickactions.lua:3118
+msgid "Dispatcher not available."
+msgstr "Bộ điều phối không khả dụng."
+
+#: screens/sui_menu.lua:3565
+msgid "Display"
+msgstr "Hiển thị"
+
+#: features/sui_quickactions.lua:2724
+msgid "Done"
+msgstr "Xong"
+
+#: screens/sui_menu.lua:496
+msgid "Dot Pager"
+msgstr "Trình phân trang chấm"
+
+#: infra/sui_updater.lua:516
+msgid "Download and install"
+msgstr "Tải xuống và cài đặt"
+
+#: infra/sui_updater.lua:515
+msgid "Download and install now?"
+msgstr "Tải xuống và cài đặt ngay?"
+
+#: infra/sui_updater.lua:438
+msgid "Download error: "
+msgstr "Lỗi tải xuống: "
+
+#: infra/sui_updater.lua:414
+msgid "Downloading Simple UI %s…"
+msgstr "Đang tải xuống Simple UI %s…"
+
+#: modules/module_currently.lua:1478
+msgid "Dynamic"
+msgstr "Động"
+
+#: features/sui_quickactions.lua:3051
+msgid "Edit"
+msgstr "Chỉnh sửa"
+
+#: screens/sui_menu.lua:634 screens/sui_menu.lua:636 screens/sui_menu.lua:898
+msgid "Edit Custom Text"
+msgstr "Chỉnh sửa văn bản tùy chỉnh"
+
+#: screens/sui_menu.lua:2191 screens/sui_settings_window.lua:379
+msgid "Edit Home Screen Layout"
+msgstr "Chỉnh sửa bố cục màn hình chính"
+
+#: features/sui_quickactions.lua:2391
+msgid "Edit Quick Action"
+msgstr "Chỉnh sửa thao tác nhanh"
+
+#: modules/module_clock.lua:317
+msgid "Eight"
+msgstr "Tám"
+
+#: modules/module_clock.lua:320
+msgid "Eighteen"
+msgstr "Mười tám"
+
+#: modules/module_clock.lua:318
+msgid "Eleven"
+msgstr "Mười một"
+
+#: screens/sui_menu.lua:891
+msgid "Empty"
+msgstr "Trống"
+
+#: features/sui_quickactions.lua:998 features/sui_quickactions.lua:1016
+#: features/sui_quickactions.lua:1034
+msgid "Enable 'Browse by Author / Series / Tags' in the library menu first."
+msgstr "Bật 'Duyệt theo Tác giả / Bộ sách / Thẻ' trong menu thư viện trước."
+
+#: screens/sui_menu.lua:2820
+msgid "Enable Browse by Author / Series / Tags"
+msgstr "Bật duyệt theo Tác giả / Bộ sách / Thẻ"
+
+#: screens/sui_menu.lua:2804
+msgid "Enable Library Custom Covers"
+msgstr "Cho phép tùy chỉnh ảnh bìa thư viện."
+
+#: screens/sui_menu.lua:1110
+msgid "Enable Navigation Bar"
+msgstr "Bật thanh điều hướng"
+
+#: screens/sui_quicksettings_bar.lua:1106
+msgid "Enable Quick Settings Bar"
+msgstr "Bật thanh cài đặt nhanh"
+
+#: screens/sui_menu.lua:838
+msgid "Enable Status Bar"
+msgstr "Bật thanh trạng thái"
+
+#: screens/sui_menu.lua:1779
+msgid "Enable Title Bar"
+msgstr "Bật thanh tiêu đề"
+
+#: screens/sui_menu.lua:2239
+msgid "Enable Wallpaper"
+msgstr "Bật hình nền"
+
+#: features/sui_style.lua:1789
+msgid "Enable custom UI font"
+msgstr "Cho phép tùy chỉnh phông chữ giao diện"
+
+#: features/sui_quickactions.lua:2135
+msgid ""
+"Enter the Unicode codepoint (hex) of a Nerd Fonts symbol.\n"
+"You can look up codes with wakamaifondue.com using the file:\n"
+"  /koreader/fonts/nerdfonts/symbols.ttf\n"
+"Leave blank and press OK to remove a Nerd Font icon."
+msgstr ""
+"Nhập mã Unicode (hex) của biểu tượng Nerd Fonts.\n"
+"Bạn có thể tra cứu mã trên trang wakamaifondue.com bằng tệp:\n"
+"  /koreader/fonts/nerdfonts/symbols.ttf\n"
+"Để trống và nhấn Đồng ý để xóa biểu tượng."
+
+#: screens/sui_menu.lua:3867
+msgid "Error applying pack:"
+msgstr "Lỗi áp dụng gói:"
+
+#: infra/sui_updater.lua:638
+msgid "Error checking for updates."
+msgstr "Lỗi kiểm tra cập nhật."
+
+#: infra/sui_updater.lua:643
+msgid "Error checking for updates: "
+msgstr "Lỗi kiểm tra cập nhật: "
+
+#: features/sui_presets.lua:1121 screens/sui_menu.lua:4272
+msgid "Error exporting preset: "
+msgstr "Lỗi xuất thiết lập: "
+
+#: features/sui_style.lua:2040
+msgid "Error extracting zip: "
+msgstr "Lỗi giải nén zip: "
+
+#: features/sui_presets.lua:1095 screens/sui_menu.lua:4245
+msgid "Error importing preset: "
+msgstr "Lỗi nhập thiết lập: "
+
+#: modules/module_reading_goals.lua:1150
+msgid "Error in Reading Goals: check crash.log"
+msgstr "Lỗi trong Mục tiêu đọc: kiểm tra crash.log"
+
+#: screens/sui_menu.lua:3785
+msgid "Error installing pack:"
+msgstr "Lỗi cài đặt gói:"
+
+#: screens/sui_stats_windows.lua:1216
+msgid "Exclude from goals"
+msgstr "Loại khỏi mục tiêu"
+
+#: screens/sui_stats_windows.lua:839 screens/sui_stats_windows.lua:845
+msgid "Excluded"
+msgstr "Đã loại trừ"
+
+#: features/sui_backup.lua:1099
+#, fuzzy
+msgid "Export"
+msgstr "Xuất thiết lập"
+
+#: features/sui_backup.lua:1125
+msgid "Export Full Backup…"
+msgstr ""
+
+#: features/sui_backup.lua:1078
+msgid "Export now…"
+msgstr ""
+
+#: features/sui_presets.lua:1109 screens/sui_menu.lua:4259
+msgid "Export preset"
+msgstr "Xuất thiết lập"
+
+#: screens/sui_settings_window.lua:390 screens/sui_settings_window.lua:1078
+msgid "Extra Custom Screens"
+msgstr "Màn hình tùy chỉnh bổ sung"
+
+#: screens/sui_menu.lua:564
+msgid "Extra Small"
+msgstr "Cực nhỏ"
+
+#: infra/sui_updater.lua:439
+msgid "Extraction error: "
+msgstr "Lỗi trích xuất: "
+
+#: screens/sui_stats_windows.lua:3469
+msgid "FREEZES"
+msgstr "ĐÓNG BĂNG"
+
+#: screens/sui_menu.lua:4432
+msgid "Factory Reset"
+msgstr "Đặt lại nhà máy"
+
+#: screens/sui_menu.lua:3274
+msgid "Fade Finished Books"
+msgstr "Làm mờ sách đã đọc xong"
+
+#: screens/sui_menu.lua:3290
+msgid "Fade Intensity"
+msgstr "Cường độ làm mờ"
+
+#: screens/sui_menu.lua:3291
+msgid ""
+"Fades finished book covers towards white.\n"
+"50% is the default."
+msgstr ""
+"Làm mờ bìa sách đã đọc xong về phía trắng.\n"
+"50% là mặc định."
+
+#: screens/sui_menu.lua:2400
+msgid ""
+"Fades the wallpaper towards white to improve text readability.\n"
+"0% is the default (no lightening)."
+msgstr ""
+"Làm mờ tường nền về phía trắng để cải thiện khả năng đọc.\n"
+"0% là mặc định (không làm sáng)."
+
+#: modules/module_coverdeck.lua:1434 features/sui_quickactions.lua:835
+#: features/sui_quickactions.lua:2269 infra/sui_config.lua:123
+msgid "Favorites"
+msgstr "Yêu thích"
+
+#: features/sui_quickactions.lua:842
+msgid "Favorites not available."
+msgstr "Mục yêu thích không khả dụng."
+
+#: modules/module_feat_coll.lua:370 modules/module_feat_coll.lua:426
+msgid "Featured Collection"
+msgstr "Bộ sưu tập nổi bật"
+
+#: modules/module_feat_coll.lua:87
+msgid "Featured Collection — tap to configure"
+msgstr "Bộ sưu tập nổi bật — chạm để cấu hình"
+
+#: engines/sui_heatmap_widgets.lua:87
+msgid "Feb"
+msgstr "th2"
+
+#: modules/module_clock.lua:62 screens/sui_stats_windows.lua:2815
+msgid "February"
+msgstr "Tháng Hai"
+
+#: features/sui_quickactions.lua:446
+msgid "Fetching bookmarks…"
+msgstr "Đang tải dấu trang…"
+
+#: modules/module_clock.lua:319
+msgid "Fifteen"
+msgstr "Mười lăm"
+
+#: modules/module_clock.lua:325
+msgid "Fifty"
+msgstr "Năm mươi"
+
+#: features/sui_quickactions.lua:823
+msgid "File Manager not available."
+msgstr "Trình quản lý tệp không khả dụng."
+
+#: features/sui_quickactions.lua:2271
+msgid "File Search"
+msgstr "Tìm kiếm tệp"
+
+#: features/sui_backup.lua:566
+#, fuzzy
+msgid "File not found."
+msgstr "Không tìm thấy tệp: "
+
+#: features/sui_style.lua:1987
+msgid "File not found: "
+msgstr "Không tìm thấy tệp: "
+
+#: modules/module_library.lua:216
+msgid "File size (largest)"
+msgstr "Kích thước tệp (lớn nhất)"
+
+#: modules/module_library.lua:217
+msgid "File size (smallest)"
+msgstr "Kích thước tệp (nhỏ nhất)"
+
+#: engines/sui_asset_browser.lua:274
+msgid "Filter by name…"
+msgstr ""
+
+#: screens/sui_menu.lua:3267
+msgid "Finished Books"
+msgstr "Sách đã đọc xong"
+
+#: modules/module_clock.lua:316
+msgid "Five"
+msgstr "Năm"
+
+#: modules/module_quote.lua:1579
+msgid "Fixed Height"
+msgstr "Chiều cao cố định"
+
+#: modules/module_reading_stats.lua:824 modules/module_quick_actions.lua:633
+#: screens/sui_menu.lua:4356 screens/sui_quicksettings_bar.lua:1307
+msgid "Flat"
+msgstr "Phẳng"
+
+#: modules/module_library.lua:292
+msgid "Flat Library"
+msgstr "Thư viện phẳng"
+
+#: features/sui_quickactions.lua:2747
+msgid "Folder"
+msgstr "Thư mục"
+
+#: screens/sui_menu.lua:2874
+msgid "Folder Cover Type"
+msgstr "Loại bìa thư mục"
+
+#: features/sui_style.lua:1296
+msgid "Folder Covers"
+msgstr "Bìa thư mục"
+
+#: features/sui_style.lua:202
+msgid "Folder Covers: Empty Folder"
+msgstr "Bìa thư mục: Thư mục trống"
+
+#: screens/sui_menu.lua:3311
+msgid "Folder Name"
+msgstr "Tên thư mục"
+
+#: screens/sui_menu.lua:3420
+msgid "Folder Name Text Size"
+msgstr "Kích thước chữ tên thư mục"
+
+#: features/sui_quickactions.lua:2272
+msgid "Folder Shortcuts"
+msgstr "Phím tắt thư mục"
+
+#: features/library/sui_foldercovers.lua:647
+#: features/library/sui_library_browse.lua:366
+#: features/library/sui_series_grouping.lua:87
+#: features/library/sui_group_actions.lua:76
+msgid "Folder cover"
+msgstr "Bìa thư mục"
+
+#: features/sui_backup.lua:120
+msgid "Folder covers, browse modes, series grouping"
+msgstr ""
+
+#: modules/module_coverdeck.lua:1735 engines/sui_book_grid.lua:1913
+msgid "Follow Library"
+msgstr "Theo thư viện"
+
+#: features/sui_backup.lua:105
+msgid "Fonts, icon assignments, icon presets"
+msgstr ""
+
+#: modules/module_clock.lua:325
+msgid "Forty"
+msgstr "Bốn mươi"
+
+#: modules/module_clock.lua:316
+msgid "Four"
+msgstr "Bốn"
+
+#: modules/module_clock.lua:319
+msgid "Fourteen"
+msgstr "Mười bốn"
+
+#: modules/module_heatmap.lua:365 modules/module_reading_goals.lua:1587
+#: modules/module_currently.lua:1930 engines/sui_book_grid.lua:1869
+msgid "Frame"
+msgstr "Khung"
+
+#: screens/sui_menu.lua:1276 screens/sui_menu.lua:4367
+msgid "Framed"
+msgstr "Có khung"
+
+#: modules/module_reading_stats.lua:903 modules/module_reading_stats.lua:908
+msgid "Freezes"
+msgstr "Đóng băng"
+
+#: screens/sui_stats_windows.lua:3075
+msgid ""
+"Freezes can only cover a single missed day, and only right after an active "
+"one. Tap yesterday's cell to use one, when eligible."
+msgstr ""
+"Đóng băng chỉ có thể bù cho một ngày bị bỏ lỡ, và chỉ ngay sau một ngày có "
+"hoạt động. Chạm vào ô của hôm qua để sử dụng khi đủ điều kiện."
+
+#: engines/sui_heatmap_widgets.lua:95 screens/sui_stats_windows.lua:2805
+msgid "Fri"
+msgstr "Thứ Sáu"
+
+#: modules/module_clock.lua:59
+msgid "Friday"
+msgstr "Thứ Sáu"
+
+#: screens/sui_quicksettings_bar.lua:320 screens/sui_quicksettings_bar.lua:342
+msgid "Frontlight"
+msgstr "Đèn trước"
+
+#: screens/sui_quicksettings_bar.lua:1202
+msgid "Frontlight Slider"
+msgstr "Thanh trượt đèn trước"
+
+#: features/sui_quickactions.lua:411
+msgid "Frontlight not available on this device."
+msgstr "Đèn trước không khả dụng trên thiết bị này."
+
+#: features/sui_backup.lua:649
+#, fuzzy
+msgid "General — %d settings"
+msgstr "Cài đặt mô-đun"
+
+#: screens/sui_menu.lua:2575
+msgid "Gesture Only"
+msgstr "Chỉ dùng cử chỉ"
+
+#: screens/sui_menu.lua:4320 screens/sui_menu.lua:4327
+msgid "Global Text Size"
+msgstr "Kích thước chữ toàn cục"
+
+#: screens/sui_settings_window.lua:352
+msgid "Global custom actions & icons"
+msgstr "Thao tác và biểu tượng tùy chỉnh toàn cục"
+
+#: screens/sui_menu.lua:4328
+msgid ""
+"Global scale applied to all of KOReader's interface text — menus, dialogs, "
+"titles, and Simple UI. It does not change the book's reading font size, "
+"which has its own setting.\n"
+"100% is the default size. Useful when a chosen UI font (see UI Font above) "
+"renders smaller or larger than usual."
+msgstr ""
+"Tỷ lệ toàn cục áp dụng cho toàn bộ chữ giao diện của KOReader — menu, hộp "
+"thoại, tiêu đề và Simple UI. Không thay đổi kích thước phông chữ đọc sách, "
+"vốn có cài đặt riêng.\n"
+"100% là kích thước mặc định. Hữu ích khi phông chữ giao diện đã chọn (xem "
+"Phông chữ giao diện ở trên) hiển thị nhỏ hơn hoặc lớn hơn bình thường."
+
+#: screens/sui_menu.lua:2472
+msgid ""
+"Global scale for all modules.\n"
+"Individual overrides in Module Settings take precedence.\n"
+"100% is the default size."
+msgstr ""
+"Tỷ lệ toàn cục cho tất cả mô-đun.\n"
+"Cài đặt riêng trong Cài đặt mô-đun được ưu tiên.\n"
+"100% là kích thước mặc định."
+
+#: screens/sui_onboarding.lua:166
+msgid "Go to Settings > Home Screen to edit your layout whenever you want."
+msgstr "Đi tới Cài đặt > Màn hình chính để chỉnh sửa bố cục bất cứ lúc nào."
+
+#: modules/module_reading_goals.lua:1289 modules/module_reading_goals.lua:1354
+#: modules/module_reading_goals.lua:1368
+msgid "Goals"
+msgstr "Mục tiêu"
+
+#: features/sui_backup.lua:129
+msgid "Goals & Streaks"
+msgstr ""
+
+#: engines/sui_book_grid.lua:1821 engines/sui_book_grid.lua:1832
+msgid "Grid size"
+msgstr "Kích thước lưới"
+
+#: features/sui_quickactions.lua:2402 features/sui_quickactions.lua:2730
+msgid "Group"
+msgstr "Nhóm"
+
+#: screens/sui_menu.lua:2856
+msgid "Group by Book Series"
+msgstr "Nhóm theo bộ sách"
+
+#: features/sui_quickactions.lua:2755
+msgid "Group of Quick Actions"
+msgstr "Nhóm thao tác nhanh"
+
+#: features/sui_quickactions.lua:2737
+msgid "Group: select actions"
+msgstr "Nhóm: chọn thao tác"
+
+#: modules/module_currently.lua:1486
+msgid ""
+"Grows or shrinks the cover so its height always matches the text column, "
+"keeping the cover's proportions.\n"
+"The spacing between cover and text stays as set above.\n"
+"The Cover size setting still applies on top of this, and the cover never "
+"shrinks below its 100% size."
+msgstr ""
+"Tăng hoặc giảm kích thước bìa để chiều cao của bìa luôn khớp với cột chữ, "
+"giữ nguyên tỷ lệ của bìa.\n"
+"Khoảng cách giữa bìa và chữ vẫn giữ như đã đặt ở trên.\n"
+"Cài đặt Kích thước bìa vẫn được áp dụng thêm vào đây, và bìa không bao giờ "
+"nhỏ hơn 100% kích thước của nó."
+
+#: screens/sui_menu.lua:1311
+msgid ""
+"Height of the bottom navigation bar.\n"
+"100% is the default size."
+msgstr ""
+"Chiều cao thanh điều hướng dưới.\n"
+"100% là kích thước mặc định."
+
+#: modules/module_spacer.lua:91
+#, fuzzy
+msgid ""
+"Height of the spacer.\n"
+"100% is the default size.\n"
+"Tap the arrows for fine steps, hold for larger ones."
+msgstr ""
+"Chiều cao khoảng trống.\n"
+"100% là kích thước mặc định."
+
+#: screens/sui_menu.lua:1034
+msgid ""
+"Height of the top status bar.\n"
+"100% is the default size."
+msgstr ""
+"Chiều cao thanh trạng thái trên.\n"
+"100% là kích thước mặc định."
+
+#: modules/module_collections.lua:1381 screens/sui_menu.lua:480
+#: screens/sui_menu.lua:539 screens/sui_menu.lua:2951 screens/sui_menu.lua:2958
+#: screens/sui_menu.lua:2985 screens/sui_menu.lua:3025
+#: screens/sui_menu.lua:3031 screens/sui_menu.lua:3042
+#: screens/sui_menu.lua:3079 screens/sui_menu.lua:3085
+#: screens/sui_menu.lua:3096 screens/sui_menu.lua:3317
+#: screens/sui_menu.lua:3348
+msgid "Hidden"
+msgstr "Ẩn"
+
+#: modules/module_collections.lua:1370
+msgid "Hide Book Spine"
+msgstr "Ẩn gáy sách"
+
+#: modules/module_recent.lua:70
+#, fuzzy
+msgid "Hide Currently Reading book"
+msgstr "Đang đọc"
+
+#: screens/sui_menu.lua:3522
+msgid "Hide Folder Book Spine"
+msgstr "Ẩn gáy sách thư mục"
+
+#: modules/module_quick_actions.lua:386 modules/module_quick_actions.lua:539
+#: screens/sui_menu.lua:1981 screens/sui_quicksettings_bar.lua:1235
+msgid "Hide Label"
+msgstr "Ẩn nhãn"
+
+#: screens/sui_menu.lua:3516
+msgid "Hide Selection Underline"
+msgstr "Ẩn gạch chân lựa chọn"
+
+#: screens/sui_menu.lua:1079
+msgid "Hide Wi-Fi Icon When Off"
+msgstr "Đần biểu tượng Wi-Fi khi tắt"
+
+#: screens/sui_menu.lua:547
+msgid ""
+"Hides the pagination bar on the homescreen.\n"
+"Not available when Navpager is active."
+msgstr ""
+"Ẩn thanh phân trang trên màn hình chính.\n"
+"Không khả dụng khi Navpager đang hoạt động."
+
+#: screens/sui_menu.lua:2630
+msgid "High-Quality Cover"
+msgstr "Bìa chất lượng cao"
+
+#: screens/sui_stats_windows.lua:1210 screens/sui_stats_windows.lua:3884
+msgid "Highlights"
+msgstr "Đoạn đánh dấu"
+
+#: features/sui_quickactions.lua:494 features/sui_quickactions.lua:749
+#: features/sui_quickactions.lua:2267 infra/sui_config.lua:119
+msgid "History"
+msgstr "Lịch sử"
+
+#: features/sui_quickactions.lua:756
+msgid "History not available."
+msgstr "Lịch sử không khả dụng."
+
+#: features/sui_quickactions.lua:690 infra/sui_config.lua:117
+msgid "Home"
+msgstr "Trang chủ"
+
+#: engines/sui_screen_engine.lua:1371 features/sui_backup.lua:109
+#: infra/sui_patches.lua:1134 infra/sui_patches.lua:1161
+#: screens/sui_menu.lua:4560 screens/sui_settings_window.lua:323
+#: screens/sui_settings_window.lua:1077
+msgid "Home Screen"
+msgstr "Màn hình chính"
+
+#: screens/sui_settings_window.lua:1093
+msgid "Home Screen Presets"
+msgstr "Thiết lập màn hình chính"
+
+#: screens/sui_menu.lua:493
+msgid "Home Screen Style"
+msgstr "Kiểu màn hình chính"
+
+#: features/sui_quickactions.lua:511
+msgid "Home folder"
+msgstr "Thư mục chính"
+
+#: features/sui_quickactions.lua:513
+msgid "Home folder + subfolders"
+msgstr "Thư mục chính + thư mục con"
+
+#: screens/sui_menu.lua:2717
+#, fuzzy
+msgid "Home key opens Home Screen"
+msgstr "Nút Home của PocketBook mở Màn hình chính"
+
+#: features/sui_quickactions.lua:731
+msgid "Homescreen not available."
+msgstr "Màn hình chính không khả dụng."
+
+#: modules/module_currently.lua:1453
+msgid ""
+"Horizontal space between the cover and the text.\n"
+"100% is the default spacing."
+msgstr ""
+"Khoảng cách ngang giữa bìa và chữ.\n"
+"100% là khoảng cách mặc định."
+
+#: modules/module_reading_goals.lua:766
+msgid "Hours per month:"
+msgstr "Giờ mỗi tháng:"
+
+#: modules/module_heatmap.lua:296
+msgid ""
+"How many weeks of history to include, and (in Calendar view) how many weeks "
+"the grid shows — this count is unaffected by Scale, which only resizes the "
+"cells. In Time of day view, this only changes how much history feeds the "
+"shading — the grid itself always has one column per hour."
+msgstr ""
+"Số tuần lịch sử cần tính, và (ở chế độ xem Lịch) số tuần lưới hiển thị — con "
+"số này không bị ảnh hưởng bởi Tỷ lệ, vốn chỉ thay đổi kích thước ô. Ở chế độ "
+"xem Thời điểm trong ngày, điều này chỉ thay đổi lượng lịch sử đưa vào tô "
+"bóng — bản thân lưới luôn có một cột cho mỗi giờ."
+
+#: features/sui_quickactions.lua:2427 features/sui_quickactions.lua:2431
+msgid "Icon"
+msgstr "Biểu tượng"
+
+#: screens/sui_menu.lua:3705
+msgid "Icon Packs"
+msgstr "Gói biểu tượng"
+
+#: screens/sui_menu.lua:3882
+msgid "Icon Presets"
+msgstr "Thiết lập biểu tượng"
+
+#: screens/sui_menu.lua:1346 screens/sui_menu.lua:1347
+msgid "Icon Size"
+msgstr "Kích thước biểu tượng"
+
+#: features/sui_backup.lua:147
+msgid "Icon files and installed packs from sui_icons/"
+msgstr ""
+
+#: features/sui_quickactions.lua:2423
+msgid "Icon: Default"
+msgstr "Biểu tượng: Mặc định"
+
+#: screens/sui_menu.lua:208 screens/sui_menu.lua:3651
+msgid "Icons"
+msgstr "Biểu tượng"
+
+#: screens/sui_menu.lua:209
+msgid "Icons only"
+msgstr "Chỉ biểu tượng"
+
+#: screens/sui_settings_window.lua:345
+msgid "Icons, fonts and appearance"
+msgstr "Biểu tượng, phông chữ và giao diện"
+
+#: screens/sui_onboarding.lua:170
+msgid ""
+"If you selected the Momentum Preset, long press the Reading Goal module to "
+"choose and set your reading goals."
+msgstr ""
+"Nếu bạn đã chọn Thiết lập động lượng, nhấn giữ mô-đun Mục tiêu đọc để chọn "
+"và đặt mục tiêu đọc."
+
+#: features/sui_backup.lua:1135
+msgid "Import Backup…"
+msgstr ""
+
+#: features/sui_presets.lua:1072 screens/sui_menu.lua:4221
+msgid "Import preset"
+msgstr "Nhập thiết lập"
+
+#: screens/sui_menu.lua:3790
+msgid "Install pack from ZIP"
+msgstr "Cài đặt gói từ ZIP"
+
+#: screens/sui_menu.lua:3283
+msgid "Intensity"
+msgstr "Cường độ"
+
+#: screens/sui_menu.lua:1508
+msgid ""
+"Invalid arrangement.\n"
+"Keep items between the Left and Right separators."
+msgstr ""
+"Sắp xếp không hợp lệ.\n"
+"Giữ các mục giữa hai dấu phân cách Trái và Phải."
+
+#: screens/sui_menu.lua:733
+msgid ""
+"Invalid arrangement.\n"
+"Keep the Left, Center and Right separators in order."
+msgstr ""
+"Sắp xếp không hợp lệ.\n"
+"Giữ các dấu phân cách Trái, Giữa và Phải theo thứ tự."
+
+#: features/sui_presets.lua:430 features/sui_presets.lua:610
+msgid "Invalid data"
+msgstr "Dữ liệu không hợp lệ"
+
+#: features/sui_quickactions.lua:2166
+msgid "Invalid input. Please enter 1–6 hexadecimal digits (0–9, A–F)."
+msgstr ""
+"Đầu vào không hợp lệ. Vui lòng nhập 1–6 chữ số thập lục phân (0–9, A–F)."
+
+#: features/sui_presets.lua:426 features/sui_presets.lua:606
+msgid "Invalid preset file"
+msgstr "Tệp thiết lập không hợp lệ"
+
+#: screens/sui_menu.lua:2374
+msgid "Invert in Night Mode"
+msgstr "Đảo ngược trong chế độ đêm"
+
+#: modules/module_reading_stats.lua:694 modules/module_reading_stats.lua:715
+#: modules/module_reading_stats.lua:737 modules/module_clock.lua:1045
+#: modules/module_clock.lua:1068 modules/module_clock.lua:1077
+#: modules/module_clock.lua:1115 modules/module_coverdeck.lua:1602
+#: modules/module_coverdeck.lua:1642 modules/module_coverdeck.lua:1656
+#: modules/module_currently.lua:1618 modules/module_currently.lua:1623
+#: modules/module_currently.lua:1646 screens/sui_menu.lua:857
+#: screens/sui_menu.lua:862 screens/sui_menu.lua:951 screens/sui_menu.lua:1991
+#: screens/sui_menu.lua:1996 screens/sui_menu.lua:2022
+msgid "Items"
+msgstr "Mục"
+
+#: engines/sui_heatmap_widgets.lua:87
+msgid "Jan"
+msgstr "th1"
+
+#: modules/module_clock.lua:62 screens/sui_stats_windows.lua:2815
+msgid "January"
+msgstr "Tháng Một"
+
+#: engines/sui_heatmap_widgets.lua:88
+msgid "Jul"
+msgstr "th7"
+
+#: modules/module_clock.lua:63 screens/sui_stats_windows.lua:2816
+msgid "July"
+msgstr "Tháng Bảy"
+
+#: engines/sui_heatmap_widgets.lua:87
+msgid "Jun"
+msgstr "th6"
+
+#: modules/module_clock.lua:63 screens/sui_stats_windows.lua:2816
+msgid "June"
+msgstr "Tháng Sáu"
+
+#: modules/module_quick_actions.lua:648
+msgid "Justified"
+msgstr "Căn đều"
+
+#: screens/sui_menu.lua:517
+msgid "KOReader"
+msgstr "KOReader"
+
+#: screens/sui_stats_windows.lua:2727
+msgid "LAST 7 DAYS"
+msgstr "7 NGÀY GẦN ĐÂY"
+
+#: modules/module_quick_actions.lua:556 screens/sui_quicksettings_bar.lua:1224
+msgid "Label"
+msgstr "Nhãn"
+
+#: screens/sui_menu.lua:2503
+msgid "Label Scale"
+msgstr "Tỷ lệ nhãn"
+
+#: screens/sui_menu.lua:1359 screens/sui_menu.lua:1360
+msgid "Label Size"
+msgstr "Kích thước nhãn"
+
+#: screens/sui_menu.lua:2492
+msgid "Labels"
+msgstr "Nhãn"
+
+#: screens/sui_menu.lua:1830
+msgid "Large"
+msgstr "Lớn"
+
+#: features/sui_backup.lua:1031
+msgid "Last backup: %s%s"
+msgstr ""
+
+#: features/sui_backup.lua:1028
+msgid "Last backup: never"
+msgstr ""
+
+#: features/sui_backup.lua:1009 infra/sui_updater.lua:449
+#: screens/sui_menu.lua:444 screens/sui_menu.lua:847 screens/sui_menu.lua:1058
+#: screens/sui_menu.lua:1119 screens/sui_menu.lua:1335
+#: screens/sui_menu.lua:1794 screens/sui_menu.lua:3448
+#: screens/sui_menu.lua:3471 screens/sui_menu.lua:3493
+#: screens/sui_menu.lua:4342 screens/sui_menu.lua:4544
+#: screens/sui_quicksettings_bar.lua:1120
+msgid "Later"
+msgstr "Sau đó"
+
+#: modules/module_reading_goals.lua:1509 modules/module_currently.lua:1472
+msgid "Layout"
+msgstr "Bố cục"
+
+#: screens/sui_settings_window.lua:1084 screens/sui_settings_window.lua:1085
+msgid "Layout Editor"
+msgstr "Trình chỉnh sửa bố cục"
+
+#: features/sui_backup.lua:110
+#, fuzzy
+msgid "Layout, modules, custom screens, presets"
+msgstr "Chưa có màn hình tùy chỉnh nào."
+
+#: screens/sui_settings_window.lua:324
+msgid "Layout, wallpaper, presets and behaviour"
+msgstr "Bố cục, hình nền, thiết lập sẵn và hành vi"
+
+#: modules/module_quote.lua:125 modules/module_quote.lua:1558
+#: modules/module_action_list.lua:66 modules/module_action_list.lua:464
+#: modules/module_reading_stats.lua:91 modules/module_reading_stats.lua:850
+#: modules/module_reading_goals.lua:119 modules/module_reading_goals.lua:1568
+#: modules/module_clock.lua:166 modules/module_clock.lua:1198
+#: modules/module_quick_actions.lua:658 screens/sui_menu.lua:704
+#: screens/sui_menu.lua:937 screens/sui_menu.lua:1475 screens/sui_menu.lua:1682
+msgid "Left"
+msgstr "Trái"
+
+#: modules/module_heatmap.lua:176 engines/sui_heatmap_widgets.lua:375
+msgid "Less"
+msgstr "Ít hơn"
+
+#: features/sui_quickactions.lua:661 features/sui_backup.lua:119
+#: infra/sui_config.lua:116 infra/sui_config.lua:376
+#: screens/sui_titlebar.lua:1089 screens/sui_menu.lua:4564
+#: screens/sui_settings_window.lua:337 screens/sui_settings_window.lua:1080
+msgid "Library"
+msgstr "Thư viện"
+
+#: screens/sui_menu.lua:1802 screens/sui_menu.lua:1805
+msgid "Library Buttons"
+msgstr "Nút thư viện"
+
+#: features/sui_presets.lua:187
+msgid "Library View"
+msgstr "Chế độ xem thư viện"
+
+#: modules/module_collections.lua:1415 modules/module_coverdeck.lua:1737
+#: engines/sui_book_grid.lua:1915 screens/sui_menu.lua:2999
+#: screens/sui_menu.lua:3011 screens/sui_menu.lua:3053
+#: screens/sui_menu.lua:3065 screens/sui_menu.lua:3107
+#: screens/sui_menu.lua:3119 screens/sui_menu.lua:3174
+#: screens/sui_menu.lua:3186 screens/sui_menu.lua:3241
+#: screens/sui_menu.lua:3253 screens/sui_menu.lua:3395
+#: screens/sui_menu.lua:3400
+msgid "Light"
+msgstr "Sáng"
+
+#: screens/sui_menu.lua:2386
+msgid "Lighten"
+msgstr "Làm sáng"
+
+#: screens/sui_menu.lua:2399
+msgid "Lighten Wallpaper"
+msgstr "Làm sáng tường nền"
+
+#: modules/module_reading_stats.lua:834
+msgid "List"
+msgstr "Danh sách"
+
+#: screens/sui_stats_windows.lua:2491
+msgid "Loading statistics…"
+msgstr "Đang tải thống kê…"
+
+#: screens/sui_menu.lua:2451
+msgid "Lock Scale"
+msgstr "Khóa tỷ lệ"
+
+#: infra/sui_config.lua:1278
+msgid "Long Press"
+msgstr "Nhấn giữ"
+
+#: screens/sui_onboarding.lua:161
+msgid "Long press to customize"
+msgstr "Nhấn giữ để tùy chỉnh"
+
+#: features/sui_backup.lua:521 features/sui_backup.lua:570
+#: features/sui_presets.lua:409 features/sui_presets.lua:421
+#: features/sui_presets.lua:589 features/sui_presets.lua:601
+msgid "LuaSettings module unavailable"
+msgstr "Mô-đun LuaSettings không khả dụng"
+
+#: screens/sui_onboarding.lua:127
+msgid "Make it yours"
+msgstr "Cá nhân hóa"
+
+#: screens/sui_menu.lua:2718
+#, fuzzy
+msgid ""
+"Makes the device's physical Home key open the SimpleUI Home Screen — while "
+"reading and while browsing files — instead of KOReader's native Home "
+"behaviour. The file browser title-bar home icon still goes to the home "
+"folder."
+msgstr ""
+"Làm cho nút Home vật lý của thiết bị luôn mở Màn hình chính của SimpleUI — "
+"cả khi đọc lẫn khi duyệt tệp — thay vì hành vi Home mặc định của KOReader."
+
+#: features/sui_presets.lua:897 features/sui_presets.lua:973
+#: features/sui_presets.lua:978 screens/sui_menu.lua:4049
+#: screens/sui_menu.lua:4123 screens/sui_menu.lua:4128
+msgid "Manage presets"
+msgstr "Quản lý thiết lập"
+
+#: modules/module_collections.lua:525
+msgid "Manual order"
+msgstr "Thứ tự thủ công"
+
+#: modules/module_reading_goals.lua:1499
+msgid "Manually Tracked Books"
+msgstr "Sách được theo dõi thủ công"
+
+#: modules/module_reading_goals.lua:1487
+msgid "Manually Tracked Books  (%s)"
+msgstr "Sách được theo dõi thủ công (%s)"
+
+#: engines/sui_heatmap_widgets.lua:87
+msgid "Mar"
+msgstr "th3"
+
+#: modules/module_clock.lua:62 screens/sui_stats_windows.lua:2815
+msgid "March"
+msgstr "Tháng Ba"
+
+#: screens/sui_quicksettings_bar.lua:367 screens/sui_quicksettings_bar.lua:473
+msgid "Max"
+msgstr "Tối đa"
+
+#: modules/module_clock.lua:63 engines/sui_heatmap_widgets.lua:87
+#: screens/sui_stats_windows.lua:2816
+msgid "May"
+msgstr "Tháng Năm"
+
+#: screens/sui_titlebar.lua:102 screens/sui_titlebar.lua:107
+msgid "Menu"
+msgstr "Menu"
+
+#: features/sui_style.lua:81
+msgid "Menu Button"
+msgstr "Nút menu"
+
+#: modules/module_clock.lua:386
+msgid "Midnight"
+msgstr "Nửa đêm"
+
+#: features/sui_presets.lua:149
+msgid "Mindful Reading"
+msgstr "Đọc có chánh niệm"
+
+#: screens/sui_menu.lua:372
+msgid "Minimum 1 tab required in navpager mode."
+msgstr "Cần ít nhất 1 tab trong chế độ navpager."
+
+#: screens/sui_menu.lua:373
+msgid "Minimum 2 tabs required. Select another tab first."
+msgstr "Cần ít nhất 2 tab. Vui lòng chọn thêm tab khác."
+
+#: modules/module_reading_goals.lua:778
+msgid "Minutes per day:"
+msgstr "Phút mỗi ngày:"
+
+#: screens/sui_menu.lua:456
+msgid "Mode"
+msgstr "Chế độ"
+
+#: screens/sui_menu.lua:2469
+msgid "Module Scale"
+msgstr "Tỷ lệ mô-đun"
+
+#: infra/sui_config.lua:1275 screens/sui_menu.lua:2198
+msgid "Module Settings"
+msgstr "Cài đặt mô-đun"
+
+#: screens/sui_menu.lua:3709
+msgid "Module unavailable"
+msgstr "Mô-đun không khả dụng"
+
+#: screens/sui_menu.lua:2462 screens/sui_menu.lua:2737
+msgid "Modules"
+msgstr "Mô-đun"
+
+#: screens/sui_menu.lua:2186
+msgid "Modules  (%d)"
+msgstr "Mô-đun (%d)"
+
+#: engines/sui_screen_engine.lua:2781
+msgid ""
+"Modules exceed the visible area.\n"
+"Move some to another page or adjust the scale."
+msgstr ""
+"Mô-đun vượt quá vùng hiển thị.\n"
+"Di chuyển một số sang trang khác hoặc điều chỉnh tỷ lệ."
+
+#: features/sui_presets.lua:169
+msgid "Momentum"
+msgstr "Động lực"
+
+#: engines/sui_heatmap_widgets.lua:95 screens/sui_stats_windows.lua:2805
+msgid "Mon"
+msgstr "Thứ Hai"
+
+#: modules/module_clock.lua:58
+msgid "Monday"
+msgstr "Thứ Hai"
+
+#: modules/module_reading_goals.lua:1312 modules/module_reading_goals.lua:1359
+#: modules/module_reading_goals.lua:1396 modules/module_reading_goals.lua:1427
+msgid "Monthly Goal"
+msgstr "Mục tiêu hàng tháng"
+
+#: modules/module_reading_goals.lua:765
+msgid "Monthly Reading Goal"
+msgstr "Mục tiêu đọc hàng tháng"
+
+#: engines/sui_heatmap_widgets.lua:382
+msgid "More"
+msgstr "Nhiều hơn"
+
+#: main.lua:1083
+msgid "More by %s (%d)"
+msgstr "Thêm bởi %s (%d)"
+
+#: engines/sui_window.lua:2853
+msgid "Move down"
+msgstr "Di chuyển xuống"
+
+#: engines/sui_window.lua:2847 screens/sui_settings_window.lua:704
+#: screens/sui_settings_window.lua:739
+msgid "Move to page"
+msgstr "Di chuyển đến trang"
+
+#: engines/sui_window.lua:2850
+msgid "Move up"
+msgstr "Di chuyển lên"
+
+#: modules/module_quote.lua:1407
+msgid "My Highlights"
+msgstr "Đoạn đánh dấu của tôi"
+
+#: features/sui_presets.lua:795 features/sui_presets.lua:800
+msgid "My Presets"
+msgstr "Thiết lập của tôi"
+
+#: features/sui_quickactions.lua:2518
+msgid "Name"
+msgstr "Tên"
+
+#: modules/module_collections.lua:526
+msgid "Name (A–Z)"
+msgstr "Tên (A-Z)"
+
+#: modules/module_collections.lua:527
+msgid "Name (Z–A)"
+msgstr "Tên (Z-A)"
+
+#: screens/sui_menu.lua:3135 screens/sui_menu.lua:3144
+#: screens/sui_menu.lua:3156 features/library/sui_foldercovers.lua:314
+msgid "Native"
+msgstr "Gốc"
+
+#: screens/sui_menu.lua:2773 screens/sui_bottombar.lua:821
+msgid "Navigation Bar"
+msgstr "Thanh điều hướng"
+
+#: screens/sui_menu.lua:1310
+msgid "Navigation Bar Size"
+msgstr "Kích thước thanh điều hướng"
+
+#: screens/sui_menu.lua:1118
+msgid ""
+"Navigation Bar will be %s after restart.\n"
+"\n"
+"Restart now?"
+msgstr ""
+"Thanh điều hướng sẽ là %s sau khi khởi động lại.\n"
+"\n"
+"Khởi động lại ngay?"
+
+#: features/sui_backup.lua:115
+msgid "Navigation, status, title and quick settings bars"
+msgstr ""
+
+#: features/sui_style.lua:1295 screens/sui_menu.lua:469
+msgid "Navpager"
+msgstr "Navpager"
+
+#: screens/sui_menu.lua:476
+msgid ""
+"Navpager enabled.\n"
+"\n"
+"Restart now?"
+msgstr ""
+"Navpager đã bật.\n"
+"\n"
+"Khởi động lại ngay?"
+
+#: features/sui_style.lua:161
+msgid "Navpager: Next"
+msgstr "Navpager: Tiếp theo"
+
+#: features/sui_style.lua:155
+msgid "Navpager: Previous"
+msgstr "Navpager: Trước đó"
+
+#: features/sui_quickactions.lua:2132
+msgid "Nerd Font Icon"
+msgstr "Biểu tượng Nerd Font"
+
+#: features/sui_quickactions.lua:2197
+msgid "Nerd Font symbol…"
+msgstr "Biểu tượng Nerd Font…"
+
+#: features/sui_quickactions.lua:275
+msgid "Network manager unavailable."
+msgstr "Trình quản lý mạng không khả dụng."
+
+#: screens/sui_menu.lua:2586
+msgid "Never"
+msgstr "Không bao giờ"
+
+#: modules/module_new_books.lua:137 engines/sui_book_grid.lua:535
+#: features/library/sui_foldercovers.lua:1263
+#: features/library/sui_foldercovers.lua:1911
+#: features/library/sui_cover_widgets.lua:467
+msgid "New"
+msgstr "Mới"
+
+#: engines/sui_book_grid.lua:2070
+msgid "New Badge Color"
+msgstr "Màu huy hiệu sách mới"
+
+#: screens/sui_menu.lua:3198
+msgid "New Book"
+msgstr "Sách mới"
+
+#: engines/sui_book_grid.lua:2062 engines/sui_book_grid.lua:2075
+msgid "New Book Badge"
+msgstr "Huy hiệu sách mới"
+
+#: modules/module_new_books.lua:82 modules/module_new_books.lua:83
+msgid "New Books"
+msgstr "Sách mới"
+
+#: features/sui_quickactions.lua:2391
+msgid "New Quick Action"
+msgstr "Thao tác nhanh mới"
+
+#: features/library/sui_group_actions.lua:97
+msgid "New collection name"
+msgstr "Tên bộ sưu tập mới"
+
+#: screens/sui_bottombar.lua:501
+msgid "Next"
+msgstr "Tiếp theo"
+
+#: features/sui_quickactions.lua:923 infra/sui_config.lua:128
+msgid "Night Mode"
+msgstr "Chế độ đêm"
+
+#: modules/module_clock.lua:317
+msgid "Nine"
+msgstr "Chín"
+
+#: modules/module_clock.lua:321
+msgid "Nineteen"
+msgstr "Mười chín"
+
+#: screens/sui_stats_windows.lua:1217
+msgid "No"
+msgstr "Không"
+
+#: modules/module_quote.lua:1464 modules/module_quote.lua:1513
+msgid "No .lua files found in sui_quotes/"
+msgstr "Không tìm thấy tệp .lua nào trong sui_quotes/"
+
+#: screens/sui_menu.lua:3828
+msgid ""
+"No .zip files found.\n"
+"Place .zip files in:\n"
+"%1"
+msgstr ""
+"Không tìm thấy tệp .zip nào.\n"
+"Đặt tệp .zip vào:\n"
+"%1"
+
+#: screens/sui_quicksettings_bar.lua:1138
+#: screens/sui_quicksettings_bar.lua:1158
+msgid "No actions active yet."
+msgstr "Chưa có thao tác nào hoạt động."
+
+#: modules/module_action_list.lua:95 modules/module_action_list.lua:114
+#: modules/module_quick_actions.lua:150 features/sui_quickactions.lua:1667
+#: screens/sui_settings_window.lua:657
+msgid "No actions configured"
+msgstr "Chưa cấu hình thao tác nào"
+
+#: modules/module_action_list.lua:94 modules/module_action_list.lua:113
+#: modules/module_quick_actions.lua:149
+msgid "No actions configured  —  long press to configure"
+msgstr "Chưa cấu hình thao tác nào — nhấn giữ để cấu hình"
+
+#: screens/sui_quicksettings_bar.lua:279
+msgid ""
+"No actions configured.\n"
+"Go to Bars → Quick Settings Bar."
+msgstr ""
+"Chưa cấu hình thao tác nào.\n"
+"Đi tới Thanh → Thanh cài đặt nhanh."
+
+#: features/sui_backup.lua:1170
+#, fuzzy
+msgid "No backup loaded yet."
+msgstr "Chưa mở cuốn sách nào"
+
+#: features/sui_quickactions.lua:782
+msgid "No book in history."
+msgstr "Không có sách nào trong lịch sử."
+
+#: screens/sui_stats_windows.lua:785
+msgid "No books finished in %s"
+msgstr "Không có sách nào hoàn thành trong %s"
+
+#: features/library/sui_foldercovers.lua:651
+msgid "No books found in this folder."
+msgstr "Không tìm thấy sách nào trong thư mục này."
+
+#: features/library/sui_series_grouping.lua:91
+#: features/library/sui_series_grouping.lua:104
+msgid "No books found in this series."
+msgstr "Không tìm thấy sách nào trong bộ sách này."
+
+#: features/library/sui_library_browse.lua:370
+#: features/library/sui_library_browse.lua:392
+#: features/library/sui_group_actions.lua:36
+#: features/library/sui_group_actions.lua:90
+msgid "No books found."
+msgstr "Không tìm thấy sách nào."
+
+#: modules/module_tbr.lua:402 modules/module_tbr.lua:427
+#: modules/module_tbr.lua:502
+msgid "No books in To Be Read list."
+msgstr "Không có sách nào trong danh sách cần đọc."
+
+#: modules/module_feat_coll.lua:257 modules/module_feat_coll.lua:281
+#: modules/module_feat_coll.lua:350
+msgid "No books in this collection."
+msgstr "Không có sách nào trong bộ sưu tập này."
+
+#: engines/sui_screen_engine.lua:441
+msgid "No books opened yet"
+msgstr "Chưa mở cuốn sách nào"
+
+#: modules/module_coverdeck.lua:693 modules/module_currently.lua:455
+msgid "No books to show yet — open a book to see it here."
+msgstr ""
+
+#: modules/module_feat_coll.lua:407 screens/sui_settings_window.lua:669
+msgid "No collection selected"
+msgstr "Chưa chọn bộ sưu tập nào"
+
+#: modules/module_feat_coll.lua:406
+msgid "No collection selected  —  long press to configure"
+msgstr "Chưa chọn bộ sưu tập nào — nhấn giữ để cấu hình"
+
+#: modules/module_coverdeck.lua:1404
+msgid "No collections found"
+msgstr "Không tìm thấy bộ sưu tập nào"
+
+#: modules/module_collections.lua:1271 modules/module_collections.lua:1439
+#: modules/module_feat_coll.lua:134
+msgid "No collections found."
+msgstr "Không tìm thấy bộ sưu tập nào."
+
+#: modules/module_collections.lua:1524
+msgid "No collections selected"
+msgstr "Chưa chọn bộ sưu tập nào"
+
+#: modules/module_collections.lua:1523
+msgid "No collections selected  —  long press to configure"
+msgstr "Chưa chọn bộ sưu tập nào — nhấn giữ để cấu hình"
+
+#: modules/module_quote.lua:928
+msgid ""
+"No custom quotes found. Add a .lua file to the plugin's sui_quotes/ folder "
+"and select it in Settings."
+msgstr ""
+"Không tìm thấy trích dẫn tùy chỉnh. Thêm tệp .lua vào thư mục sui_quotes/ "
+"của plugin và chọn trong Cài đặt."
+
+#: screens/sui_settings_window.lua:441
+msgid "No custom screens yet."
+msgstr "Chưa có màn hình tùy chỉnh nào."
+
+#: infra/sui_updater.lua:498
+msgid ""
+"No download file found.\n"
+"\n"
+"Open the releases page?"
+msgstr ""
+"Không tìm thấy tệp tải xuống.\n"
+"\n"
+"Mở trang phát hành?"
+
+#: features/sui_presets.lua:401 features/sui_presets.lua:581
+msgid "No export directory"
+msgstr "Không có thư mục xuất"
+
+#: screens/sui_stats_windows.lua:159
+msgid "No filepath."
+msgstr "Không có đường dẫn."
+
+#: features/sui_quickactions.lua:3196
+msgid ""
+"No folder, collection or plugin configured.\n"
+"Go to Simple UI → Settings → Quick Actions to set one."
+msgstr ""
+"Chưa cấu hình thư mục, bộ sưu tập hoặc plugin nào.\n"
+"Đi tới Simple UI → Cài đặt → Thao tác nhanh để thiết lập."
+
+#: features/sui_style.lua:1804
+msgid "No fonts found."
+msgstr "Không tìm thấy phông chữ nào."
+
+#: modules/module_quote.lua:1000
+msgid "No highlights found. Open a book and highlight some passages."
+msgstr "Không tìm thấy đoạn đánh dấu. Mở sách và đánh dấu một số đoạn."
+
+#: features/library/sui_library_search.lua:187
+#, fuzzy
+msgid "No home folder set."
+msgstr "Thư mục chính"
+
+#: features/sui_quickactions.lua:2232
+msgid "No icons found in:"
+msgstr "Không tìm thấy biểu tượng nào trong:"
+
+#: engines/sui_window.lua:2521 engines/sui_window.lua:3170
+msgid "No items available."
+msgstr "Không có mục nào khả dụng."
+
+#: modules/module_collections.lua:1219 modules/module_action_list.lua:352
+#: modules/module_action_list.lua:377 modules/module_reading_stats.lua:718
+#: modules/module_reading_stats.lua:739 modules/module_reading_goals.lua:1362
+#: modules/module_reading_goals.lua:1369 modules/module_clock.lua:1080
+#: modules/module_coverdeck.lua:1650 modules/module_coverdeck.lua:1658
+#: modules/module_currently.lua:1640 modules/module_currently.lua:1724
+#: modules/module_currently.lua:1856 modules/module_currently.lua:1899
+#: modules/module_quick_actions.lua:404 modules/module_quick_actions.lua:429
+#: engines/sui_window.lua:3080 screens/sui_menu.lua:875
+#: screens/sui_menu.lua:953 screens/sui_menu.lua:1145 screens/sui_menu.lua:1196
+#: screens/sui_menu.lua:1591 screens/sui_menu.lua:1698
+#: screens/sui_menu.lua:1999 screens/sui_menu.lua:2024
+msgid "No items selected."
+msgstr "Chưa chọn mục nào."
+
+#: modules/module_clock.lua:1117
+#, fuzzy
+msgid "No items."
+msgstr "Chưa chọn mục nào."
+
+#: screens/sui_settings_window.lua:575 screens/sui_settings_window.lua:750
+msgid "No modules"
+msgstr "Không có mô-đun"
+
+#: screens/sui_settings_window.lua:736
+msgid "No other pages available."
+msgstr "Không có trang nào khác."
+
+#: screens/sui_menu.lua:3849
+msgid "No packs found."
+msgstr "Không tìm thấy gói nào."
+
+#: features/sui_quickactions.lua:2613
+msgid "No plugins found."
+msgstr "Không tìm thấy plugin nào."
+
+#: features/sui_presets.lua:1079 screens/sui_menu.lua:4229
+msgid ""
+"No preset files found.\n"
+"Place .lua files in:\n"
+"%1"
+msgstr ""
+"Không tìm thấy tệp thiết lập nào.\n"
+"Đặt tệp .lua vào:\n"
+"%1"
+
+#: features/sui_presets.lua:1056 screens/sui_menu.lua:4205
+msgid "No presets found."
+msgstr "Không tìm thấy thiết lập nào."
+
+#: modules/module_quote.lua:962
+msgid "No quotes found."
+msgstr "Không tìm thấy trích dẫn nào."
+
+#: features/sui_quickactions.lua:3509
+msgid "No recent books."
+msgstr "Không có sách gần đây."
+
+#: features/library/sui_library_search.lua:198
+#, fuzzy
+msgid "No results for: %1"
+msgstr "Không tìm thấy thiết lập nào."
+
+#: screens/sui_stats_windows.lua:168 screens/sui_stats_windows.lua:202
+#: screens/sui_stats_windows.lua:3565
+msgid "No statistics found for this book."
+msgstr "Không tìm thấy thống kê nào cho cuốn sách này."
+
+#: modules/module_coverdeck.lua:1525
+msgid "No statistics selected."
+msgstr "Chưa chọn thống kê nào."
+
+#: modules/module_reading_stats.lua:465
+msgid "No stats selected"
+msgstr "Chưa chọn thống kê nào"
+
+#: modules/module_reading_stats.lua:464
+msgid "No stats selected  —  long press to configure"
+msgstr "Chưa chọn thống kê nào — nhấn giữ để cấu hình"
+
+#: features/sui_quickactions.lua:2639
+msgid "No system actions found."
+msgstr "Không tìm thấy thao tác hệ thống nào."
+
+#: screens/sui_menu.lua:2287
+msgid "No wallpapers found."
+msgstr "Không tìm thấy tường nền nào."
+
+#: engines/sui_book_grid.lua:1938 engines/sui_book_grid.lua:2056
+#: features/sui_quickactions.lua:2511 screens/sui_menu.lua:3136
+#: screens/sui_menu.lua:3145 screens/sui_menu.lua:3163
+#: screens/sui_menu.lua:3203 screens/sui_menu.lua:3212
+#: screens/sui_menu.lua:3230 features/library/sui_foldercovers.lua:319
+msgid "None"
+msgstr "Không"
+
+#: modules/module_clock.lua:389
+msgid "Noon"
+msgstr "Buổi trưa"
+
+#: features/sui_backup.lua:575 features/sui_backup.lua:579
+#: features/sui_backup.lua:589 features/sui_backup.lua:774
+#: features/sui_backup.lua:931
+msgid "Not a valid backup file."
+msgstr ""
+
+#: modules/module_reading_goals.lua:1410 modules/module_reading_goals.lua:1425
+#: modules/module_reading_goals.lua:1440
+msgid "Not set"
+msgstr "Chưa đặt"
+
+#: screens/sui_stats_windows.lua:1211 screens/sui_stats_windows.lua:3885
+msgid "Notes"
+msgstr "Ghi chú"
+
+#: features/sui_backup.lua:986
+msgid "Nothing selected to import."
+msgstr ""
+
+#: engines/sui_heatmap_widgets.lua:88
+msgid "Nov"
+msgstr "th11"
+
+#: modules/module_clock.lua:64 screens/sui_stats_windows.lua:2817
+msgid "November"
+msgstr "Tháng Mười Một"
+
+#: engines/sui_book_grid.lua:1805 engines/sui_book_grid.lua:1806
+msgid "Number of Books"
+msgstr "Số lượng sách"
+
+#: screens/sui_menu.lua:2949
+msgid "Number of Books in Folder"
+msgstr "Số lượng sách trong thư mục"
+
+#: screens/sui_menu.lua:3023
+msgid "Number of Pages"
+msgstr "Số trang"
+
+#: modules/module_clock.lua:407
+msgid "O'Clock"
+msgstr "Giờ"
+
+#: features/sui_quickactions.lua:2145
+msgid "OK"
+msgstr "Đồng ý"
+
+#: engines/sui_heatmap_widgets.lua:88
+msgid "Oct"
+msgstr "th10"
+
+#: modules/module_clock.lua:64 screens/sui_stats_windows.lua:2817
+msgid "October"
+msgstr "Tháng Mười"
+
+#: modules/module_coverdeck.lua:1747 engines/sui_book_grid.lua:2023
+#: engines/sui_book_grid.lua:2049 screens/sui_menu.lua:1439
+#: screens/sui_menu.lua:1649 screens/sui_menu.lua:3269
+#: screens/sui_menu.lua:3434 screens/sui_menu.lua:4526
+msgid "Off"
+msgstr "Tắt"
+
+#: modules/module_clock.lua:352
+msgid "Oh"
+msgstr "À"
+
+#: modules/module_coverdeck.lua:1747 engines/sui_book_grid.lua:2023
+#: engines/sui_book_grid.lua:2049 screens/sui_menu.lua:1439
+#: screens/sui_menu.lua:1649 screens/sui_menu.lua:4526
+msgid "On"
+msgstr "Bật"
+
+#: modules/module_coverdeck.lua:1721
+msgid "On side covers too"
+msgstr ""
+
+#: modules/module_clock.lua:315
+msgid "One"
+msgstr "Một"
+
+#: modules/module_quote.lua:1299 engines/sui_screen_engine.lua:791
+#: features/sui_quickactions.lua:3464 screens/sui_stats_windows.lua:771
+#: features/library/sui_library_search.lua:69
+#: features/library/sui_library_search.lua:142
+msgid "Open"
+msgstr "Mở"
+
+#: modules/module_collections.lua:1105
+msgid "Open Module Settings"
+msgstr "Cài đặt mô-đun"
+
+#: engines/sui_screen_engine.lua:450
+msgid "Open a book to get started"
+msgstr "Mở một cuốn sách để bắt đầu"
+
+#: infra/sui_updater.lua:499
+msgid "Open in browser"
+msgstr "Mở trong trình duyệt"
+
+#: features/library/sui_book_hold_dialog.lua:517
+msgid "Open module settings"
+msgstr "Cài đặt mô-đun"
+
+#: modules/module_quote.lua:1298 engines/sui_screen_engine.lua:790
+#: features/sui_quickactions.lua:3463 screens/sui_stats_windows.lua:769
+#: features/library/sui_library_search.lua:68
+msgid "Open this file?"
+msgstr "Mở tệp này?"
+
+#: features/library/sui_book_hold_dialog.lua:387
+msgid "Open with…"
+msgstr "Mở bằng…"
+
+#: screens/sui_menu.lua:2668
+msgid "Overflow Warning"
+msgstr "Cảnh báo tràn"
+
+#: screens/sui_menu.lua:2913
+msgid "Overlays"
+msgstr "Lớp phủ"
+
+#: features/sui_presets.lua:878 features/sui_presets.lua:908
+#: features/sui_presets.lua:1040 screens/sui_menu.lua:4031
+#: screens/sui_menu.lua:4060 screens/sui_menu.lua:4189
+msgid "Overwrite"
+msgstr "Ghi đè"
+
+#: features/sui_presets.lua:907 features/sui_presets.lua:1039
+msgid "Overwrite preset \"%s\" with the current homescreen settings?"
+msgstr "Ghi đè thiết lập \"%s\" bằng cài đặt màn hình chính hiện tại?"
+
+#: screens/sui_menu.lua:4059 screens/sui_menu.lua:4188
+msgid "Overwrite preset \"%s\" with the current icon settings?"
+msgstr "Ghi đè thiết lập \"%s\" bằng cài đặt biểu tượng hiện tại?"
+
+#: screens/sui_menu.lua:3864
+msgid ""
+"Pack \"%s\" applied.\n"
+"%d icons replaced."
+msgstr ""
+"Gói \"%s\" đã áp dụng.\n"
+"%d biểu tượng đã thay thế."
+
+#: screens/sui_menu.lua:3782
+msgid ""
+"Pack \"%s\" installed.\n"
+"You can now apply it from the list."
+msgstr ""
+"Gói \"%s\" đã cài đặt.\n"
+"Bạn có thể áp dụng nó từ danh sách."
+
+#: features/sui_style.lua:2045
+msgid "Pack folder not accessible: "
+msgstr "Không thể truy cập thư mục gói: "
+
+#: engines/sui_screen_engine.lua:2036 engines/sui_window.lua:1416
+#: infra/sui_patches.lua:2273 infra/sui_patches.lua:2862
+msgid "Page %1 of %2"
+msgstr "Trang %1 trên %2"
+
+#: screens/sui_settings_window.lua:549 screens/sui_settings_window.lua:713
+#: screens/sui_settings_window.lua:1099
+msgid "Page %d"
+msgstr "Trang %d"
+
+#: screens/sui_settings_window.lua:548 screens/sui_settings_window.lua:712
+#: screens/sui_settings_window.lua:1098
+msgid "Page 1 (Home)"
+msgstr "Trang 1 (Trang chủ)"
+
+#: screens/sui_stats_windows.lua:947 screens/sui_stats_windows.lua:3650
+msgid "Pages"
+msgstr "Trang"
+
+#: engines/sui_book_grid.lua:2005 engines/sui_book_grid.lua:2021
+msgid "Pages Badge"
+msgstr "Huy hiệu trang"
+
+#: engines/sui_book_grid.lua:2016
+msgid "Pages Badge Color"
+msgstr "Màu huy hiệu trang"
+
+#: screens/sui_stats_windows.lua:2412
+msgid "Pages per day"
+msgstr "Trang mỗi ngày"
+
+#: screens/sui_stats_windows.lua:2429 screens/sui_stats_windows.lua:2445
+msgid "Pages read"
+msgstr "Trang đã đọc"
+
+#: features/sui_style.lua:1294 screens/sui_menu.lua:2775
+msgid "Pagination Bar"
+msgstr "Thanh phân trang"
+
+#: screens/sui_menu.lua:486
+msgid ""
+"Pagination bar hidden.\n"
+"\n"
+"Restart now?"
+msgstr ""
+"Thanh phân trang đã ẩn.\n"
+"\n"
+"Khởi động lại ngay?"
+
+#: screens/sui_menu.lua:465
+msgid ""
+"Pagination bar set to Default.\n"
+"\n"
+"Restart now?"
+msgstr ""
+"Thanh phân trang đã đặt về Mặc định.\n"
+"\n"
+"Khởi động lại ngay?"
+
+#: screens/sui_menu.lua:572 screens/sui_menu.lua:584 screens/sui_menu.lua:596
+msgid ""
+"Pagination bar size will change after restart.\n"
+"\n"
+"Restart now?"
+msgstr ""
+"Kích thước thanh phân trang sẽ thay đổi sau khi khởi động lại.\n"
+"\n"
+"Khởi động lại ngay?"
+
+#: features/sui_style.lua:142
+msgid "Pagination: First Page"
+msgstr "Phân trang: Trang đầu"
+
+#: features/sui_style.lua:148
+msgid "Pagination: Last Page"
+msgstr "Phân trang: Trang cuối"
+
+#: features/sui_style.lua:136
+msgid "Pagination: Next Page"
+msgstr "Phân trang: Trang tiếp"
+
+#: features/sui_style.lua:130
+msgid "Pagination: Previous Page"
+msgstr "Phân trang: Trang trước"
+
+#: features/sui_quickactions.lua:2567
+msgid "Path chooser not available."
+msgstr "Trình chọn đường dẫn không khả dụng."
+
+#: features/sui_style.lua:2034
+msgid "Path does not exist: "
+msgstr "Đường dẫn không tồn tại: "
+
+#: modules/module_coverdeck.lua:143 modules/module_currently.lua:284
+#: modules/module_currently.lua:1599
+msgid "Percentage read"
+msgstr "Phần trăm đã đọc"
+
+#: modules/module_reading_goals.lua:754
+msgid "Physical Books — %s"
+msgstr "Sách giấy — %s"
+
+#: modules/module_reading_goals.lua:755
+msgid "Physical books read this year:"
+msgstr "Sách giấy đọc trong năm nay:"
+
+#: modules/module_quote.lua:1489 modules/module_quote.lua:1538
+msgid "Place .lua files in the plugin's sui_quotes/ folder"
+msgstr "Đặt tệp .lua vào thư mục sui_quotes/ của plugin"
+
+#: screens/sui_menu.lua:3850
+msgid "Place a folder or .zip in:"
+msgstr "Đặt thư mục hoặc .zip vào:"
+
+#: screens/sui_menu.lua:2289
+msgid "Place images in:"
+msgstr "Đặt hình ảnh vào:"
+
+#: screens/sui_onboarding.lua:174
+msgid ""
+"Place your files in koreader/settings/simpleui/sui_wallpapers or sui_icons."
+msgstr ""
+"Đặt tệp của bạn vào koreader/settings/simpleui/sui_wallpapers hoặc sui_icons."
+
+#: screens/sui_menu.lua:3532
+msgid "Placeholder Cover for Bookless Folders"
+msgstr "Bìa giữ chỗ cho thư mục không có sách"
+
+#: screens/sui_stats_windows.lua:667
+msgid "Please enter a date in YYYY-MM-DD format."
+msgstr "Vui lòng nhập ngày theo định dạng YYYY-MM-DD."
+
+#: features/sui_presets.lua:860 screens/sui_menu.lua:4015
+msgid "Please enter a name for the preset."
+msgstr "Vui lòng nhập tên cho thiết lập."
+
+#: features/sui_quickactions.lua:2538
+msgid "Please select an action."
+msgstr "Vui lòng chọn thao tác."
+
+#: features/sui_quickactions.lua:2632 features/sui_quickactions.lua:2751
+msgid "Plugin"
+msgstr "Plugin"
+
+#: features/sui_quickactions.lua:3142
+msgid "Plugin error: %s"
+msgstr "Lỗi plugin: %s"
+
+#: features/sui_quickactions.lua:3144
+msgid "Plugin not available: %s"
+msgstr "Plugin không khả dụng: %s"
+
+#: screens/sui_menu.lua:2956 screens/sui_menu.lua:3360
+msgid "Position"
+msgstr "Vị trí"
+
+#: features/sui_quickactions.lua:956 infra/sui_config.lua:130
+msgid "Power"
+msgstr "Nguồn"
+
+#: screens/sui_menu.lua:2642
+msgid "Preserve Cover Proportions"
+msgstr "Giữ nguyên tỷ lệ bìa"
+
+#: screens/sui_menu.lua:2693
+msgid "Preserve Deleted Books in Statistics"
+msgstr "Giữ sách đã xóa trong thống kê"
+
+#: features/sui_presets.lua:1092 screens/sui_menu.lua:4240
+msgid "Preset \"%s\" imported."
+msgstr "Thiết lập \"%s\" đã nhập."
+
+#: features/sui_presets.lua:743 features/sui_presets.lua:821
+#: screens/sui_menu.lua:3978
+msgid "Preset \"%s\" not found."
+msgstr "Không tìm thấy thiết lập \"%s\"."
+
+#: features/sui_presets.lua:871 screens/sui_menu.lua:4022
+msgid "Preset \"%s\" saved."
+msgstr "Thiết lập \"%s\" đã lưu."
+
+#: features/sui_presets.lua:914 features/sui_presets.lua:1046
+#: screens/sui_menu.lua:4066 screens/sui_menu.lua:4195
+msgid "Preset \"%s\" updated."
+msgstr "Thiết lập \"%s\" đã cập nhật."
+
+#: features/sui_presets.lua:1119 screens/sui_menu.lua:4270
+msgid ""
+"Preset exported to:\n"
+"%s"
+msgstr ""
+"Thiết lập đã xuất tới:\n"
+"%s"
+
+#: features/sui_presets.lua:846 screens/sui_menu.lua:4001
+msgid "Preset name"
+msgstr "Tên thiết lập"
+
+#: features/sui_presets.lua:403 features/sui_presets.lua:583
+msgid "Preset not found"
+msgstr "Không tìm thấy thiết lập"
+
+#: screens/sui_menu.lua:2747 screens/sui_settings_window.lua:408
+msgid "Presets"
+msgstr "Thiết lập"
+
+#: screens/sui_settings_window.lua:909
+msgid "Presets module unavailable."
+msgstr "Mô-đun thiết lập không khả dụng."
+
+#: screens/sui_onboarding.lua:162
+msgid ""
+"Press and hold any element on the screen (like modules or bars) to quickly "
+"customize its settings."
+msgstr ""
+"Nhấn và giữ bất kỳ yếu tố nào trên màn hình (như mô-đun hoặc thanh) để nhanh "
+"chóng tùy chỉnh cài đặt."
+
+#: screens/sui_bottombar.lua:501
+msgid "Prev"
+msgstr "Trước"
+
+#: screens/sui_menu.lua:3131
+msgid "Progress"
+msgstr "Tiến trình"
+
+#: modules/module_coverdeck.lua:1712 modules/module_coverdeck.lua:1745
+msgid "Progress Badge"
+msgstr "Huy hiệu tiến trình"
+
+#: modules/module_coverdeck.lua:1732 engines/sui_book_grid.lua:1964
+msgid "Progress Badge Color"
+msgstr "Màu huy hiệu tiến trình"
+
+#: screens/sui_menu.lua:4353
+msgid "Progress Bar Type"
+msgstr "Loại thanh tiến trình"
+
+#: engines/sui_book_grid.lua:1969
+msgid "Progress Indicator"
+msgstr "Chỉ báo tiến trình"
+
+#: engines/sui_book_grid.lua:1956
+msgid "Progress Style"
+msgstr "Kiểu thanh tiến trình"
+
+#: engines/sui_book_grid.lua:2089
+msgid "Progress and Badges"
+msgstr "Tiến trình và huy hiệu"
+
+#: modules/module_currently.lua:1951
+msgid "Progress and Stats"
+msgstr "Tiến trình và thống kê"
+
+#: modules/module_coverdeck.lua:157 modules/module_currently.lua:283
+msgid "Progress bar"
+msgstr "Thanh tiến trình"
+
+#: modules/module_currently.lua:1954
+msgid "Progress bar style"
+msgstr "Kiểu thanh tiến trình"
+
+#: modules/module_action_list.lua:344 modules/module_action_list.lua:349
+#: modules/module_action_list.lua:375 modules/module_quick_actions.lua:396
+#: modules/module_quick_actions.lua:401 modules/module_quick_actions.lua:427
+#: modules/module_quick_actions.lua:538 features/sui_quickactions.lua:1572
+#: features/sui_quickactions.lua:3407 features/sui_backup.lua:124
+#: screens/sui_menu.lua:2175 screens/sui_menu.lua:4581
+#: screens/sui_quicksettings_bar.lua:1130
+#: screens/sui_quicksettings_bar.lua:1135
+#: screens/sui_quicksettings_bar.lua:1156 screens/sui_settings_window.lua:351
+msgid "Quick Actions"
+msgstr "Thao tác nhanh"
+
+#: screens/sui_menu.lua:4585
+msgid "Quick Actions  (%d/%d — %d left)"
+msgstr "Thao tác nhanh (%d/%d — còn lại %d)"
+
+#: screens/sui_menu.lua:4583
+msgid "Quick Actions  (%d/%d — at limit)"
+msgstr "Thao tác nhanh (%d/%d — đã đạt giới hạn)"
+
+#: features/sui_quickactions.lua:1554 features/sui_quickactions.lua:1956
+#: screens/sui_menu.lua:3688
+msgid "Quick Actions Icons"
+msgstr "Biểu tượng thao tác nhanh"
+
+#: modules/module_quick_actions.lua:252 modules/module_quick_actions.lua:308
+#: modules/module_quick_actions.lua:692 screens/sui_menu.lua:1925
+msgid "Quick Actions Row"
+msgstr "Hàng thao tác nhanh"
+
+#: screens/sui_menu.lua:2777 screens/sui_quicksettings_bar.lua:979
+msgid "Quick Settings Bar"
+msgstr "Thanh cài đặt nhanh"
+
+#: screens/sui_onboarding.lua:236 screens/sui_onboarding.lua:237
+msgid "Quick Tips"
+msgstr "Mẹo nhanh"
+
+#: features/sui_quickactions.lua:606
+msgid "Quit"
+msgstr "Thoát"
+
+#: features/sui_quickactions.lua:609
+msgid "Quitting…"
+msgstr ""
+
+#: modules/module_quote.lua:1117 features/sui_presets.lua:150
+#: features/sui_presets.lua:215
+msgid "Quote of the Day"
+msgstr "Trích dẫn trong ngày"
+
+#: features/sui_backup.lua:141
+#, fuzzy
+msgid "Quote pool files from sui_quotes/"
+msgstr "Không tìm thấy tệp .lua nào trong sui_quotes/"
+
+#: modules/module_quote.lua:1429
+msgid "Quotes + My Highlights"
+msgstr "Trích dẫn + Đoạn đánh dấu của tôi"
+
+#: infra/sui_config.lua:172
+msgid "RAM Usage"
+msgstr "Mức sử dụng RAM"
+
+#: modules/module_library.lua:218 features/sui_quickactions.lua:788
+#: infra/sui_config.lua:122
+msgid "Random"
+msgstr "Ngẫu nhiên"
+
+#: modules/module_reading_goals.lua:872 modules/module_reading_goals.lua:873
+#: modules/module_reading_goals.lua:899 modules/module_reading_goals.lua:1585
+#: features/sui_presets.lua:170 features/sui_presets.lua:216
+msgid "Reading Goals"
+msgstr "Mục tiêu đọc"
+
+#: modules/module_heatmap.lua:206 modules/module_heatmap.lua:207
+#: modules/module_heatmap.lua:226 modules/module_heatmap.lua:354
+#: screens/sui_heatmap_popup.lua:193
+msgid "Reading Heatmap"
+msgstr "Bản đồ nhiệt đọc sách"
+
+#: screens/sui_stats_windows.lua:2741
+msgid "Reading Insights"
+msgstr "Hiểu biết về đọc"
+
+#: modules/module_reading_stats.lua:360 features/sui_presets.lua:170
+#: features/sui_presets.lua:216
+msgid "Reading Stats"
+msgstr "Thống kê đọc"
+
+#: features/sui_backup.lua:130
+msgid "Reading goals, streak mode and freeze bank"
+msgstr ""
+
+#: modules/module_reading_stats.lua:904 modules/module_reading_stats.lua:918
+msgid "Real streak only"
+msgstr "Chỉ chuỗi ngày thật"
+
+#: features/sui_quickactions.lua:592
+msgid "Reboot"
+msgstr "Khởi động lại"
+
+#: features/sui_quickactions.lua:761 features/sui_quickactions.lua:3570
+#: infra/sui_config.lua:120
+msgid "Recent"
+msgstr "Gần đây"
+
+#: modules/module_recent.lua:15 modules/module_recent.lua:16
+#: modules/module_coverdeck.lua:1430 features/sui_presets.lua:138
+#: features/sui_presets.lua:188
+msgid "Recent Books"
+msgstr "Sách gần đây"
+
+#: modules/module_tbr.lua:589
+msgid "Remove from To Be Read"
+msgstr "Xóa khỏi danh sách cần đọc"
+
+#: modules/module_tbr.lua:526
+msgid "Remove from list when finished"
+msgstr "Xóa khỏi danh sách khi đọc xong"
+
+#: engines/sui_window.lua:1938 engines/sui_window.lua:2859
+#: features/sui_presets.lua:920 features/sui_presets.lua:927
+#: features/sui_presets.lua:1013 screens/sui_menu.lua:4072
+#: screens/sui_menu.lua:4079 screens/sui_menu.lua:4164
+msgid "Rename"
+msgstr "Đổi tên"
+
+#: features/sui_presets.lua:923 features/sui_presets.lua:1009
+#: screens/sui_menu.lua:4075 screens/sui_menu.lua:4160
+msgid "Rename \"%s\""
+msgstr "Đổi tên \"%s\""
+
+#: screens/sui_settings_window.lua:478
+msgid "Rename screen"
+msgstr "Đổi tên màn hình"
+
+#: screens/sui_menu.lua:2619
+msgid ""
+"Replaces the \"Closing book…\" notice above with the cover for that close, "
+"when a cover is available."
+msgstr ""
+"Thay thế thông báo \"Đang đóng sách…\" ở trên bằng bìa sách khi đóng, nếu có "
+"bìa khả dụng."
+
+#: screens/sui_menu.lua:472
+msgid ""
+"Replaces the pagination bar with Prev/Next arrows at the edges of the "
+"navigation bar.\n"
+"The arrows dim when there is no previous or next page.\n"
+"With navpager active, as few as 1 tab and at most 4 tabs can be configured."
+msgstr ""
+"Thay thế thanh phân trang bằng các mũi tên Trước/Tiếp theo ở các cạnh thanh "
+"điều hướng.\n"
+"Các mũi tên mờ đi khi không có trang trước hoặc tiếp theo.\n"
+"Khi navpager hoạt động, có thể cấu hình từ 1 đến 4 tab."
+
+#: features/sui_quickactions.lua:1964 features/sui_style.lua:1310
+#: screens/sui_menu.lua:2530 screens/sui_stats_windows.lua:653
+msgid "Reset"
+msgstr "Đặt lại"
+
+#: features/sui_quickactions.lua:1958 features/sui_style.lua:1304
+msgid "Reset All"
+msgstr "Đặt lại tất cả"
+
+#: features/sui_quickactions.lua:2816
+msgid "Reset All Quick Action Icons"
+msgstr "Đặt lại tất cả biểu tượng thao tác nhanh"
+
+#: features/sui_style.lua:1076
+msgid "Reset All System Icons"
+msgstr "Đặt lại tất cả biểu tượng hệ thống"
+
+#: features/sui_quickactions.lua:1963
+msgid "Reset all Quick Actions icons to default?"
+msgstr "Đặt lại tất cả biểu tượng thao tác nhanh về mặc định?"
+
+#: screens/sui_menu.lua:2529
+msgid "Reset all scales to default (100%)? This cannot be undone."
+msgstr ""
+"Đặt lại tất cả tỷ lệ về mặc định (100%)? Thao tác này không thể hoàn tác."
+
+#: features/sui_style.lua:1309
+msgid "Reset all system icons to default?"
+msgstr "Đặt lại tất cả biểu tượng hệ thống về mặc định?"
+
+#: screens/sui_menu.lua:2524
+msgid "Reset to Default Scale"
+msgstr "Đặt lại về tỷ lệ mặc định"
+
+#: features/sui_quickactions.lua:586 infra/sui_updater.lua:448
+#: screens/sui_menu.lua:444 screens/sui_menu.lua:847 screens/sui_menu.lua:1057
+#: screens/sui_menu.lua:1119 screens/sui_menu.lua:1334
+#: screens/sui_menu.lua:1793 screens/sui_menu.lua:3448
+#: screens/sui_menu.lua:3471 screens/sui_menu.lua:3493
+#: screens/sui_menu.lua:4341 screens/sui_menu.lua:4544
+#: screens/sui_quicksettings_bar.lua:1120
+msgid "Restart"
+msgstr "Khởi động lại"
+
+#: features/sui_backup.lua:1008
+#, fuzzy
+msgid "Restart now"
+msgstr "Khởi động lại"
+
+#: features/sui_style.lua:1796 features/sui_style.lua:1840
+msgid "Restart to fully apply the UI font change."
+msgstr "Khởi động lại để áp dụng đầy đủ thay đổi phông chữ giao diện."
+
+#: features/sui_quickactions.lua:588
+#, fuzzy
+msgid "Restarting…"
+msgstr "Khởi động lại"
+
+#: features/sui_backup.lua:994
+#, fuzzy
+msgid "Restore"
+msgstr "Khởi động lại"
+
+#: features/sui_backup.lua:1162
+msgid "Restore Selected…"
+msgstr ""
+
+#: features/sui_backup.lua:999
+msgid "Restore failed."
+msgstr ""
+
+#: features/sui_backup.lua:857
+msgid "Restore failed. Your previous configuration was kept unchanged."
+msgstr ""
+
+#: features/sui_backup.lua:993
+msgid ""
+"Restore this backup? Existing settings for these categories will be "
+"replaced. Saved presets are merged — yours are kept."
+msgstr ""
+
+#: screens/sui_menu.lua:2544
+msgid "Return to Book Folder"
+msgstr "Trở về thư mục sách"
+
+#: screens/sui_menu.lua:2435
+msgid "Return to Home Screen on Wakeup"
+msgstr "Trở về màn hình chính khi đánh thức"
+
+#: engines/sui_book_grid.lua:2058 screens/sui_menu.lua:3202
+#: screens/sui_menu.lua:3211 screens/sui_menu.lua:3223
+msgid "Ribbon"
+msgstr "Ruy băng"
+
+#: modules/module_quote.lua:126 modules/module_quote.lua:1570
+#: modules/module_action_list.lua:67 modules/module_action_list.lua:476
+#: modules/module_reading_stats.lua:92 modules/module_reading_stats.lua:870
+#: modules/module_reading_goals.lua:120 modules/module_reading_goals.lua:1578
+#: modules/module_clock.lua:167 modules/module_clock.lua:1212
+#: modules/module_quick_actions.lua:668 screens/sui_menu.lua:716
+#: screens/sui_menu.lua:945 screens/sui_menu.lua:1490 screens/sui_menu.lua:1688
+msgid "Right"
+msgstr "Phải"
+
+#: modules/module_reading_goals.lua:1564
+#, fuzzy
+msgid "Ring Alignment"
+msgstr "Căn chỉnh"
+
+#: modules/module_reading_goals.lua:1538
+#, fuzzy
+msgid "Ring Style"
+msgstr "Kiểu"
+
+#: modules/module_reading_goals.lua:1527
+#, fuzzy
+msgid "Rings"
+msgstr "Cài đặt"
+
+#: modules/module_quick_actions.lua:577 screens/sui_quicksettings_bar.lua:1250
+msgid "Round"
+msgstr "Tròn"
+
+#: engines/sui_book_grid.lua:1942
+msgid "Round Overlay"
+msgstr "Lớp phủ tròn"
+
+#: modules/module_quick_actions.lua:587 screens/sui_quicksettings_bar.lua:1260
+msgid "Rounded Square"
+msgstr "Vuông bo tròn"
+
+#: engines/sui_book_grid.lua:1842
+msgid "Rows"
+msgstr "Hàng"
+
+#: screens/sui_stats_windows.lua:2805
+msgid "Sat"
+msgstr "Thứ Bảy"
+
+#: modules/module_clock.lua:59
+msgid "Saturday"
+msgstr "Thứ Bảy"
+
+#: modules/module_reading_goals.lua:731 features/sui_quickactions.lua:2535
+#: features/sui_presets.lua:854 screens/sui_menu.lua:4009
+#: screens/sui_stats_windows.lua:662 screens/sui_settings_window.lua:488
+msgid "Save"
+msgstr "Lưu"
+
+#: features/sui_presets.lua:839 screens/sui_menu.lua:3994
+msgid "Save as new preset"
+msgstr "Lưu làm thiết lập mới"
+
+#: features/sui_backup.lua:1089
+msgid "Save backup as"
+msgstr ""
+
+#: screens/sui_menu.lua:3999
+msgid "Save icon preset"
+msgstr "Lưu thiết lập biểu tượng"
+
+#: features/sui_presets.lua:844
+msgid "Save preset"
+msgstr "Lưu thiết lập"
+
+#: modules/module_heatmap.lua:309 modules/module_heatmap.lua:311
+#: modules/module_quote.lua:1349 modules/module_quote.lua:1353
+#: modules/module_action_list.lua:431 modules/module_action_list.lua:433
+#: modules/module_reading_stats.lua:655 modules/module_reading_stats.lua:657
+#: modules/module_reading_goals.lua:1250 modules/module_reading_goals.lua:1252
+#: modules/module_clock.lua:1004 modules/module_clock.lua:1006
+#: modules/module_coverdeck.lua:1339 modules/module_coverdeck.lua:1341
+#: modules/module_currently.lua:1410 modules/module_currently.lua:1412
+#: modules/module_quick_actions.lua:544 modules/module_quick_actions.lua:546
+#: engines/sui_book_grid.lua:1770 engines/sui_book_grid.lua:1772
+#: screens/sui_menu.lua:2447
+msgid "Scale"
+msgstr "Tỷ lệ"
+
+#: modules/module_currently.lua:1439
+msgid ""
+"Scale for all text elements (title, author, progress, time).\n"
+"100% is the default size."
+msgstr ""
+"Tỷ lệ cho tất cả phần tử chữ (tiêu đề, tác giả, tiến trình, thời gian).\n"
+"100% là kích thước mặc định."
+
+#: modules/module_clock.lua:1034
+#, fuzzy
+msgid ""
+"Scale for the battery text only.\n"
+"100% is the default size."
+msgstr ""
+"Tỷ lệ cho chữ nhãn.\n"
+"100% là kích thước mặc định."
+
+#: modules/module_quick_actions.lua:561
+msgid ""
+"Scale for the button label text.\n"
+"100% is the default size."
+msgstr ""
+"Tỷ lệ cho chữ nhãn nút.\n"
+"100% là kích thước mặc định."
+
+#: modules/module_clock.lua:1016
+#, fuzzy
+msgid ""
+"Scale for the clock face only.\n"
+"100% is the default size."
+msgstr ""
+"Tỷ lệ cho hình thu nhỏ bìa.\n"
+"100% là kích thước mặc định."
+
+#: modules/module_collections.lua:1426
+msgid "Scale for the collection count badge."
+msgstr ""
+"Tỷ lệ cho huy hiệu số lượng sách trong bộ sưu tập.\n"
+"100% là kích thước mặc định."
+
+#: modules/module_currently.lua:1426
+msgid ""
+"Scale for the cover thumbnail only.\n"
+"100% is the default size.\n"
+"When Dynamic Cover Size is on, this scales the cover relative to its current "
+"dynamic size instead, and the cover never shrinks below its 100% size."
+msgstr ""
+"Tỷ lệ chỉ áp dụng cho ảnh thu nhỏ của bìa.\n"
+"100% là kích thước mặc định.\n"
+"Khi Kích thước bìa động được bật, tỷ lệ này sẽ áp dụng theo kích thước động "
+"hiện tại thay vào đó, và bìa không bao giờ nhỏ hơn 100% kích thước của nó."
+
+#: modules/module_coverdeck.lua:1350
+msgid ""
+"Scale for the cover thumbnails only.\n"
+"100% is the default size."
+msgstr ""
+"Tỷ lệ cho hình thu nhỏ bìa.\n"
+"100% là kích thước mặc định."
+
+#: engines/sui_book_grid.lua:1790
+msgid ""
+"Scale for the cover thumbnails only.\n"
+"Text and progress bar follow the module scale.\n"
+"100% is the default size."
+msgstr ""
+"Tỷ lệ cho hình thu nhỏ bìa.\n"
+"Chữ và thanh tiến trình theo tỷ lệ mô-đun.\n"
+"100% là kích thước mặc định."
+
+#: modules/module_clock.lua:1025
+#, fuzzy
+msgid ""
+"Scale for the date text only.\n"
+"100% is the default size."
+msgstr ""
+"Tỷ lệ cho chữ nhãn.\n"
+"100% là kích thước mặc định."
+
+#: screens/sui_menu.lua:3421
+msgid ""
+"Scale for the folder name overlay text.\n"
+"100% is the default size."
+msgstr ""
+"Tỷ lệ cho chữ lớp phủ tên thư mục.\n"
+"100% là kích thước mặc định."
+
+#: modules/module_action_list.lua:442 screens/sui_quicksettings_bar.lua:1229
+msgid ""
+"Scale for the label text.\n"
+"100% is the default size."
+msgstr ""
+"Tỷ lệ cho chữ nhãn.\n"
+"100% là kích thước mặc định."
+
+#: screens/sui_menu.lua:2930
+msgid ""
+"Scale for the library badges (progress, pages, etc.).\n"
+"100% is the default size."
+msgstr ""
+"Tỷ lệ cho huy hiệu thư viện (tiến trình, trang, v.v.).\n"
+"100% là kích thước mặc định."
+
+#: engines/sui_book_grid.lua:1781
+msgid ""
+"Scale for the percentage read text.\n"
+"100% is the default size."
+msgstr ""
+"Tỷ lệ cho chữ phần trăm đã đọc.\n"
+"100% là kích thước mặc định."
+
+#: modules/module_reading_goals.lua:1268
+#, fuzzy
+msgid ""
+"Scale for the text inside the rings.\n"
+"100% is the default size."
+msgstr ""
+"Tỷ lệ cho chữ nhãn nút.\n"
+"100% là kích thước mặc định."
+
+#: engines/sui_book_grid.lua:1993
+msgid ""
+"Scale for this module's corner badges (progress, pages, series, new book)."
+msgstr ""
+"Tỷ lệ cho huy hiệu góc của mô-đun này (tiến trình, trang, bộ sách, sách "
+"mới).\n"
+"100% là kích thước mặc định."
+
+#: modules/module_coverdeck.lua:1342
+msgid "Scale for this module."
+msgstr "Tỷ lệ cho mô-đun này."
+
+#: modules/module_quote.lua:1355 modules/module_action_list.lua:434
+#: modules/module_reading_stats.lua:658 modules/module_reading_goals.lua:1253
+#: modules/module_clock.lua:1007 modules/module_currently.lua:1413
+#: modules/module_quick_actions.lua:547 engines/sui_book_grid.lua:1773
+msgid ""
+"Scale for this module.\n"
+"100% is the default size."
+msgstr ""
+"Tỷ lệ cho mô-đun này.\n"
+"100% là kích thước mặc định."
+
+#: modules/module_heatmap.lua:312
+msgid ""
+"Scale for this module.\n"
+"100% is the default size. Capped at 100% here: the grid always has as many "
+"columns as \"Weeks shown\" (or, in Time of day view, 24), so there's no room "
+"to grow the cells past their autofit size without the grid overflowing the "
+"card."
+msgstr ""
+"Tỷ lệ cho mô-đun này.\n"
+"100% là kích thước mặc định. Bị giới hạn ở 100% tại đây: lưới luôn có số cột "
+"bằng \"Số tuần hiển thị\" (hoặc 24, ở chế độ xem Thời điểm trong ngày), vì "
+"vậy không có chỗ để các ô lớn hơn kích thước tự động vừa khít mà không làm "
+"lưới tràn ra ngoài thẻ."
+
+#: modules/module_coverdeck.lua:1358
+msgid ""
+"Scale for title and statistics text.\n"
+"100% is the default size."
+msgstr ""
+"Tỷ lệ cho chữ tiêu đề và thống kê.\n"
+"100% là kích thước mặc định."
+
+#: screens/sui_menu.lua:2471
+msgid ""
+"Scales all modules and labels together.\n"
+"100% is the default size."
+msgstr ""
+"Tỷ lệ tất cả mô-đun và nhãn cùng nhau.\n"
+"100% là kích thước mặc định."
+
+#: screens/sui_menu.lua:2504
+msgid ""
+"Scales the section label text above each module.\n"
+"100% is the default size."
+msgstr ""
+"Tỷ lệ chữ nhãn phần phía trên mỗi mô-đun.\n"
+"100% là kích thước mặc định."
+
+#: screens/sui_menu.lua:3545
+msgid "Scan Subfolders for Covers"
+msgstr "Quét thư mục con để tìm bìa"
+
+#: screens/sui_settings_window.lua:480 screens/sui_settings_window.lua:1167
+msgid "Screen name"
+msgstr "Tên màn hình"
+
+#: features/sui_quickactions.lua:873 infra/sui_config.lua:125
+#: screens/sui_titlebar.lua:104 features/library/sui_library_search.lua:208
+msgid "Search"
+msgstr "Tìm kiếm"
+
+#: features/sui_style.lua:87
+msgid "Search Button"
+msgstr "Nút tìm kiếm"
+
+#: features/sui_quickactions.lua:890
+#, fuzzy
+msgid "Search Library not available."
+msgstr "Lịch sử không khả dụng."
+
+#: features/library/sui_library_search.lua:204
+#, fuzzy
+msgid "Search library"
+msgstr "Duyệt thư viện"
+
+#: features/library/sui_library_search.lua:174
+msgid "Search results: %1"
+msgstr ""
+
+#: engines/sui_window.lua:1927 engines/sui_window.lua:2844
+msgid "Select"
+msgstr "Chọn"
+
+#: features/sui_presets.lua:750 features/sui_presets.lua:758
+#: features/sui_presets.lua:763 screens/sui_menu.lua:3985
+msgid "Select Preset"
+msgstr "Chọn thiết lập"
+
+#: screens/sui_menu.lua:2250
+msgid "Select Wallpaper"
+msgstr "Chọn hình nền"
+
+#: modules/module_collections.lua:1192
+msgid "Select at least 2 collections to arrange."
+msgstr "Chọn ít nhất 2 bộ sưu tập để sắp xếp."
+
+#: engines/sui_heatmap_widgets.lua:88
+msgid "Sep"
+msgstr "th9"
+
+#: modules/module_clock.lua:64 screens/sui_stats_windows.lua:2817
+msgid "September"
+msgstr "Tháng Chín"
+
+#: modules/module_currently.lua:281 features/sui_quickactions.lua:1008
+#: infra/sui_config.lua:134 features/library/sui_library_browse.lua:59
+msgid "Series"
+msgstr "Bộ sách"
+
+#: engines/sui_book_grid.lua:2031 engines/sui_book_grid.lua:2047
+msgid "Series Badge"
+msgstr "Huy hiệu bộ sách"
+
+#: engines/sui_book_grid.lua:2042
+msgid "Series Badge Color"
+msgstr "Màu huy hiệu bộ sách"
+
+#: screens/sui_menu.lua:3077
+msgid "Series Index"
+msgstr "Chỉ mục bộ sách"
+
+#: screens/sui_menu.lua:655 screens/sui_menu.lua:912
+msgid "Set"
+msgstr "Đặt"
+
+#: modules/module_reading_goals.lua:1416 modules/module_reading_goals.lua:1431
+#: modules/module_reading_goals.lua:1446
+msgid "Set Goal"
+msgstr "Đặt mục tiêu"
+
+#: modules/module_collections.lua:1097
+msgid "Set collection cover"
+msgstr "Đặt bìa bộ sưu tập"
+
+#: features/library/sui_foldercovers.lua:684
+#: features/library/sui_library_browse.lua:811
+#: features/library/sui_series_grouping.lua:357
+msgid "Set folder cover"
+msgstr "Đặt bìa thư mục"
+
+#: screens/sui_onboarding.lua:169
+msgid "Set your reading goal"
+msgstr "Đặt mục tiêu đọc của bạn"
+
+#: features/sui_quickactions.lua:966 infra/sui_config.lua:131
+msgid "Settings"
+msgstr "Cài đặt"
+
+#: screens/sui_settings_window.lua:299 screens/sui_settings_window.lua:304
+msgid "Settings not found."
+msgstr "Không tìm thấy cài đặt."
+
+#: screens/sui_menu.lua:1088 screens/sui_menu.lua:1390
+#: screens/sui_menu.lua:2680 screens/sui_quicksettings_bar.lua:1320
+msgid "Settings on Long Tap"
+msgstr "Cài đặt khi nhấn giữ"
+
+#: modules/module_clock.lua:317
+msgid "Seven"
+msgstr "Bảy"
+
+#: modules/module_clock.lua:320
+msgid "Seventeen"
+msgstr "Mười bảy"
+
+#: infra/sui_config.lua:1154
+msgid ""
+"Share of the row this module occupies.\n"
+"100% = full width. Modules under 100% share a row when their widths fit "
+"(bento grid)."
+msgstr ""
+
+#: modules/module_clock.lua:1149
+msgid "Show Battery"
+msgstr "Hiện pin"
+
+#: modules/module_clock.lua:1137
+msgid "Show Clock"
+msgstr "Hiện đồng hồ"
+
+#: modules/module_clock.lua:1143
+msgid "Show Date"
+msgstr "Hiện ngày"
+
+#: modules/module_action_list.lua:451
+msgid "Show Icon"
+msgstr "Hiện biểu tượng"
+
+#: screens/sui_menu.lua:603
+msgid "Show Page Count in Title Bar"
+msgstr "Hiển thị số trang trong thanh tiêu đề"
+
+#: screens/sui_menu.lua:2557
+msgid ""
+"Show a brief \"Closing book…\" notice when closing a book, preventing "
+"accidental double-taps while e-ink refreshes."
+msgstr ""
+"Hiển thị thông báo \"Đang đóng sách…\" khi đóng sách, ngăn chặn nhấn đúp "
+"trong khi làm mới e-ink."
+
+#: screens/sui_menu.lua:2657
+msgid ""
+"Show a brief \"Loading statistics…\" notice when opening a statistics "
+"window, preventing accidental double-taps while e-ink refreshes."
+msgstr ""
+"Hiển thị thông báo ngắn \"Đang tải thống kê…\" khi mở cửa sổ thống kê, ngăn "
+"chặn nhấn đúp ngoài ý muốn trong khi e-ink làm mới."
+
+#: modules/module_library.lua:345 modules/module_recent.lua:54
+#: modules/module_coverdeck.lua:1753
+msgid "Show finished books"
+msgstr "Hiển thị sách đã đọc xong"
+
+#: modules/module_heatmap.lua:356
+msgid "Show legend"
+msgstr "Hiện chú giải"
+
+#: screens/sui_menu.lua:2618
+msgid "Show on Close"
+msgstr "Hiện khi đóng"
+
+#: screens/sui_menu.lua:2607
+msgid "Show on Open"
+msgstr "Hiện khi mở"
+
+#: infra/sui_config.lua:1367
+msgid "Show section label"
+msgstr "Hiển thị nhãn phần"
+
+#: screens/sui_menu.lua:2334
+msgid "Show wallpaper on all screens"
+msgstr "Hiển thị hình nền trên tất cả màn hình"
+
+#: screens/sui_menu.lua:608
+msgid ""
+"Shows \"Page X of Y\" in the title bar subtitle when browsing the library, "
+"history or collections.\n"
+"Navpager enables this automatically.\n"
+"Not available when Navpager is active."
+msgstr ""
+"Hiển thị \"Trang X trên Y\" trong phụ đề của thanh tiêu đề khi mở thư viện, "
+"lịch sử hoặc bộ sưu tập.\n"
+"Navpager tự động bật tính năng này.\n"
+"Không khả dụng khi Navpager đang hoạt động."
+
+#: screens/sui_menu.lua:504
+msgid ""
+"Shows a row of dots at the bottom of the homescreen.\n"
+"The active page dot is filled; the others are dimmed.\n"
+"Always active when Navpager is selected."
+msgstr ""
+"Hiển thị một hàng chấm ở dưới màn hình chính.\n"
+"Chấm trang hoạt động được tô đầy; các chấm khác bị mờ.\n"
+"Luôn hoạt động khi Navpager được chọn."
+
+#: modules/module_feat_coll.lua:171 modules/module_tbr.lua:309
+msgid "Shuffle"
+msgstr "Xáo trộn"
+
+#: modules/module_library.lua:273
+msgid "Shuffle now"
+msgstr "Xáo trộn ngay"
+
+#: modules/module_currently.lua:1956
+msgid "Simple"
+msgstr "Đơn giản"
+
+#: main.lua:2515 main.lua:2528 _meta.lua:5 screens/sui_menu.lua:4526
+#: screens/sui_menu.lua:4615
+msgid "Simple UI"
+msgstr "Simple UI"
+
+#: infra/sui_updater.lua:445
+msgid ""
+"Simple UI %s installed.\n"
+"\n"
+"Restart KOReader to apply the update?"
+msgstr ""
+"Simple UI %s đã cài đặt.\n"
+"\n"
+"Khởi động lại KOReader để áp dụng cập nhật?"
+
+#: infra/sui_updater.lua:492
+msgid ""
+"Simple UI %s is available!\n"
+"You have %s."
+msgstr ""
+"Simple UI %s khả dụng!\n"
+"Bạn đang dùng %s."
+
+#: screens/sui_settings_window.lua:1076
+msgid "Simple UI Settings"
+msgstr "Cài đặt Simple UI"
+
+#: screens/sui_onboarding.lua:134
+msgid ""
+"Simple UI is designed to be simple and flexible. Here are a few tips to get "
+"the most out of it."
+msgstr ""
+"Simple UI được thiết kế đơn giản và linh hoạt. Đây là một vài mẹo để tận "
+"dụng tối đa."
+
+#: infra/sui_updater.lua:486
+msgid "Simple UI is up to date (%s)."
+msgstr "Simple UI đã cập nhật (%s)."
+
+#: main.lua:181
+msgid ""
+"Simple UI was updated (%s → %s).\n"
+"\n"
+"A restart is recommended to apply all changes cleanly."
+msgstr ""
+
+#: screens/sui_menu.lua:4543
+msgid ""
+"Simple UI will be %s after restart.\n"
+"\n"
+"Restart now?"
+msgstr ""
+"Simple UI sẽ là %s sau khi khởi động lại.\n"
+"\n"
+"Khởi động lại ngay?"
+
+#: main.lua:887
+msgid "Simple UI: Go to Homescreen"
+msgstr "Simple UI: Đi tới màn hình chính"
+
+#: main.lua:893
+msgid "Simple UI: Go to Library"
+msgstr "Simple UI: Đi tới thư viện"
+
+#: main.lua:917
+msgid "Simple UI: Navigation Bar"
+msgstr "Simple UI: Thanh điều hướng"
+
+#: main.lua:911
+msgid "Simple UI: Recent"
+msgstr "Simple UI: Gần đây"
+
+#: main.lua:905
+msgid "Simple UI: Settings"
+msgstr "Simple UI: Cài đặt"
+
+#: main.lua:899
+msgid "Simple UI: Toggle Homescreen / Library"
+msgstr "Simple UI: Chuyển màn hình chính / Thư viện"
+
+#: modules/module_collections.lua:1337 screens/sui_menu.lua:2877
+msgid "Single Cover"
+msgstr "Bìa đơn"
+
+#: modules/module_clock.lua:316
+msgid "Six"
+msgstr "Sáu"
+
+#: modules/module_clock.lua:320
+msgid "Sixteen"
+msgstr "Mười sáu"
+
+#: modules/module_action_list.lua:428 modules/module_reading_goals.lua:1281
+#: modules/module_clock.lua:1157 modules/module_coverdeck.lua:1695
+#: modules/module_currently.lua:1915 modules/module_quick_actions.lua:559
+#: modules/module_quick_actions.lua:560 engines/sui_book_grid.lua:1854
+#: screens/sui_menu.lua:1026 screens/sui_menu.lua:2921
+#: screens/sui_quicksettings_bar.lua:1227
+#: screens/sui_quicksettings_bar.lua:1228
+msgid "Size"
+msgstr "Kích thước"
+
+#: screens/sui_menu.lua:1348
+msgid ""
+"Size of the tab icons.\n"
+"100% is the default size."
+msgstr ""
+"Kích thước biểu tượng tab.\n"
+"100% là kích thước mặc định."
+
+#: screens/sui_menu.lua:1361
+msgid ""
+"Size of the tab label text.\n"
+"100% is the default size."
+msgstr ""
+"Kích thước chữ nhãn tab.\n"
+"100% là kích thước mặc định."
+
+#: modules/module_reading_stats.lua:791
+msgid ""
+"Size of the text inside the stat cards.\n"
+"Does not affect card size or padding.\n"
+"100% is the default size."
+msgstr ""
+"Kích thước chữ bên trong thẻ thống kê.\n"
+"Không ảnh hưởng đến kích thước hoặc đệm thẻ.\n"
+"100% là kích thước mặc định."
+
+#: features/sui_quickactions.lua:599
+msgid "Sleep"
+msgstr "Ngủ"
+
+#: screens/sui_menu.lua:576
+msgid "Small"
+msgstr "Nhỏ"
+
+#: modules/module_quick_actions.lua:623 screens/sui_menu.lua:3318
+#: screens/sui_menu.lua:3322 screens/sui_quicksettings_bar.lua:1297
+msgid "Solid"
+msgstr "Đặc"
+
+#: modules/module_heatmap.lua:374 modules/module_reading_goals.lua:1596
+#: modules/module_currently.lua:1939 engines/sui_book_grid.lua:1878
+msgid "Solid Background"
+msgstr "Nền đặc"
+
+#: modules/module_library.lua:239 modules/module_collections.lua:1311
+#: modules/module_feat_coll.lua:175 modules/module_tbr.lua:319
+msgid "Sort"
+msgstr "Sắp xếp"
+
+#: modules/module_quote.lua:1381 modules/module_coverdeck.lua:1440
+msgid "Source"
+msgstr "Nguồn"
+
+#: screens/sui_menu.lua:1374
+msgid ""
+"Space below the bottom navigation bar.\n"
+"100% is the default spacing."
+msgstr ""
+"Khoảng cách dưới thanh điều hướng.\n"
+"100% là khoảng cách mặc định."
+
+#: modules/module_spacer.lua:58 modules/module_spacer.lua:112
+msgid "Spacer"
+msgstr "Khoảng trống"
+
+#: modules/module_spacer.lua:89 modules/module_spacer.lua:90
+msgid "Spacer Size"
+msgstr "Kích thước khoảng trống"
+
+#: modules/module_clock.lua:1223 modules/module_clock.lua:1230
+msgid "Spacing"
+msgstr "Khoảng cách"
+
+#: screens/sui_onboarding.lua:272
+msgid "Start using Simple UI"
+msgstr "Bắt đầu sử dụng Simple UI"
+
+#: infra/sui_patches.lua:1161 infra/sui_patches.lua:1163
+msgid "Start with"
+msgstr "Bắt đầu với"
+
+#: screens/sui_menu.lua:2424
+msgid "Start with Home Screen"
+msgstr "Bắt đầu với màn hình chính"
+
+#: screens/sui_onboarding.lua:62
+msgid "Start with a ready-made layout. You can change everything later."
+msgstr "Bắt đầu với bỗ cục có sẵn. Bạn có thể thay đổi mọi thứ sau."
+
+#: modules/module_coverdeck.lua:158 modules/module_coverdeck.lua:1523
+#: modules/module_coverdeck.lua:1556 modules/module_coverdeck.lua:1623
+msgid "Statistics"
+msgstr "Thống kê"
+
+#: screens/sui_menu.lua:2656
+msgid "Statistics Loading Notice"
+msgstr "Thông báo đang tải thống kê"
+
+#: screens/sui_stats_windows.lua:163
+msgid "Statistics database library not available."
+msgstr "Thư viện cơ sở dữ liệu thống kê không khả dụng."
+
+#: features/sui_quickactions.lua:950
+msgid "Statistics plugin not available."
+msgstr "Plugin thống kê không khả dụng."
+
+#: modules/module_currently.lua:1634 modules/module_currently.lua:1716
+#: modules/module_currently.lua:1777 features/sui_quickactions.lua:935
+#: infra/sui_config.lua:129
+msgid "Stats"
+msgstr "Thống kê"
+
+#: modules/module_currently.lua:1963
+msgid "Stats layout"
+msgstr "Bố cục thống kê"
+
+#: modules/module_reading_stats.lua:949 modules/module_reading_goals.lua:1625
+#: modules/module_coverdeck.lua:1780 modules/module_currently.lua:2000
+msgid "Stats updated successfully."
+msgstr "Thống kê đã cập nhật thành công."
+
+#: screens/sui_menu.lua:2772
+msgid "Status Bar"
+msgstr "Thanh trạng thái"
+
+#: screens/sui_menu.lua:1033
+msgid "Status Bar Size"
+msgstr "Kích thước thanh trạng thái"
+
+#: screens/sui_menu.lua:846
+msgid ""
+"Status Bar will be %s after restart.\n"
+"\n"
+"Restart now?"
+msgstr ""
+"Thanh trạng thái sẽ là %s sau khi khởi động lại.\n"
+"\n"
+"Khởi động lại ngay?"
+
+#: modules/module_reading_stats.lua:130
+msgid "Status — Abandoned"
+msgstr "Trạng thái — Đã bỏ"
+
+#: modules/module_reading_stats.lua:129
+msgid "Status — Reading"
+msgstr "Trạng thái — Đang đọc"
+
+#: modules/module_reading_stats.lua:128
+msgid "Status — Unread"
+msgstr "Trạng thái — Chưa đọc"
+
+#: screens/sui_settings_window.lua:331
+msgid "Status, title, navigation and pagination"
+msgstr "Trạng thái, tiêu đề, điều hướng và phân trang"
+
+#: modules/module_reading_stats.lua:119 screens/sui_stats_windows.lua:3494
+msgid "Streak"
+msgstr "Chuỗi"
+
+#: modules/module_reading_stats.lua:900
+msgid "Streak Mode"
+msgstr "Chế độ chuỗi ngày"
+
+#: screens/sui_menu.lua:2352
+msgid "Stretch to fill screen"
+msgstr "Kéo giãn để lấp đầy màn hình"
+
+#: modules/module_reading_stats.lua:801 screens/sui_menu.lua:4572
+#: screens/sui_settings_window.lua:344 screens/sui_settings_window.lua:1081
+msgid "Style"
+msgstr "Kiểu"
+
+#: screens/sui_menu.lua:1808 screens/sui_menu.lua:1811
+msgid "Sub-page Buttons"
+msgstr "Nút trang phụ"
+
+#: screens/sui_stats_windows.lua:2805
+msgid "Sun"
+msgstr "Chủ Nhật"
+
+#: modules/module_clock.lua:58
+msgid "Sunday"
+msgstr "Chủ Nhật"
+
+#: screens/sui_menu.lua:1069
+msgid "Swipe Indicator"
+msgstr "Chỉ báo vuốt"
+
+#: features/sui_quickactions.lua:1924 features/sui_quickactions.lua:1927
+#: features/sui_quickactions.lua:2657 features/sui_quickactions.lua:2753
+msgid "System Actions"
+msgstr "Thao tác hệ thống"
+
+#: features/sui_style.lua:1302 screens/sui_menu.lua:3657
+#: screens/sui_menu.lua:3665
+msgid "System Icons"
+msgstr "Biểu tượng hệ thống"
+
+#: features/sui_quickactions.lua:3115
+msgid "System action error: %s"
+msgstr "Lỗi thao tác hệ thống: %s"
+
+#: screens/sui_stats_windows.lua:2729
+msgid "THIS MONTH"
+msgstr "THÁNG NÀY"
+
+#: screens/sui_stats_windows.lua:2728
+msgid "THIS WEEK"
+msgstr "TUẦN NÀY"
+
+#: screens/sui_heatmap_popup.lua:164
+msgid "TIME OF DAY"
+msgstr "THỜI ĐIỂM TRONG NGÀY"
+
+#: screens/sui_stats_windows.lua:2724
+msgid "TODAY'S SUMMARY"
+msgstr "TÓM TẮT HÔM NAY"
+
+#: features/sui_style.lua:1297
+msgid "Tab Bar"
+msgstr "Thanh tab"
+
+#: screens/sui_menu.lua:1257
+msgid "Tab Style"
+msgstr "Kiểu tab"
+
+#: features/sui_style.lua:1253
+msgid "Tab bar icons must be PNG or SVG."
+msgstr "Biểu tượng thanh tab phải là PNG hoặc SVG."
+
+#: features/sui_style.lua:263
+msgid "Tab: Back to File Browser"
+msgstr "Tab: Quay lại trình duyệt tệp"
+
+#: features/sui_style.lua:242
+msgid "Tab: File Browser Settings"
+msgstr "Tab: Cài đặt trình duyệt tệp"
+
+#: features/sui_style.lua:214
+msgid "Tab: Menu"
+msgstr "Tab: Menu"
+
+#: features/sui_style.lua:249
+msgid "Tab: Reader Navigation"
+msgstr "Tab: Điều hướng trình đọc"
+
+#: features/sui_style.lua:256
+msgid "Tab: Reader Typeset"
+msgstr "Tab: Trình bày trang đọc"
+
+#: features/sui_style.lua:235
+msgid "Tab: Search"
+msgstr "Tab: Tìm kiếm"
+
+#: features/sui_style.lua:221
+msgid "Tab: Settings"
+msgstr "Tab: Cài đặt"
+
+#: features/sui_style.lua:270
+msgid "Tab: SimpleUI Quick Settings"
+msgstr "Tab: Cài đặt nhanh Simple UI"
+
+#: features/sui_style.lua:228
+msgid "Tab: Tools"
+msgstr "Tab: Công cụ"
+
+#: screens/sui_menu.lua:1142 screens/sui_menu.lua:1194
+msgid "Tabs"
+msgstr "Tab"
+
+#: screens/sui_menu.lua:1136
+msgid "Tabs  (%d/%d — %d left)"
+msgstr "Tab (%d/%d — còn lại %d)"
+
+#: screens/sui_menu.lua:1134
+msgid "Tabs  (%d/%d — at limit)"
+msgstr "Tab (%d/%d — đã đạt giới hạn)"
+
+#: features/sui_quickactions.lua:1026 infra/sui_config.lua:136
+#: features/library/sui_library_browse.lua:60
+msgid "Tags"
+msgstr "Thẻ"
+
+#: screens/sui_settings_window.lua:442
+msgid "Tap \"Create Screen\" below to add one."
+msgstr "Chạm \"Tạo màn hình\" bên dưới để thêm một cái."
+
+#: modules/module_clock.lua:318
+msgid "Ten"
+msgstr "Mười"
+
+#: engines/sui_book_grid.lua:1940 screens/sui_menu.lua:208
+msgid "Text"
+msgstr "Chữ"
+
+#: modules/module_action_list.lua:440 modules/module_action_list.lua:441
+#: modules/module_reading_stats.lua:789 modules/module_reading_stats.lua:790
+#: modules/module_reading_goals.lua:1265 modules/module_reading_goals.lua:1267
+#: modules/module_coverdeck.lua:1356 modules/module_coverdeck.lua:1357
+#: modules/module_currently.lua:1437 modules/module_currently.lua:1438
+#: engines/sui_book_grid.lua:1779 engines/sui_book_grid.lua:1780
+#: screens/sui_menu.lua:3418
+msgid "Text Size"
+msgstr "Kích thước chữ"
+
+#: screens/sui_menu.lua:210
+msgid "Text only"
+msgstr "Chỉ chữ"
+
+#: screens/sui_quicksettings_bar.lua:1117
+msgid ""
+"The Quick Settings Bar will be %s after restart.\n"
+"\n"
+"Restart now?"
+msgstr ""
+"Thanh cài đặt nhanh sẽ là %s sau khi khởi động lại.\n"
+"\n"
+"Khởi động lại ngay?"
+
+#: screens/sui_menu.lua:2631
+msgid ""
+"The cover shown right as a book opens normally comes from the library's "
+"cached thumbnail, which can look soft on higher-resolution screens. When on, "
+"SimpleUI instead reads the cover straight from the book file for that moment "
+"(also covers books never opened before, which otherwise show no cover at "
+"all) — at the cost of a brief extra pause while opening, since the file has "
+"to be read twice. Cover on close is unaffected either way: it already reads "
+"the full-quality cover from the open book."
+msgstr ""
+"Bìa hiển thị ngay khi mở sách thường lấy từ ảnh thu nhỏ đã lưu trong bộ nhớ "
+"đệm của thư viện, có thể trông không sắc nét trên màn hình độ phân giải cao. "
+"Khi bật, SimpleUI sẽ đọc bìa trực tiếp từ tệp sách vào thời điểm đó (cũng "
+"bao gồm cả những sách chưa từng mở trước đây, vốn không hiển thị bìa nào cả) "
+"— với cái giá là một khoảng dừng ngắn khi mở, vì tệp phải được đọc hai lần. "
+"Bìa khi đóng sách không bị ảnh hưởng trong mọi trường hợp: nó đã đọc bìa "
+"chất lượng đầy đủ từ cuốn sách đang mở."
+
+#: main.lua:1335 screens/sui_bottombar.lua:1823
+msgid "The navigation bar is already available on this screen."
+msgstr "Thanh điều hướng đã có sẵn trên màn hình này."
+
+#: infra/sui_patches.lua:1307
+msgid "The «To Be Read» collection cannot be renamed."
+msgstr "Bộ sưu tập «Cần đọc» không thể đổi tên."
+
+#: modules/module_clock.lua:319
+msgid "Thirteen"
+msgstr "Mười ba"
+
+#: modules/module_clock.lua:324
+msgid "Thirty"
+msgstr "Ba mươi"
+
+#: features/sui_backup.lua:941
+msgid "This backup contains no settings or files."
+msgstr ""
+
+#: modules/module_tbr.lua:600
+msgid ""
+"This book is marked as Finished, so it can't be added to To Be Read.\n"
+"Change its status to Reading or On Hold first."
+msgstr ""
+"Sách này được đánh dấu là Đã đọc xong, vì vậy không thể thêm vào Cần đọc.\n"
+"Trước tiên hãy đổi trạng thái thành Đang đọc hoặc Tạm dừng."
+
+#: features/sui_quickactions.lua:3313 features/sui_quickactions.lua:3391
+msgid ""
+"This group is empty.\n"
+"Add actions to it from Settings → Quick Actions."
+msgstr ""
+"Nhóm này trống.\n"
+"Thêm thao tác vào nhóm từ Cài đặt → Thao tác nhanh."
+
+#: modules/module_reading_stats.lua:116
+msgid "This month — Pages"
+msgstr "Tháng này — Trang"
+
+#: modules/module_reading_stats.lua:115
+msgid "This month — Time"
+msgstr "Tháng này — Thời gian"
+
+#: features/sui_presets.lua:864 features/sui_presets.lua:932
+#: features/sui_presets.lua:1018
+msgid "This name is reserved by a built-in preset."
+msgstr "Tên này được dành riêng cho thiết lập tích hợp sẵn."
+
+#: modules/module_reading_stats.lua:112
+msgid "This week — Pages"
+msgstr "Tuần này — Trang"
+
+#: modules/module_reading_stats.lua:111
+msgid "This week — Time"
+msgstr "Tuần này — Thời gian"
+
+#: screens/sui_menu.lua:4438
+msgid ""
+"This will delete all Simple UI settings and restart KOReader.\n"
+"Are you sure?"
+msgstr ""
+"Thao tác này sẽ xóa tất cả cài đặt Simple UI và khởi động lại KOReader.\n"
+"Bạn có chắc không?"
+
+#: modules/module_clock.lua:315
+msgid "Three"
+msgstr "Ba"
+
+#: screens/sui_stats_windows.lua:2805
+msgid "Thu"
+msgstr "Thứ Năm"
+
+#: modules/module_clock.lua:59
+msgid "Thursday"
+msgstr "Thứ Năm"
+
+#: modules/module_heatmap.lua:221 modules/module_heatmap.lua:343
+msgid "Time of day"
+msgstr "Thời điểm trong ngày"
+
+#: modules/module_coverdeck.lua:145 modules/module_currently.lua:286
+msgid "Time read"
+msgstr "Thời gian đọc"
+
+#: modules/module_coverdeck.lua:146 modules/module_currently.lua:287
+msgid "Time remaining"
+msgstr "Thời gian còn lại"
+
+#: modules/module_coverdeck.lua:155 modules/module_currently.lua:279
+#: screens/sui_titlebar.lua:106
+msgid "Title"
+msgstr "Tiêu đề"
+
+#: modules/module_library.lua:211 modules/module_feat_coll.lua:166
+#: modules/module_tbr.lua:304
+msgid "Title (A–Z)"
+msgstr "Tiêu đề (A-Z)"
+
+#: modules/module_library.lua:212 modules/module_feat_coll.lua:167
+#: modules/module_tbr.lua:305
+msgid "Title (Z–A)"
+msgstr "Tiêu đề (Z-A)"
+
+#: features/sui_style.lua:1292 screens/sui_menu.lua:2774
+msgid "Title Bar"
+msgstr "Thanh tiêu đề"
+
+#: screens/sui_menu.lua:1790
+msgid ""
+"Title Bar will be %s after restart.\n"
+"\n"
+"Restart now?"
+msgstr ""
+"Thanh tiêu đề sẽ là %s sau khi khởi động lại.\n"
+"\n"
+"Khởi động lại ngay?"
+
+#: screens/sui_menu.lua:3480
+msgid "Title and Author"
+msgstr "Tiêu đề và tác giả"
+
+#: screens/sui_menu.lua:3431
+msgid "Title and Author Below Covers"
+msgstr "Tiêu đề và tác giả dưới bìa"
+
+#: screens/sui_menu.lua:3492
+msgid ""
+"Title and author strip enabled.\n"
+"\n"
+"Restart now?"
+msgstr ""
+"Dải tiêu đề và tác giả đã bật.\n"
+"\n"
+"Khởi động lại ngay?"
+
+#: screens/sui_menu.lua:3458
+msgid "Title only"
+msgstr "Chỉ tiêu đề"
+
+#: screens/sui_menu.lua:3447
+msgid ""
+"Title strip disabled.\n"
+"\n"
+"Restart now?"
+msgstr ""
+"Dải tiêu đề đã tắt.\n"
+"\n"
+"Khởi động lại ngay?"
+
+#: screens/sui_menu.lua:3470
+msgid ""
+"Title strip enabled.\n"
+"\n"
+"Restart now?"
+msgstr ""
+"Dải tiêu đề đã bật.\n"
+"\n"
+"Khởi động lại ngay?"
+
+#: modules/module_tbr.lua:560 modules/module_tbr.lua:620
+#: modules/module_tbr.lua:621 modules/module_coverdeck.lua:1432
+msgid "To Be Read"
+msgstr "Cần đọc"
+
+#: modules/module_tbr.lua:398
+msgid "To Be Read Books"
+msgstr "Sách cần đọc"
+
+#: modules/module_reading_goals.lua:970 modules/module_reading_goals.lua:1066
+#: modules/module_reading_goals.lua:1068 modules/module_reading_goals.lua:1122
+#: modules/module_reading_goals.lua:1125
+msgid "Today"
+msgstr "Hôm nay"
+
+#: modules/module_reading_stats.lua:110
+msgid "Today — Pages"
+msgstr "Hôm nay — Trang"
+
+#: modules/module_reading_stats.lua:109
+msgid "Today — Time"
+msgstr "Hôm nay — Thời gian"
+
+#: engines/sui_window.lua:2862
+msgid "Toggle"
+msgstr "Chuyển đổi"
+
+#: modules/module_collections.lua:1391 screens/sui_menu.lua:2952
+#: screens/sui_menu.lua:2959 screens/sui_menu.lua:2963
+#: screens/sui_menu.lua:3363 screens/sui_menu.lua:3370
+msgid "Top"
+msgstr "Trên"
+
+#: screens/sui_topbar.lua:508
+msgid "Top Bar"
+msgstr "Thanh trên"
+
+#: infra/sui_config.lua:1196
+msgid "Top Margin"
+msgstr "Lề trên"
+
+#: screens/sui_stats_windows.lua:943 screens/sui_stats_windows.lua:3646
+msgid "Total"
+msgstr "Tổng cộng"
+
+#: screens/sui_stats_windows.lua:2427 screens/sui_stats_windows.lua:2443
+msgid "Total time"
+msgstr "Tổng thời gian"
+
+#: features/sui_backup.lua:673
+msgid "Total: %d settings, %d files (%s)"
+msgstr ""
+
+#: modules/module_quick_actions.lua:613 screens/sui_menu.lua:3318
+#: screens/sui_menu.lua:3335 screens/sui_quicksettings_bar.lua:1287
+msgid "Transparent"
+msgstr "Trong suốt"
+
+#: screens/sui_menu.lua:2314
+msgid "Transparent navigation bar"
+msgstr "Thanh điều hướng trong suốt"
+
+#: screens/sui_menu.lua:2296
+msgid "Transparent status bar"
+msgstr "Thanh trạng thái trong suốt"
+
+#: screens/sui_stats_windows.lua:2805
+msgid "Tue"
+msgstr "Thứ Ba"
+
+#: modules/module_clock.lua:58
+msgid "Tuesday"
+msgstr "Thứ Ba"
+
+#: modules/module_clock.lua:318
+msgid "Twelve"
+msgstr "Mười hai"
+
+#: modules/module_clock.lua:324
+msgid "Twenty"
+msgstr "Hai mươi"
+
+#: modules/module_clock.lua:315
+msgid "Two"
+msgstr "Hai"
+
+#: modules/module_heatmap.lua:340 screens/sui_menu.lua:3140
+#: screens/sui_menu.lua:3207
+msgid "Type"
+msgstr "Loại"
+
+#: screens/sui_menu.lua:4290 screens/sui_menu.lua:4293
+msgid "UI Font"
+msgstr "Phông chữ giao diện"
+
+#: screens/sui_menu.lua:4297
+msgid "UI Font  (default)"
+msgstr "Phông chữ giao diện (mặc định)"
+
+#: screens/sui_menu.lua:4299
+msgid "UI Font  [%s]"
+msgstr "Phông chữ giao diện [%s]"
+
+#: screens/sui_menu.lua:3507
+msgid "Uniformize Covers (2:3)"
+msgstr "Đồng nhất hóa bìa (2:3)"
+
+#: screens/sui_stats_windows.lua:859
+msgid "Unknown error."
+msgstr "Lỗi không xác định."
+
+#: features/sui_style.lua:2043
+msgid "Unsupported format (use a folder or a .zip file)"
+msgstr "Định dạng không được hỗ trợ (sử dụng thư mục hoặc tệp .zip)"
+
+#: features/sui_quickactions.lua:107 features/sui_quickactions.lua:1868
+#: features/sui_style.lua:1059 features/sui_style.lua:1246
+msgid ""
+"Unsupported icon format.\n"
+"Please use a PNG or SVG file."
+msgstr ""
+"Định dạng biểu tượng không được hỗ trợ.\n"
+"Vui lòng sử dụng tệp PNG hoặc SVG."
+
+#: engines/sui_window.lua:1935 engines/sui_window.lua:2856
+msgid "Update"
+msgstr "Cập nhật"
+
+#: modules/module_reading_stats.lua:931 modules/module_reading_goals.lua:1607
+#: modules/module_coverdeck.lua:1762 modules/module_currently.lua:1982
+msgid "Update Stats Now"
+msgstr "Cập nhật thống kê ngay"
+
+#: infra/sui_updater.lua:465
+msgid "Update cancelled."
+msgstr "Đã hủy cập nhật."
+
+#: infra/sui_updater.lua:666
+msgid "Update check cancelled."
+msgstr "Đã hủy kiểm tra cập nhật."
+
+#: features/sui_presets.lua:905 screens/sui_menu.lua:4057
+msgid "Update with current settings"
+msgstr "Cập nhật với cài đặt hiện tại"
+
+#: screens/sui_menu.lua:4416
+msgid "Updater module not found."
+msgstr "Không tìm thấy mô-đun cập nhật."
+
+#: screens/sui_stats_windows.lua:3103
+msgid "Use freeze"
+msgstr "Dùng đóng băng"
+
+#: features/sui_quickactions.lua:2115
+msgid "Use this Nerd Font icon?"
+msgstr "Sử dụng biểu tượng Nerd Font này?"
+
+#: screens/sui_menu.lua:526
+msgid ""
+"Uses the standard KOReader pagination bar on the homescreen.\n"
+"Not available when Navpager is active."
+msgstr ""
+"Sử dụng thanh phân trang chuẩn KOReader trên màn hình chính.\n"
+"Không khả dụng khi Navpager đang hoạt động."
+
+#: screens/sui_settings_window.lua:366
+msgid "Version, author and updates"
+msgstr "Phiên bản, tác giả và cập nhật"
+
+#: screens/sui_menu.lua:4391
+msgid "Version: %s"
+msgstr "Phiên bản: %s"
+
+#: infra/sui_config.lua:1198
+msgid ""
+"Vertical space above this module.\n"
+"100% is the default spacing."
+msgstr ""
+"Khoảng cách dọc phía trên mô-đun này.\n"
+"100% là khoảng cách mặc định."
+
+#: modules/module_clock.lua:1231
+#, fuzzy
+msgid ""
+"Vertical space between items.\n"
+"100% is the default spacing."
+msgstr ""
+"Khoảng cách dọc phía trên mô-đun này.\n"
+"100% là khoảng cách mặc định."
+
+#: screens/sui_menu.lua:3029 screens/sui_menu.lua:3083
+#: screens/sui_menu.lua:3315
+msgid "Visibility"
+msgstr "Hiển thị"
+
+#: screens/sui_menu.lua:3025 screens/sui_menu.lua:3031
+#: screens/sui_menu.lua:3035 screens/sui_menu.lua:3079
+#: screens/sui_menu.lua:3085 screens/sui_menu.lua:3089
+msgid "Visible"
+msgstr "Hiển thị"
+
+#: screens/sui_stats_windows.lua:2726 screens/sui_stats_windows.lua:3364
+msgid "WEEK STREAK"
+msgstr "CHUỖI TUẦN"
+
+#: modules/module_clock.lua:332
+msgid "WORD_CLOCK_TENS_SEP"
+msgstr ""
+
+#: features/sui_backup.lua:134 screens/sui_menu.lua:2743
+#: screens/sui_settings_window.lua:396 screens/sui_settings_window.lua:402
+msgid "Wallpaper"
+msgstr "Hình nền"
+
+#: features/sui_backup.lua:135
+msgid "Wallpaper settings and image files"
+msgstr ""
+
+#: screens/sui_quicksettings_bar.lua:424 screens/sui_quicksettings_bar.lua:445
+#: screens/sui_quicksettings_bar.lua:456
+msgid "Warmth"
+msgstr "Độ ấm"
+
+#: screens/sui_quicksettings_bar.lua:1213
+msgid "Warmth Slider"
+msgstr "Thanh trượt độ ấm"
+
+#: screens/sui_menu.lua:2669
+msgid "Warn when modules on a page exceed the available screen height."
+msgstr "Cảnh báo khi mô-đun trên trang vượt quá chiều cao màn hình khả dụng."
+
+#: engines/sui_heatmap_widgets.lua:95 screens/sui_stats_windows.lua:2805
+msgid "Wed"
+msgstr "Thứ Tư"
+
+#: modules/module_clock.lua:58
+msgid "Wednesday"
+msgstr "Thứ Tư"
+
+#: modules/module_heatmap.lua:291 modules/module_heatmap.lua:295
+msgid "Weeks shown"
+msgstr "Số tuần hiển thị"
+
+#: screens/sui_onboarding.lua:234 screens/sui_onboarding.lua:235
+msgid "Welcome to Simple UI"
+msgstr "Chào mừng đến với Simple UI"
+
+#: infra/sui_updater.lua:493
+msgid "What's new:"
+msgstr "Có gì mới:"
+
+#: screens/sui_menu.lua:2694
+#, fuzzy
+msgid ""
+"When a finished book is deleted from the device (file or folder), keep it "
+"counted in the Books Read statistics on the Home Screen.\n"
+"\n"
+"Books changed back to Reading or Abandoned are automatically removed from "
+"this list."
+msgstr ""
+"Khi một cuốn sách đã đọc xong bị xóa khỏi thiết bị, vẫn tính nó trong thống "
+"kê Sách đã đọc ở Màn hình chính.\n"
+"\n"
+"Sách được đổi trở lại thành Đang đọc hoặc Đã bỏ sẽ tự động bị xóa khỏi danh "
+"sách này."
+
+#: screens/sui_menu.lua:2545
+msgid ""
+"When closing a book from the Home Screen, go back to the folder where the "
+"book is located instead of the Library home folder."
+msgstr ""
+"Khi đóng sách từ màn hình chính, quay lại thư mục chứa sách thay vì thư mục "
+"gốc thư viện."
+
+#: screens/sui_menu.lua:2681
+msgid ""
+"When enabled, long-pressing a module on the home screen opens its settings "
+"menu.\n"
+"Disable this to prevent settings from appearing on long tap."
+msgstr ""
+"Khi bật, nhấn giữ mô-đun trên màn hình chính mở menu cài đặt.\n"
+"Tắt để ngăn cài đặt xuất hiện khi nhấn giữ."
+
+#: screens/sui_quicksettings_bar.lua:1321
+msgid ""
+"When enabled, long-pressing the Quick Settings Bar opens its settings menu.\n"
+"Disable this to prevent the settings menu from appearing on long tap."
+msgstr ""
+"Khi bật, nhấn giữ thanh cài đặt nhanh mở menu cài đặt.\n"
+"Tắt để ngăn menu cài đặt xuất hiện khi nhấn giữ."
+
+#: screens/sui_menu.lua:1391
+msgid ""
+"When enabled, long-pressing the navigation bar opens its settings menu.\n"
+"Disable this to prevent the settings menu from appearing on long tap."
+msgstr ""
+"Khi bật, nhấn giữ thanh điều hướng sẽ mở menu cài đặt.\n"
+"Tắt để ngăn menu cài đặt xuất hiện khi nhấn giữ."
+
+#: screens/sui_menu.lua:1089
+msgid ""
+"When enabled, long-pressing the top bar opens its settings menu.\n"
+"Disable this to prevent the settings menu from appearing on long tap."
+msgstr ""
+"Khi bật, nhấn giữ thanh trên mở menu cài đặt.\n"
+"Tắt để ngăn menu cài đặt xuất hiện khi nhấn giữ."
+
+#: screens/sui_menu.lua:2436
+msgid ""
+"When waking the device from sleep/suspend, always return to the Home Screen "
+"— even if a book was open when it went to sleep."
+msgstr ""
+"Khi đánh thức thiết bị khỏi chế độ ngủ/tạm dừng, luôn quay lại Màn hình "
+"chính — ngay cả khi có sách đang mở lúc thiết bị vào chế độ ngủ."
+
+#: features/sui_quickactions.lua:898 infra/sui_config.lua:126
+msgid "Wi-Fi"
+msgstr "Wi-Fi"
+
+#: features/sui_quickactions.lua:283
+msgid "Wi-Fi off"
+msgstr "Tắt Wi-Fi"
+
+#: infra/sui_config.lua:168
+msgid "WiFi"
+msgstr "WiFi"
+
+#: features/sui_quickactions.lua:270
+msgid "WiFi not available on this device."
+msgstr "WiFi không khả dụng trên thiết bị này."
+
+#: features/sui_quickactions.lua:2274
+msgid "Wikipedia Lookup"
+msgstr "Tra cứu Wikipedia"
+
+#: modules/module_currently.lua:1958
+msgid "With percentage"
+msgstr "Với phần trăm"
+
+#: modules/module_clock.lua:1164 modules/module_clock.lua:1177
+msgid "Word"
+msgstr "Từ"
+
+#: screens/sui_stats_windows.lua:1217
+msgid "Yes"
+msgstr "Có"
+
+#: screens/sui_stats_windows.lua:3092
+msgid "Yesterday is already covered by a freeze."
+msgstr "Hôm qua đã được bù bằng đóng băng."
+
+#: screens/sui_stats_windows.lua:3090
+msgid "You already read yesterday — there's nothing to freeze."
+msgstr "Bạn đã đọc hôm qua rồi — không có gì để đóng băng."
+
+#: screens/sui_stats_windows.lua:3084
+msgid "You don't have any freezes available yet."
+msgstr "Bạn chưa có lượt đóng băng nào khả dụng."
+
+#: screens/sui_stats_windows.lua:3101
+msgid ""
+"You have %d freeze(s) available.\n"
+"Use one to cover %s?"
+msgstr ""
+"Bạn có %d lượt đóng băng khả dụng.\n"
+"Dùng một lượt để bù cho %s?"
+
+#: modules/module_quote.lua:1002
+msgid "Your highlights"
+msgstr "Đoạn đánh dấu của bạn"
+
+#: modules/module_reading_stats.lua:130
+msgid "abandoned"
+msgstr "đã bỏ"
+
+#: screens/sui_stats_windows.lua:416 screens/sui_stats_windows.lua:1424
+msgid "apr"
+msgstr "th4"
+
+#: screens/sui_stats_windows.lua:1428
+msgid "april"
+msgstr "tháng tư"
+
+#: screens/sui_stats_windows.lua:417 screens/sui_stats_windows.lua:1425
+msgid "aug"
+msgstr "th8"
+
+#: screens/sui_stats_windows.lua:1429
+msgid "august"
+msgstr "tháng tám"
+
+#: modules/module_reading_stats.lua:118 screens/sui_stats_windows.lua:2301
+msgid "books finished"
+msgstr "sách đã đọc"
+
+#: modules/module_reading_stats.lua:113
+msgid "daily avg (7 days)"
+msgstr "trung bình hàng ngày (7 ngày)"
+
+#: screens/sui_stats_windows.lua:417 screens/sui_stats_windows.lua:1425
+msgid "dec"
+msgstr "th12"
+
+#: screens/sui_stats_windows.lua:1429
+msgid "december"
+msgstr "tháng mười hai"
+
+#: features/sui_quickactions.lua:1860 features/sui_quickactions.lua:2928
+msgid "default"
+msgstr "mặc định"
+
+#: screens/sui_menu.lua:846 screens/sui_menu.lua:1118 screens/sui_menu.lua:1791
+#: screens/sui_menu.lua:4543 screens/sui_quicksettings_bar.lua:1118
+msgid "disabled"
+msgstr "đã tắt"
+
+#: features/sui_backup.lua:667
+#, fuzzy
+msgid "empty"
+msgstr "Trống"
+
+#: screens/sui_menu.lua:846 screens/sui_menu.lua:1118 screens/sui_menu.lua:1791
+#: screens/sui_menu.lua:4543 screens/sui_quicksettings_bar.lua:1118
+msgid "enabled"
+msgstr "đã bật"
+
+#: screens/sui_stats_windows.lua:416 screens/sui_stats_windows.lua:1424
+msgid "feb"
+msgstr "th2"
+
+#: screens/sui_stats_windows.lua:1428
+msgid "february"
+msgstr "tháng hai"
+
+#: features/sui_style.lua:1989
+msgid "ffi/archiver not available in this KOReader version"
+msgstr "ffi/archiver không khả dụng trong phiên bản KOReader này"
+
+#: features/sui_quickactions.lua:2134
+msgid "hex code, e.g. E001"
+msgstr "mã hex, ví dụ: E001"
+
+#: screens/sui_stats_windows.lua:1960 screens/sui_stats_windows.lua:2299
+msgid "hours read"
+msgstr "giờ đã đọc"
+
+#: modules/module_reading_stats.lua:129
+msgid "in progress"
+msgstr "đang tiến hành"
+
+#: screens/sui_stats_windows.lua:416 screens/sui_stats_windows.lua:1424
+msgid "jan"
+msgstr "th1"
+
+#: screens/sui_stats_windows.lua:1428
+msgid "january"
+msgstr "tháng một"
+
+#: screens/sui_stats_windows.lua:417 screens/sui_stats_windows.lua:1425
+msgid "jul"
+msgstr "th7"
+
+#: screens/sui_stats_windows.lua:1429
+msgid "july"
+msgstr "tháng bảy"
+
+#: screens/sui_stats_windows.lua:416 screens/sui_stats_windows.lua:1424
+msgid "jun"
+msgstr "th6"
+
+#: screens/sui_stats_windows.lua:1428
+msgid "june"
+msgstr "tháng sáu"
+
+#: infra/sui_updater.lua:680
+msgid "latest"
+msgstr "mới nhất"
+
+#: screens/sui_stats_windows.lua:416 screens/sui_stats_windows.lua:1424
+msgid "mar"
+msgstr "th3"
+
+#: screens/sui_stats_windows.lua:1428
+msgid "march"
+msgstr "tháng ba"
+
+#: screens/sui_stats_windows.lua:416 screens/sui_stats_windows.lua:1424
+#: screens/sui_stats_windows.lua:1428
+msgid "may"
+msgstr "th5"
+
+#: modules/module_reading_stats.lua:121
+msgid "no streak"
+msgstr "không có chuỗi"
+
+#: features/sui_quickactions.lua:1610 features/sui_quickactions.lua:3024
+#: features/sui_quickactions.lua:3043
+msgid "not configured"
+msgstr "chưa cấu hình"
+
+#: screens/sui_stats_windows.lua:417 screens/sui_stats_windows.lua:1425
+msgid "nov"
+msgstr "th11"
+
+#: screens/sui_stats_windows.lua:1429
+msgid "november"
+msgstr "tháng mười một"
+
+#: screens/sui_stats_windows.lua:417 screens/sui_stats_windows.lua:1425
+msgid "oct"
+msgstr "th10"
+
+#: screens/sui_stats_windows.lua:1429
+msgid "october"
+msgstr "tháng mười"
+
+#: modules/module_reading_stats.lua:115
+msgid "of reading this month"
+msgstr "đọc trong tháng này"
+
+#: modules/module_reading_stats.lua:111
+msgid "of reading this week"
+msgstr "đọc trong tuần này"
+
+#: modules/module_reading_stats.lua:109
+msgid "of reading today"
+msgstr "đọc hôm nay"
+
+#: modules/module_reading_stats.lua:117
+msgid "of reading, all time"
+msgstr "đọc, tổng cộng"
+
+#: features/sui_style.lua:2032
+msgid "pack_path not provided"
+msgstr "pack_path không được cung cấp"
+
+#: screens/sui_stats_windows.lua:2300 screens/sui_stats_windows.lua:2615
+msgid "pages read"
+msgstr "trang đã đọc"
+
+#: modules/module_reading_stats.lua:116
+msgid "pages read this month"
+msgstr "trang đọc tháng này"
+
+#: modules/module_reading_stats.lua:112
+msgid "pages read this week"
+msgstr "trang đọc tuần này"
+
+#: modules/module_reading_stats.lua:110
+msgid "pages read today"
+msgstr "trang đọc hôm nay"
+
+#: modules/module_reading_stats.lua:114
+msgid "pages/day (7 days)"
+msgstr "trang/ngày (7 ngày)"
+
+#: screens/sui_stats_windows.lua:2613
+msgid "reading time"
+msgstr "thời gian đọc"
+
+#: screens/sui_stats_windows.lua:417 screens/sui_stats_windows.lua:1425
+msgid "sep"
+msgstr "th9"
+
+#: screens/sui_stats_windows.lua:1429
+msgid "september"
+msgstr "tháng chín"
+
+#: modules/module_reading_stats.lua:128
+msgid "unread"
+msgstr "chưa đọc"
+
+#: infra/sui_updater.lua:682
+msgid "⬆ Update available: %s"
+msgstr "⬆ Có cập nhật: %s"
+
+#: modules/module_action_list.lua:333 modules/module_reading_stats.lua:889
+#: modules/module_quick_actions.lua:376 screens/sui_menu.lua:350
+#: screens/sui_menu.lua:1971
+msgid "  (%d left)"
+msgid_plural "  (%d left)"
+msgstr[0] "  (còn lại %d)"
+msgstr[1] "  (còn lại %d)"
+
+#: modules/module_reading_goals.lua:1304
+msgid "  Set Goal  (%d book in %s)"
+msgid_plural "  Set Goal  (%d books in %s)"
+msgstr[0] "  Đặt mục tiêu  (%d sách trong %s)"
+msgstr[1] "  Đặt mục tiêu  (%d sách trong %s)"
+
+#: modules/module_reading_goals.lua:819
+msgid "%d book"
+msgid_plural "%d books"
+msgstr[0] "%d sách"
+msgstr[1] "%d sách"
+
+#: modules/module_reading_goals.lua:1409
+msgid "%d book in %s"
+msgid_plural "%d books in %s"
+msgstr[0] "%d sách trong %s"
+msgstr[1] "%d sách trong %s"
+
+#: screens/sui_stats_windows.lua:1286
+msgid "%d book read in %s"
+msgid_plural "%d books read in %s"
+msgstr[0] "%d sách đọc trong %s"
+msgstr[1] "%d sách đọc trong %s"
+
+#: screens/sui_stats_windows.lua:2165 screens/sui_stats_windows.lua:2167
+msgid "%d day"
+msgid_plural "%d days"
+msgstr[0] "%d ngày"
+msgstr[1] "%d ngày"
+
+#: modules/module_coverdeck.lua:1078 modules/module_currently.lua:859
+#: modules/module_currently.lua:860 modules/module_currently.lua:940
+msgid "%d day of reading"
+msgid_plural "%d days of reading"
+msgstr[0] "%d ngày đọc"
+msgstr[1] "%d ngày đọc"
+
+#: screens/sui_stats_windows.lua:3410
+msgid "%d freeze available"
+msgid_plural "%d freezes available"
+msgstr[0] "%d lượt đóng băng khả dụng"
+msgstr[1] "%d lượt đóng băng khả dụng"
+
+#: modules/module_reading_goals.lua:1495
+msgid "%d in %s"
+msgid_plural "%d in %s"
+msgstr[0] "%d trong %s"
+msgstr[1] "%d trong %s"
+
+#: features/sui_quickactions.lua:1602 features/sui_quickactions.lua:3016
+#: features/sui_quickactions.lua:3037
+msgid "%d item"
+msgid_plural "%d items"
+msgstr[0] "%d mục"
+msgstr[1] "%d mục"
+
+#: screens/sui_stats_windows.lua:2185 screens/sui_stats_windows.lua:2187
+msgid "%d week"
+msgid_plural "%d weeks"
+msgstr[0] "%d tuần"
+msgstr[1] "%d tuần"
+
+#: modules/module_reading_goals.lua:817
+msgid "%d/%d book"
+msgid_plural "%d/%d books"
+msgstr[0] "%d/%d sách"
+msgstr[1] "%d/%d sách"
+
+#: modules/module_collections.lua:1575
+msgid "(%d collection)"
+msgid_plural "(%d collections)"
+msgstr[0] "(%d bộ sưu tập)"
+msgstr[1] "(%d bộ sưu tập)"
+
+#: modules/module_reading_stats.lua:387 modules/module_quick_actions.lua:486
+msgid "(%d/%d — %d left)"
+msgid_plural "(%d/%d — %d left)"
+msgstr[0] "(%d/%d — còn lại %d)"
+msgstr[1] "(%d/%d — còn lại %d)"
+
+#: features/sui_quickactions.lua:2508
+msgid "Group (%d item)"
+msgid_plural "Group (%d items)"
+msgstr[0] "Nhóm (%d mục)"
+msgstr[1] "Nhóm (%d mục)"
+
+#: modules/module_reading_goals.lua:1486
+msgid "Manually Tracked Books  (%d in %s)"
+msgid_plural "Manually Tracked Books  (%d in %s)"
+msgstr[0] "Sách theo dõi thủ công (%d trong %s)"
+msgstr[1] "Sách theo dõi thủ công (%d trong %s)"
+
+#: screens/sui_quicksettings_bar.lua:1094
+#: screens/sui_quicksettings_bar.lua:1180
+msgid "Maximum of %d slot reached. Remove one first."
+msgid_plural "Maximum of %d slots reached. Remove one first."
+msgstr[0] "Đã đạt tối đa %d ô. Vui lòng xóa bớt."
+msgstr[1] "Đã đạt tối đa %d ô. Vui lòng xóa bớt."
+
+#: screens/sui_menu.lua:644 screens/sui_menu.lua:906
+msgid ""
+"Text shown in the top bar.\n"
+"Maximum %d character."
+msgid_plural ""
+"Text shown in the top bar.\n"
+"Maximum %d characters."
+msgstr[0] ""
+"Chữ hiển thị trên thanh trên cùng.\n"
+"Tối đa %d ký tự."
+msgstr[1] ""
+"Chữ hiển thị trên thanh trên cùng.\n"
+"Tối đa %d ký tự."
+
+#: modules/module_action_list.lua:276 modules/module_action_list.lua:403
+#: modules/module_quick_actions.lua:323 modules/module_quick_actions.lua:455
+#: screens/sui_menu.lua:1936 screens/sui_menu.lua:2050
+msgid "The maximum of %d action per module has been reached. Remove one first."
+msgid_plural ""
+"The maximum of %d actions per module has been reached. Remove one first."
+msgstr[0] "Đã đạt tối đa %d thao tác mỗi mô-đun. Vui lòng xóa bớt."
+msgstr[1] "Đã đạt tối đa %d thao tác mỗi mô-đun. Vui lòng xóa bớt."
+
+#: features/sui_quickactions.lua:1672 features/sui_quickactions.lua:2981
+msgid "The maximum of %d quick action has been reached. Delete one first."
+msgid_plural ""
+"The maximum of %d quick actions has been reached. Delete one first."
+msgstr[0] "Đã đạt tối đa %d thao tác nhanh. Vui lòng xóa bớt."
+msgstr[1] "Đã đạt tối đa %d thao tác nhanh. Vui lòng xóa bớt."
+
+#: modules/module_reading_stats.lua:683 modules/module_reading_stats.lua:763
+msgid "The maximum of %d stat per row has been reached. Remove one first."
+msgid_plural ""
+"The maximum of %d stats per row has been reached. Remove one first."
+msgstr[0] "Đã đạt tối đa %d mục thống kê mỗi hàng. Vui lòng xóa bớt."
+msgstr[1] "Đã đạt tối đa %d mục thống kê mỗi hàng. Vui lòng xóa bớt."
+
+#: screens/sui_menu.lua:379 screens/sui_menu.lua:1229
+msgid "The maximum of %d tab has been reached. Remove one first."
+msgid_plural "The maximum of %d tabs has been reached. Remove one first."
+msgstr[0] "Đã đạt tối đa %d tab. Vui lòng xóa bớt."
+msgstr[1] "Đã đạt tối đa %d tab. Vui lòng xóa bớt."
+
+#: screens/sui_stats_windows.lua:1963
+msgid "day read"
+msgid_plural "days read"
+msgstr[0] "ngày đọc"
+msgstr[1] "ngày đọc"
+
+#: modules/module_reading_stats.lua:122
+msgid "day streak"
+msgid_plural "days streak"
+msgstr[0] "chuỗi ngày"
+msgstr[1] "chuỗi ngày"
+
+#: screens/sui_stats_windows.lua:1978
+msgid "page read"
+msgid_plural "pages read"
+msgstr[0] "trang đọc"
+msgstr[1] "trang đọc"
+
+#~ msgid "Accent / Active Color"
+#~ msgstr "Màu nhấn / Màu hoạt động"
+
+#~ msgid "Advanced"
+#~ msgstr "Nâng cao"
+
+#~ msgid "Advanced option"
+#~ msgstr "Tùy chọn nâng cao"
+
+#~ msgid "Battery Spacing"
+#~ msgstr "Khoảng cách pin"
+
+#~ msgid "Cool Mist"
+#~ msgstr "Sương mát"
+
+#~ msgid "Cover size"
+#~ msgstr "Kích thước bìa"
+
+#~ msgid "Dark Slate"
+#~ msgstr "Đá phiến đen"
+
+#~ msgid "Date Spacing"
+#~ msgstr "Khoảng cách ngày"
+
+#~ msgid "Do something"
+#~ msgstr "Làm điều gì đó"
+
+#~ msgid ""
+#~ "Enter a hex color (#RRGGBB). On greyscale e-ink the perceived brightness "
+#~ "is used."
+#~ msgstr ""
+#~ "Nhập mã màu hex (#RRGGBB). Trên màn hình e-ink, độ sáng tương ứng sẽ được "
+#~ "áp dụng."
+
+#~ msgid "Font weight"
+#~ msgstr "Độ đậm phông chữ"
+
+#~ msgid "Home Screen — Background"
+#~ msgstr "Màn hình chính — Nền"
+
+#~ msgid "Home Screen — Text"
+#~ msgstr "Màn hình chính — Chữ"
+
+#~ msgid "Maximum slots reached."
+#~ msgstr "Đã đạt số ô tối đa."
+
+#~ msgid "My Action"
+#~ msgstr "Thao tác của tôi"
+
+#~ msgid "Navigation Bar — Background"
+#~ msgstr "Thanh điều hướng — Nền"
+
+#~ msgid "Navigation Bar — Text and Icons"
+#~ msgstr "Thanh điều hướng — Chữ và biểu tượng"
+
+#~ msgid "Quick toggles"
+#~ msgstr "Chuyển đổi nhanh"
+
+#~ msgid "Reset All Theme Colors"
+#~ msgstr "Đặt lại tất cả màu chủ đề"
+
+#~ msgid "Secondary / Dim Text"
+#~ msgstr "Phụ / Chữ mờ"
+
+#~ msgid "Separator Line"
+#~ msgstr "Đường phân cách"
+
+#~ msgid "Sepia Classic"
+#~ msgstr "Nâu sẫm cổ điển"
+
+#~ msgid "Status Bar — Background"
+#~ msgstr "Thanh trạng thái — Nền"
+
+#~ msgid "Status Bar — Text"
+#~ msgstr "Thanh trạng thái — Chữ"
+
+#~ msgid "Tab order"
+#~ msgstr "Thứ tự tab"
+
+#~ msgid "Text Size — %d%%"
+#~ msgstr "Kích thước chữ — %d%%"
+
+#~ msgid "Text size"
+#~ msgstr "Kích thước chữ"
+
+#~ msgid "Theme Colors"
+#~ msgstr "Màu chủ đề"
+
+#~ msgid "Unknown Author"
+#~ msgstr "Tác giả không xác định"
+
+#~ msgid ""
+#~ "Vertical space between the clock and the date.\n"
+#~ "100% is the default spacing."
+#~ msgstr ""
+#~ "Khoảng cách dọc giữa đồng hồ và ngày.\n"
+#~ "100% là khoảng cách mặc định."
+
+#~ msgid ""
+#~ "Vertical space between the date (or clock) and the battery.\n"
+#~ "100% is the default spacing."
+#~ msgstr ""
+#~ "Khoảng cách dọc giữa ngày (hoặc đồng hồ) và pin.\n"
+#~ "100% là khoảng cách mặc định."
+
+#~ msgid "Warm Paper"
+#~ msgstr "Giấy tông ấm"
+
+#~ msgid "e.g. #F5F0E8  or #1C1C1E  (empty = reset)"
+#~ msgstr "ví dụ: #F5F0E8 hoặc #1C1C1E (để trống = đặt lại)"
+
+#~ msgid "Above"
+#~ msgstr "Phía trên"
+
+#~ msgid "Below"
+#~ msgstr "Phía dưới"
+
+#~ msgid "Bottom Bar"
+#~ msgstr "Thanh dưới"
+
+#~ msgid "Edit Layout"
+#~ msgstr "Chỉnh sửa bố cục"
+
+#~ msgid "Global custom quick actions  (%d/%d)"
+#~ msgstr "Thao tác nhanh tùy chỉnh toàn cục (%d/%d)"
+
+#~ msgid "Maximum 5 collections. Remove one first."
+#~ msgstr "Tối đa 5 bộ sưu tập. Vui lòng xóa bớt."
+
+#~ msgid "Percentage Overlay on Cover"
+#~ msgstr "Phần trăm lớp phủ trên bìa"
+
+#~ msgid "Percentage Text"
+#~ msgstr "Chữ phần trăm"
+
+#~ msgid "Percentage overlay on cover"
+#~ msgstr "Phần trăm lớp phủ trên bìa"
+
+#~ msgid "Percentage text"
+#~ msgstr "Chữ phần trăm"
+
+#~ msgid ""
+#~ "Scale for the collection thumbnails only.\n"
+#~ "The label text follows the module scale.\n"
+#~ "100% is the default size."
+#~ msgstr ""
+#~ "Tỷ lệ cho hình thu nhỏ bộ sưu tập.\n"
+#~ "Chữ nhãn theo tỷ lệ mô-đun.\n"
+#~ "100% là kích thước mặc định."
+
+#~ msgid "Title Position"
+#~ msgstr "Vị trí tiêu đề"
+
+#~ msgid "To Be Read list is full (max. 5 books)."
+#~ msgstr "Danh sách cần đọc đã đầy (tối đa 5 sách)."
+
+#~ msgid ""
+#~ "When enabled, long-pressing the bottom bar opens its settings menu.\n"
+#~ "Disable this to prevent the settings menu from appearing on long tap."
+#~ msgstr ""
+#~ "Khi bật, nhấn giữ thanh dưới mở menu cài đặt.\n"
+#~ "Tắt để ngăn menu cài đặt xuất hiện khi nhấn giữ."

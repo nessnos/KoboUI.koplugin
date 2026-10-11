@@ -247,13 +247,13 @@ function SimpleUIPlugin:init()
         local p_root = src:match("^@?(.+)/[^/]+$")
         if p_root then
             local ok, meta = pcall(dofile, p_root .. "/_meta.lua")
-            if ok and type(meta) == "table" and meta.name == "kindleui" then
+            if ok and type(meta) == "table" and meta.name == "koboui" then
                 current_version = meta.version
             end
         end
         if not current_version then
             local meta_ok, meta = pcall(require, "_meta")
-            if meta_ok and type(meta) == "table" and meta.name == "kindleui" then
+            if meta_ok and type(meta) == "table" and meta.name == "koboui" then
                 current_version = meta.version
             end
         end

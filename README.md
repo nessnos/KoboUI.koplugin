@@ -104,12 +104,19 @@ entries if you use a Bluetooth plugin.
 
 - **Tabs:** Books, Authors, Series, Collections (and Tags: **…** → *Show Tags tab*). The Library
   remembers the last tab.
-- **Filter:** All, Unread, Reading, Finished, with counts. It uses KOReader's book-status filter, so
-  it applies to every tab and is remembered (the Series bookshelf always shows everything).
+- **Filter:** All, Unread, Reading, Finished, with counts, like Kobo: *Finished* = marked Finished,
+  *Reading* = started (or On hold), *Unread* = never started. It applies to every tab and is
+  remembered (the Series bookshelf always shows everything).
 - **Sort:** Recent, Date added, Title, Author, Series, File size, File type. On Authors: Last name or
   First name.
-- **…:** Grid / List view, Group series, Reverse order, Bookshelf / Folder view (Series), Manage
+- **…:** Grid / List view (remembered **per tab**: e.g. a list for Authors, a grid for Books), Titles
+  under covers (per tab), Group series, Reverse order, Bookshelf / Folder view (Series), Manage
   collections (Collections), Show / Hide Tags tab.
+- **Kobo list view:** books show the cover, title, pages, series, author, and on the right Unread /
+  "19% Read" / Finished, the time left, file type and size, and **…** for the book menu. Authors, Series,
+  Collections and Tags are a plain list of names with the number of books.
+- **Titles under covers** (Settings → Library → *Titles Under Covers*): choose the tabs that show the
+  title or name under each cover — by default Authors, Series, Collections and Tags, not Books.
 - **Vertical scrolling** (on by default; Settings → Library): swipe up and down; Kobo's scrollbar on
   the right. The Series bookshelf scrolls sideways.
 - **Series bookshelf** (Settings → Library → *Series View Style*): spines on wooden shelves, coloured

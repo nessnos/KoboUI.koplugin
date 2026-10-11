@@ -3007,6 +3007,32 @@ SimpleUIPlugin.addToMainMenu = function(self, menu_items)
                 end,
             },
             {
+                text = _("Titles Under Covers"),
+                help_text = _("Which Library views show the title (or the author, series or collection name) under each cover, in grid view."),
+                sub_item_table_func = function()
+                    local FCv = require("features/library/sui_foldercovers")
+                    local labels = { books = _("Books"), author = _("Authors"), series = _("Series"),
+                                     collections = _("Collections"), tags = _("Tags") }
+                    local items = {}
+                    for _i, kind in ipairs(FCv.TITLE_VIEWS) do
+                        local k = kind
+                        items[#items + 1] = {
+                            text = labels[k], keep_menu_open = true,
+                            checked_func = function() return FCv.showTitlesIn(k) end,
+                            callback = function()
+                                FCv.setShowTitlesIn(k, not FCv.showTitlesIn(k))
+                                pcall(FCv.invalidateItemTableCache)
+                                local FM = package.loaded["apps/filemanager/filemanager"]
+                                if FM and FM.instance and FM.instance.file_chooser then
+                                    UIManager:nextTick(function() pcall(function() FM.instance.file_chooser:updateItems() end) end)
+                                end
+                            end,
+                        }
+                    end
+                    return items
+                end,
+            },
+            {
                 text = _("Accent Colour"),
                 help_text = _("The colour of the current tab (navigation bar and Library tabs), like Kobo's red on a colour screen. On a black-and-white screen it is always black."),
                 value_func = function()
@@ -4585,9 +4611,9 @@ SimpleUIPlugin.addToMainMenu = function(self, menu_items)
     local function makeAboutMenuItems(ctx_menu)
         local _plugin_dir = require("infra/sui_paths").getPluginDirNoSlash()
         local ok, Meta = pcall(dofile, _plugin_dir .. "/_meta.lua")
-        if not ok or type(Meta) ~= "table" or Meta.name ~= "kindleui" then
+        if not ok or type(Meta) ~= "table" or Meta.name ~= "koboui" then
             local rok, rmeta = pcall(require, "_meta")
-            Meta = (rok and type(rmeta) == "table" and rmeta.name == "kindleui" and rmeta) or {}
+            Meta = (rok and type(rmeta) == "table" and rmeta.name == "koboui" and rmeta) or {}
         end
         return {
             {

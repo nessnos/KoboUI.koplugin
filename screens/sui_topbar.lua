@@ -161,8 +161,15 @@ function M.TOPBAR_H()
         return math.floor(SUIStyle.FS_TITLE * _getTopbarScale())  -- 22: line height base (FS_TITLE)
     end)
 end
+local function _koboBar()
+    local ok, SB = pcall(require, "screens/kbo_statusbar")
+    return ok and SB.isEnabled()
+end
+
 function M.TOPBAR_FS()
     return _cached("topbar_fs", function()
+        -- KoboUI: Kobo's clock is small next to the icons
+        if _koboBar() then return math.floor(SUIStyle.FS_BODY * 0.78 * _getTopbarScale()) end
         return math.floor(SUIStyle.FS_BODY * _getTopbarScale())   -- 18: text size (FS_BODY)
     end)
 end
@@ -173,6 +180,8 @@ function M.TOPBAR_CHEVRON_FS()
 end
 function M.TOPBAR_PAD_TOP()
     return _cached("tb_pad_top", function()
+        -- KoboUI: more room above, so an open icon's black circle isn't cut off
+        if _koboBar() then return math.floor(Screen:scaleBySize(30) * _getTopbarScale()) end
         return math.floor(Screen:scaleBySize(20) * _getTopbarScale())
     end)
 end

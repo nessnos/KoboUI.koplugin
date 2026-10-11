@@ -200,7 +200,8 @@ function M.paintIcon(bb, key, r, info, inverted, size)
     local cx, cy = r.x + math.floor(r.w / 2), r.y + math.floor(r.h / 2)
     local fg = Blitbuffer.COLOR_BLACK
     if inverted then
-        local rad = math.floor(math.min(r.w, r.h * 1.2) / 2)
+        -- the circle must stay inside the bar (never cut off at the top)
+        local rad = math.floor(math.min(r.w, r.h - 2 * math.max(2, S(3))) / 2)
         D.disc(bb, cx, cy, rad, Blitbuffer.COLOR_BLACK)
         fg = Blitbuffer.COLOR_WHITE
     end
@@ -243,7 +244,7 @@ end
 --- The right-hand group of icons for the status bar.
 function M.buildIcons(info, bar_h, fs)
     M._rects = {}
-    local size = math.max(S(14), math.floor(bar_h * 0.6))
+    local size = math.max(S(14), math.floor(bar_h * 0.64))
     local cell_w = size + S(24)
     local g = HorizontalGroup:new{ align = "center" }
     for _i, it in ipairs(M.getItems()) do

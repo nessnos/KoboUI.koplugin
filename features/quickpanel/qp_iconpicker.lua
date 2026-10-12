@@ -11,6 +11,7 @@ qp_iconpicker.lua — KoboUI: a full-screen grid for choosing an icon.
     │  ‹   Page 3 of 58   ›      [ Default ]   │
     └──────────────────────────────────────────┘
 
+Line:    thin line icons matching the status bar's own (icons/line).
 Symbols: every symbol in KOReader's icon font (searchable by name).
 Images:  KoboUI's icons, your own icons (settings/simpleui/sui_icons) and
          KOReader's built-in icons.
@@ -115,6 +116,19 @@ local function scanDir(dir, out, seen)
     end
 end
 
+-- KoboUI: thin line icons drawn like the status bar's own (icons/line).
+local _lines
+local function lines()
+    if _lines then return _lines end
+    _lines = {}
+    local pd = pluginDir()
+    if pd then
+        local seen = {}
+        scanDir(pd .. "/icons/line", _lines, seen)
+    end
+    return _lines
+end
+
 local function images()
     local out, seen = {}, {}
     local pd = pluginDir()
@@ -162,7 +176,9 @@ local IconPicker = InputContainer:extend{
 
 function IconPicker:init()
     self.dimen = Geom:new{ x = 0, y = 0, w = Screen:getWidth(), h = Screen:getHeight() }
-    self.tab = (self.current and not self.current:match("^nerd:")) and "images" or "symbols"
+    if not self.current or self.current:find("/icons/line/", 1, true) then self.tab = "line"
+    elseif self.current:match("^nerd:") then self.tab = "symbols"
+    else self.tab = "images" end
     self.filter = ""
     self.page = 1
     self.ges_events = {
@@ -174,7 +190,7 @@ function IconPicker:init()
 end
 
 function IconPicker:_list()
-    local src = self.tab == "images" and images() or symbols()
+    local src = (self.tab == "images" and images()) or (self.tab == "line" and lines()) or symbols()
     if self.filter == "" then return src end
     local out = {}
     local f = self.filter:lower()
@@ -201,14 +217,18 @@ function IconPicker:_rebuild()
 
     -- tabs + search
     local bh = S(44)
-    local tab_w = math.floor(inner * 0.24)
-    local search_w = inner - tab_w * 2 - S(24)
+    local tab_w = math.floor(inner * 0.2)
+    local search_w = inner - tab_w * 3 - S(36)
     local function add(hg, w, widget, fn)
         local h = Hit:new{ w = w, h = bh, child = widget, on_tap = fn }
         self._hits[#self._hits + 1] = h
         hg[#hg + 1] = h
     end
     local top = HorizontalGroup:new{ align = "center", HorizontalSpan:new{ width = pad } }
+    add(top, tab_w, pillButton(_("Line"), tab_w, bh, self.tab == "line"), function()
+        self.tab = "line"; self.page = 1; self:_redraw()
+    end)
+    top[#top + 1] = HorizontalSpan:new{ width = S(12) }
     add(top, tab_w, pillButton(_("Symbols"), tab_w, bh, self.tab == "symbols"), function()
         self.tab = "symbols"; self.page = 1; self:_redraw()
     end)

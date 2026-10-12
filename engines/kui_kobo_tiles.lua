@@ -456,7 +456,7 @@ function M.buildTile(src, d, ctx, opts)
     }
     local sub_w = TextWidget:new{
         text = sub_text,
-        face = Font:getFace(SUIStyle.FACE_REGULAR, d.sub_fs),
+        face = require("infra/kbo_fonts").face(d.sub_fs),  -- KoboUI: sans-serif count
         fgcolor = UI.CLR_TEXT_SUB or Blitbuffer.COLOR_DARK_GRAY,
         max_width = d.tile_w,
         truncate_with_ellipsis = true,

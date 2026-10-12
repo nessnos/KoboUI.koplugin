@@ -125,8 +125,8 @@ end
 
 local function paintTabs(bb, x, y, w, h, current)
     bb:paintRect(x, y, w, h, WHITE)
-    local Font = require("ui/font")
-    local face = Font:getFace("cfont", 18)
+    -- KoboUI: the tabs use the sans-serif label font
+    local KF = require("infra/kbo_fonts")
     local pad = require("infra/sui_core").SIDE_M and require("infra/sui_core").SIDE_M() or S(16)
     local gap = S(30)
     local cx = x + pad
@@ -134,7 +134,8 @@ local function paintTabs(bb, x, y, w, h, current)
     local accent = Accent.color()
     for _i, t in ipairs(M.tabs()) do
         local on = t.id == current
-        local tw = Accent.text{ text = t.label, face = face, bold = on, fgcolor = on and accent or BLACK, padding = 0 }
+        local tw = Accent.text{ text = t.label, face = KF.face(18, on), bold = on and not KF.hasBold(),
+            fgcolor = on and accent or BLACK, padding = 0 }
         local sz = tw:getSize()
         local ty = y + math.floor((h - sz.h) / 2) - S(2)
         tw:paintTo(bb, cx, ty)
@@ -269,10 +270,43 @@ end
 M.FILTER_KEY = "koboui_lib_filter"
 M._filter_off = 0   -- > 0 while something needs every book (counts, bookshelf)
 
+-- KoboUI: the filter is multiple choice — any of Unread / Reading /
+-- Finished can be ticked (none or all three = All). Stored as a list,
+-- e.g. { "unread", "reading" }; an older single value is read too.
+local STATES = { "unread", "reading", "finished" }
+
+--- The ticked states as a set, or nil for All.
+function M.currentFilterSet()
+    local v = SUISettings:readSetting(M.FILTER_KEY)
+    local set, n = {}, 0
+    if type(v) == "table" then
+        for _i, k in ipairs(v) do if k == "unread" or k == "reading" or k == "finished" then set[k] = true end end
+    elseif v == "notfinished" then
+        set = { unread = true, reading = true }
+    elseif v == "unread" or v == "reading" or v == "finished" then
+        set[v] = true
+    end
+    for _k in pairs(set) do n = n + 1 end
+    if n == 0 or n == #STATES then return nil end
+    return set
+end
+
+--- "all", or the one ticked state, or "multi".
 function M.currentFilter()
-    local f = SUISettings:readSetting(M.FILTER_KEY)
-    if f == "unread" or f == "reading" or f == "finished" then return f end
-    return "all"
+    local set = M.currentFilterSet()
+    if not set then return "all" end
+    local only, n = nil, 0
+    for k in pairs(set) do only = k; n = n + 1 end
+    return n == 1 and only or "multi"
+end
+
+--- Label for the Filter control: "All", "Unread", "Unread, Reading"…
+function M.filterLabel()
+    local set = M.currentFilterSet()
+    if not set then return _("All") end
+    local parts = {}
+    for _i, f in ipairs(FILTERS) do if set[f.id] then parts[#parts + 1] = f.label end end
+    return table.concat(parts, ", ")
 end
 
 local function refreshLibrary(fc)
@@ -286,12 +320,27 @@ local function refreshLibrary(fc)
     end
 end
 
-function M.setFilter(id)
-    if id == "all" then SUISettings:delSetting(M.FILTER_KEY) else SUISettings:saveSetting(M.FILTER_KEY, id) end
+local function applyFilterSet(set)
+    local list = {}
+    for _i, k in ipairs(STATES) do if set and set[k] then list[#list + 1] = k end end
+    if #list == 0 or #list == #STATES then SUISettings:delSetting(M.FILTER_KEY)
+    else SUISettings:saveSetting(M.FILTER_KEY, list) end
     pcall(function() require("features/library/kui_status_filter").invalidate() end)
     M.invalidateCounts()
     local fm = fmInstance()
     refreshLibrary(fm and fm.file_chooser)
+end
+
+--- "all" clears the filter; a state id shows only that state.
+function M.setFilter(id)
+    if id == "all" then applyFilterSet(nil) else applyFilterSet({ [id] = true }) end
+end
+
+--- Ticks / unticks one state (multiple choice).
+function M.toggleFilter(id)
+    local set = M.currentFilterSet() or {}
+    if set[id] then set[id] = nil else set[id] = true end
+    applyFilterSet(set)
 end
 
 --- Runs fn with the Kobo filter (and KOReader's status filter) switched off.
@@ -317,8 +366,8 @@ function M.installFilter()
     FileChooser.show_file = function(self, filename, fullpath)
         if not orig(self, filename, fullpath) then return false end
         if fullpath and self.name == "filemanager" and M._filter_off == 0 and M.isEnabled() then
-            local f = M.currentFilter()
-            if f ~= "all" and M.classify(fullpath) ~= f then return false end
+            local set = M.currentFilterSet()
+            if set and not set[M.classify(fullpath)] then return false end
         end
         return true
     end
@@ -462,10 +511,7 @@ local function controlsFor(view, fc)
     local ctl = {}
     local shelf = fc and fc._kui_shelf_on
     if not shelf then
-        local f = M.currentFilter()
-        local flabel
-        for _i, d in ipairs(FILTERS) do if d.id == f then flabel = d.label end end
-        ctl[#ctl + 1] = { id = "filter", text = string.format(_("Filter: %s"), flabel) }
+        ctl[#ctl + 1] = { id = "filter", text = string.format(_("Filter: %s"), M.filterLabel()) }
     end
     if view == "normal" then
         ctl[#ctl + 1] = { id = "sort", text = string.format(_("Sort: %s"), currentSort().label) }
@@ -568,24 +614,51 @@ end
 -- ---------------------------------------------------------------------------
 -- The menus
 -- ---------------------------------------------------------------------------
+-- Multiple choice: "All" clears the filter; Unread / Reading / Finished
+-- each tick on and off (the drop-down stays open, the list updates below).
 local function filterRows(row)
     local Dd = D()
     local c = counts(row.fc)
-    local cur = M.currentFilter()
-    local rows = {}
+    local rows, opts_by_id = {}, {}
+    local function sync()
+        local set = M.currentFilterSet()
+        for id, o in pairs(opts_by_id) do
+            if id == "all" then o.check = set == nil
+            else o.check = set ~= nil and set[id] == true end
+        end
+    end
     for i, f in ipairs(FILTERS) do
         local id = f.id
-        rows[#rows + 1] = Dd.itemRow{
-            text = f.label, face = "italic", check = cur == id, right = tostring(c[id] or 0),
+        local o = {
+            text = f.label, face = "italic", check = false, right = tostring(c[id] or 0),
             sep = i < #FILTERS, height = S(64),
-            tap = function(dd)
-                dd:close()
-                UIManager:nextTick(function() M.setFilter(id) end)
-                return true
-            end,
         }
+        opts_by_id[id] = o
+        o.tap = function(dd)
+            dd:close()
+            UIManager:nextTick(function()
+                if id == "all" then M.setFilter("all") else M.toggleFilter(id) end
+                -- open it again (with the new "Filter: …" label), so more
+                -- states can be ticked
+                if id ~= "all" then
+                    UIManager:scheduleIn(0.15, function()
+                        local fm = fmInstance()
+                        local fc = fm and fm.file_chooser
+                        local r = fc and fc.item_group and fc.item_group[1]
+                        if r and r.ctls then
+                            for _j, c2 in ipairs(r.ctls) do
+                                if c2.id == "filter" and c2.x then M.openMenu(c2, r); break end
+                            end
+                        end
+                    end)
+                end
+            end)
+            return true
+        end
+        rows[#rows + 1] = Dd.itemRow(o)
         if i == 1 then rows[#rows].sep = true end
     end
+    sync()
     return rows
 end
 
@@ -654,7 +727,7 @@ local function moreRows(row)
     if ok_bim and fm and fm.coverbrowser and not (fm.file_chooser and fm.file_chooser._kui_shelf_on) then
         local mode = bim:getSetting("filemanager_display_mode")
         local grid = mode and mode:find("^mosaic") ~= nil
-        act(grid and _("List view") or _("Grid view"), function()
+        act(grid and _("List view") or _("Cover view"), function()
             -- KoboUI: only for this tab
             local kind = (view == "normal") and "books" or view
             M.setModeFor(kind, grid and "list" or "grid")

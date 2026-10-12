@@ -678,9 +678,10 @@ function QARenderer.buildTabCell(action_id, active, spec)
         -- default extra space above and below the text
         local label_w = Accent.text{
             text    = entry.label,
-            face    = Font():getFace(style.FACE_REGULAR, spec.label_fs),
+            -- KoboUI: the navigation bar uses the sans-serif label font
+            face    = require("infra/kbo_fonts").face(spec.label_fs, active),
             fgcolor = item_fg,
-            bold    = active or false,
+            bold    = (active and not require("infra/kbo_fonts").hasBold()) or false,
             padding = 0,
         }
         if spec.group_chevron then
@@ -700,8 +701,8 @@ function QARenderer.buildTabCell(action_id, active, spec)
             if label_w:getSize().w > maxw then
                 label_w:free()
                 label_w = Accent.text{
-                    text = entry.label, face = Font():getFace(style.FACE_REGULAR, spec.label_fs),
-                    fgcolor = item_fg, bold = active or false, padding = 0,
+                    text = entry.label, face = require("infra/kbo_fonts").face(spec.label_fs, active),
+                    fgcolor = item_fg, bold = (active and not require("infra/kbo_fonts").hasBold()) or false, padding = 0,
                     max_width = maxw, truncate_with_ellipsis = true,
                 }
             end
@@ -738,7 +739,12 @@ function QARenderer.buildTabCell(action_id, active, spec)
             line.dimen = Geom():new{ w = spec.tab_w, h = spec.indic_h }
             line.overlap_offset = { 0, 0 }
             function line:getSize() return Geom():new{ w = spec.tab_w, h = spec.indic_h } end
-            function line:paintTo(bb, x, y) Accent.rect(bb, x, y, spec.tab_w, spec.indic_h, item_fg) end
+            -- Painted from the bar's separator line down, so the accent sits
+            -- on top of the black rule (like Kobo) instead of under it.
+            local over = spec.sep_h or 0
+            function line:paintTo(bb, x, y)
+                Accent.rect(bb, x, y - over, spec.tab_w, spec.indic_h + over, item_fg)
+            end
             og[#og + 1] = line
         elseif spec.inactive_indicator_color then
             og[#og + 1] = LineWidget():new{

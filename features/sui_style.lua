@@ -1777,6 +1777,12 @@ end
 --- Returns the sub_item_table for Style ▸ UI Font.
 --- Never throws: any internal error is caught and surfaced as a disabled
 --- "unavailable" entry so the menu always opens.
+--- KoboUI: installed font families { name, … } and { name = {regular, bold} }.
+function M.fontFamilies()
+    pcall(_ensureFonts)
+    return _font_list or {}, _fonts or {}
+end
+
 function M.makeFontMenuItems()
     local ok_ef, err_ef = pcall(_ensureFonts)
     if not ok_ef then

@@ -675,7 +675,7 @@ local function _registerBuiltins()
         -- ── Navigation actions ──────────────────────────────────────────────
         {
             id    = "home",
-            label = _("Library"),
+            label = _("My Books"),
             icon  = Config.ICON.library,
             is_in_place = false,
             execute = function(ctx)

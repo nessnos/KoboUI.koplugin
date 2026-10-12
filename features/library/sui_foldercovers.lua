@@ -152,13 +152,23 @@ function M.setOverlaySeries(v) _setFlag(SK.overlay_series, v)               end
 function M.getOverlayProgress()  return SUISettings:readSetting(SK.overlay_progress) ~= false end
 function M.setOverlayProgress(v) _setFlag(SK.overlay_progress, v)                              end
 
+-- KoboUI: size of "19% Read" / "Unread" / "Finished" under the covers
+-- (progress mode "bar"). Font size before screen scaling.
+M.STATUS_FS_DEF, M.STATUS_FS_MIN, M.STATUS_FS_MAX = 16, 12, 28
+function M.getStatusTextSize()
+    local v = tonumber(SUISettings:readSetting("koboui_cover_status_fs"))
+    if not v then return M.STATUS_FS_DEF end
+    return math.max(M.STATUS_FS_MIN, math.min(M.STATUS_FS_MAX, math.floor(v)))
+end
+function M.setStatusTextSize(v) SUISettings:saveSetting("koboui_cover_status_fs", v) end
+
 function M.getProgressMode() return SUISettings:readSetting(SK.progress_mode) or "banner" end
 function M.setProgressMode(v)
     SUISettings:saveSetting(SK.progress_mode, v)
     _setFlag(SK.overlay_progress, v == "banner")
     if v == "banner" then
         G_reader_settings:saveSetting("collection_show_mark", false)
-    elseif v == "native" or v == "none" then
+    elseif v == "native" or v == "none" or v == "bar" then
         G_reader_settings:saveSetting("collection_show_mark", true)
     end
 end
@@ -337,6 +347,13 @@ function M.getProgressModeMenuItems()
             text_func    = function() return _("Banner") end,
             checked_func = function() return M.getProgressMode() == "banner" end,
             callback     = function() _set("banner") end,
+        },
+        {
+            -- KoboUI: a thin bar with the % under the cover, like the
+            -- Featured Collection module.
+            text_func    = function() return _("Progress bar under the cover") end,
+            checked_func = function() return M.getProgressMode() == "bar" end,
+            callback     = function() _set("bar") end,
         },
         {
             text_func    = function() return _("Native") end,
@@ -910,6 +927,8 @@ local function _installStripPatch(MosaicMenuItem, BookInfoManager, _STRIP_H,
                 -- Folders: render the folder name centred in the strip.
                 if self.is_directory then
                     local name = self.text and self.text:gsub("/$", "") or ""
+                    -- only the alignment space (no title under covers here)
+                    if not _show_title_strip then return end
                     if name == "" then return end
                     local strip_bb = Blitbuffer_s.new(self.width, _STRIP_H, bb:getType())
                     strip_bb:fill(Blitbuffer_s.COLOR_WHITE)
@@ -923,9 +942,11 @@ local function _installStripPatch(MosaicMenuItem, BookInfoManager, _STRIP_H,
                         truncate_with_ellipsis = true,
                     }
                     local tsz = tw:getSize()
+                    -- (with the progress row reserved, the name sits in the title part above it)
+                    local name_h = _STRIP_H - ((self._kbo_strip_b and M._barRow) and M._barRow() or 0)
                     tw:paintTo(strip_bb,
                         math.floor((self.width - tsz.w) / 2),
-                        math.floor((_STRIP_H  - tsz.h) / 2))
+                        math.max(0, math.floor((name_h - tsz.h) / 2)))
                     tw:free()
                     self._simpleui_strip_bb = strip_bb
 
@@ -967,16 +988,17 @@ local function _installStripPatch(MosaicMenuItem, BookInfoManager, _STRIP_H,
                             end
                         end
                     end
-                    if not self._simpleui_strip_data then return end
+                    if not self._simpleui_strip_data and not self._kbo_strip_b then return end
+                    local sdata = self._simpleui_strip_data or {}
 
                     local strip_bb = Blitbuffer_s.new(self.width, _STRIP_H, bb:getType())
                     strip_bb:fill(Blitbuffer_s.COLOR_WHITE)
                     local text_w = self.width - 2 * PAD_H_S
                     local cur_y  = PAD_S
 
-                    if _show_title_strip and self._simpleui_strip_data.title then
+                    if _show_title_strip and sdata.title then
                         local tw = TextWidget_s:new{
-                            text                   = BD_s.auto(self._simpleui_strip_data.title),
+                            text                   = BD_s.auto(sdata.title),
                             face                   = Font_s:getFace(SUIStyle.FACE_REGULAR, TITLE_FONT_S),
                             bold                   = true,
                             padding                = 0,
@@ -990,9 +1012,9 @@ local function _installStripPatch(MosaicMenuItem, BookInfoManager, _STRIP_H,
                         if _show_author_strip then cur_y = cur_y + TITLE_LINE_S + GAP_S end
                     end
 
-                    if _show_author_strip and self._simpleui_strip_data.authors then
+                    if _show_author_strip and sdata.authors then
                         local aw = TextWidget_s:new{
-                            text                   = BD_s.auto(self._simpleui_strip_data.authors),
+                            text                   = BD_s.auto(sdata.authors),
                             face                   = Font_s:getFace(SUIStyle.FACE_REGULAR, AUTHOR_FONT_S),
                             bold                   = false,
                             padding                = 0,
@@ -1003,6 +1025,49 @@ local function _installStripPatch(MosaicMenuItem, BookInfoManager, _STRIP_H,
                         local asz = aw:getSize()
                         aw:paintTo(strip_bb, math.floor((self.width - asz.w) / 2), cur_y)
                         aw:free()
+                    end
+
+                    -- KoboUI: progress bar, then "19% Read" / "Unread" / "Finished"
+                    if self._kbo_strip_b then
+                        local KF = require("infra/kbo_fonts")
+                        local state = "unread"
+                        pcall(function()
+                            state = require("features/library/kbo_library_header").classify(self.filepath)
+                        end)
+                        local pct = 0
+                        if state == "finished" then pct = 1
+                        elseif state == "reading" then pct = tonumber(self.percent_finished) or 0 end
+                        local label
+                        if state == "finished" then label = _("Finished")
+                        elseif state == "reading" then
+                            label = string.format(_("%d%% Read"), math.floor(pct * 100 + 0.5))
+                        else label = _("Unread") end
+                        local row = M._barRow and M._barRow() or Screen_s:scaleBySize(30)
+                        local bar_h = M._BAR_H or 3
+                        local ry = _STRIP_H - row + PAD_S
+                        local cover_w
+                        pcall(function() cover_w = self._underline_container[1][1]:getSize().w end)
+                        cover_w = math.min(cover_w or self.width, self.width - 2 * PAD_H_S)
+                        local x0 = math.floor((self.width - cover_w) / 2)
+                        -- the bar only while reading; Unread / Finished are just the word
+                        if state == "reading" then
+                            strip_bb:paintRect(x0, ry, cover_w, bar_h, Blitbuffer_s.COLOR_LIGHT_GRAY)
+                            local fill = math.floor(cover_w * math.max(0, math.min(1, pct)) + 0.5)
+                            if fill > 0 then strip_bb:paintRect(x0, ry, fill, bar_h, Blitbuffer_s.COLOR_BLACK) end
+                        end
+                        -- the label in the UI font, left-aligned under the bar
+                        local tw = TextWidget_s:new{
+                            text = label, face = Font_s:getFace(SUIStyle.FACE_REGULAR, M.getStatusTextSize()), padding = 0,
+                            fgcolor = Blitbuffer_s.COLOR_BLACK,
+                            -- left-aligned with the cover (like Kobo); may run past
+                            -- the cover's right edge, up to the cell's
+                            max_width = math.max(cover_w, self.width - x0 - Screen_s:scaleBySize(2)), truncate_with_ellipsis = true,
+                        }
+                        local tsz = tw:getSize()
+                        -- reading: under the bar; Unread / Finished: in the bar's place
+                        local ty = (state == "reading") and (ry + bar_h + (M._BAR_GAP or 4)) or ry
+                        tw:paintTo(strip_bb, x0, ty)
+                        tw:free()
                     end
 
                     self._simpleui_strip_bb = strip_bb
@@ -1118,13 +1183,40 @@ function M.install()
         _TITLE_LINE  = _mh(SUIStyle.FS_DETAIL, true)
         _AUTHOR_LINE = _mh(SUIStyle.FS_CAPTION, false)
     end
+    -- KoboUI: progress row under book covers (progress mode "bar"):
+    -- a thin bar, then "19% Read" / "Unread" / "Finished" under it.
+    local _BAR_H, _BAR_GAP
+    local _bar_rows = {}
+    do
+        local Scr = require("device").screen
+        _BAR_H = math.max(2, Scr:scaleBySize(3))
+        _BAR_GAP = Scr:scaleBySize(4)
+    end
+    -- height of the progress row for the current text size (cached per size)
+    local function _barRow()
+        local fs = M.getStatusTextSize()
+        if not _bar_rows[fs] then
+            local tw = require("ui/widget/textwidget"):new{ text = "Ag",
+                face = require("ui/font"):getFace(SUIStyle.FACE_REGULAR, fs), padding = 0 }
+            _bar_rows[fs] = _STRIP_PAD + _BAR_H + _BAR_GAP + tw:getSize().h + _STRIP_PAD
+            tw:free()
+        end
+        return _bar_rows[fs]
+    end
+    M._barRow, M._BAR_H, M._BAR_GAP = _barRow, _BAR_H, _BAR_GAP
     local function _stripFor(item)
         local kind = M.itemViewKind(item)
-        if not M.showTitlesIn(kind) then return 0, false, false end
         local is_book = (item.entry and item.entry.is_file) or item.is_file
+        local bar = (is_book and M.getProgressMode() == "bar") and true or false
+        -- KoboUI: a folder among books (e.g. a series group in Books) keeps
+        -- the same empty space under it, so its cover lines up at the top
+        -- with the book covers next to it.
+        if not is_book and kind == "books" and M.getProgressMode() == "bar" then bar = true end
+        local h = bar and _barRow() or 0
+        if not M.showTitlesIn(kind) then return h, false, false, bar end
         local author = is_book and M.getShowAuthorStrip() or false
-        local h = _STRIP_PAD + _TITLE_LINE + (author and (_STRIP_GAP + _AUTHOR_LINE) or 0) + _STRIP_PAD
-        return h, true, author
+        h = h + _STRIP_PAD + _TITLE_LINE + (author and (_STRIP_GAP + _AUTHOR_LINE) or 0) + _STRIP_PAD
+        return h, true, author, bar
     end
     M._stripFor = _stripFor
     local _STRIP_H = 1 -- KoboUI: the strip patch is always installed; heights are per cell
@@ -1137,9 +1229,9 @@ function M.install()
     function MosaicMenuItem:init()
         -- Shrink cell height so orig_init lays out the cover within the reduced
         -- space, leaving the strip area free below.
-        local ok_sf, sh, st, sa = pcall(_stripFor, self)
-        if not ok_sf then sh, st, sa = 0, false, false end
-        self._kbo_strip_h, self._kbo_strip_t, self._kbo_strip_a = sh, st, sa
+        local ok_sf, sh, st, sa, sb = pcall(_stripFor, self)
+        if not ok_sf then sh, st, sa, sb = 0, false, false, false end
+        self._kbo_strip_h, self._kbo_strip_t, self._kbo_strip_a, self._kbo_strip_b = sh, st, sa, sb
         if sh > 0 and self.height then
             self.height = self.height - sh
         end
@@ -1158,6 +1250,7 @@ function M.install()
     end
 
     MosaicMenuItem._simpleui_fc_patched     = true
+
     MosaicMenuItem._simpleui_fc_orig_update = MosaicMenuItem.update
 
     local original_update = MosaicMenuItem.update
@@ -1779,7 +1872,7 @@ function M.install()
         -- Fields are temporarily nil'd before orig_paintTo and restored after.
         local _saved_hint, _saved_icon, _saved_menu_name, _saved_been_opened
         local _progress_mode = M.getProgressMode()
-        if (_progress_mode == "banner" or _progress_mode == "none") and not self.is_directory then
+        if (_progress_mode == "banner" or _progress_mode == "none" or _progress_mode == "bar") and not self.is_directory then
             _saved_hint = self.do_hint_opened; self.do_hint_opened = false
 
             if _progress_mode == "banner" then
@@ -1808,7 +1901,7 @@ function M.install()
 
         orig_paintTo(self, bb, x, y)
 
-        if (_progress_mode == "banner" or _progress_mode == "none") and not self.is_directory then
+        if (_progress_mode == "banner" or _progress_mode == "none" or _progress_mode == "bar") and not self.is_directory then
             self.do_hint_opened = _saved_hint
             if _progress_mode == "banner" then
                 self.shortcut_icon = _saved_icon

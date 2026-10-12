@@ -90,7 +90,7 @@ function BookRow:paintTo(bb, x, y)
     -- cover
     local cover_h = math.floor(h * 0.84)
     local cover_w = math.floor(cover_h * 2 / 3)
-    local cx, cy = x + pad, y + math.floor((h - cover_h) / 2)
+    local cx, cy = x + S(28), y + math.floor((h - cover_h) / 2)
     local drew = false
     pcall(function()
         local bim = require("bookinfomanager")
@@ -124,16 +124,30 @@ function BookRow:paintTo(bb, x, y)
     local right_w = math.floor(self.width * 0.30)
     local ry = y + math.floor(h * 0.10)
     local small = face("cfont", 13)
-    local tiny = face("cfont", 12)
+    -- KoboUI: details in the sans-serif label font
+    local KF = require("infra/kbo_fonts")
+    local tiny = KF.face(12)
     local status_text
     if state == "finished" then status_text = _("Finished")
     elseif state == "reading" then
         local pct = math.floor((tonumber(d.percent) or 0) * 100 + 0.5)
         status_text = string.format(_("%d%% Read"), pct)
     else status_text = _("Unread") end
-    ry = ry + txt(bb, status_text, face("cfont", 15), rx, ry, BLACK, right_w, true) + S(4)
-    if state == "reading" and d.avg_time and d.pages then
-        local left = d.avg_time * d.pages * (1 - (tonumber(d.percent) or 0))
+    ry = ry + txt(bb, status_text, KF.face(15), rx, ry, BLACK, right_w, true) + S(4)
+    -- Time per page: the reading statistics database first (like the
+    -- Currently Reading module), then the book's own stats.
+    local avg = nil
+    if state == "reading" and d.md5 then
+        pcall(function()
+            local MC = require("modules/module_currently")
+            local st = MC.fetchBookStatsForCtx and MC.fetchBookStatsForCtx(d.md5)
+            if st and st.avg_time and st.avg_time > 0 then avg = st.avg_time end
+        end)
+    end
+    avg = avg or d.avg_time
+    local npages = tonumber(d.pages) or tonumber(d.stat_pages)
+    if state == "reading" and avg and npages then
+        local left = avg * npages * (1 - (tonumber(d.percent) or 0))
         local t = fmtLeft(left)
         if t then ry = ry + txt(bb, t, tiny, rx, ry, BLACK, right_w, true) + S(4) end
     end
@@ -142,31 +156,56 @@ function BookRow:paintTo(bb, x, y)
     local sz = fmtSize(attr.size)
     if sz then info = info .. " \u{00B7} " .. sz end
     ry = ry + txt(bb, info, tiny, rx, ry, BLACK, right_w, true) + S(6)
-    -- "…" (book menu)
-    local dots_y = y + h - S(16)
-    local r = math.max(2, S(1.4))
-    local D = require("screens/kbo_dropdown")
-    for k = 0, 2 do D.disc(bb, rx - S(4) - k * (r * 2 + S(4)), dots_y, r, BLACK) end
-    self.dots = { x = rx - S(40), y = dots_y - S(22), w = S(48), h = S(44) }
 
     -- left text column
     local tx = cx + cover_w + S(20)
     local tw = math.max(S(60), rx - right_w - S(16) - tx)
-    local ty = y + math.floor(h * 0.10)
-    ty = ty + txt(bb, d.title, face("NotoSerif-Regular.ttf", 18), tx, ty, BLACK, tw) + S(4)
-    if d.pages then
-        ty = ty + txt(bb, string.format(_("%d pages"), d.pages), small, tx, ty, BLACK, tw) + S(4)
+    -- Lines are measured first, then the block is centred in the row and
+    -- the gaps shrink when there are many lines, so nothing spills onto the
+    -- separator below.
+    local lines = {}
+    lines[#lines + 1] = { d.title, face("NotoSerif-Regular.ttf", 18) }
+    -- pages: the book's stable page numbers when it has them, in the label font
+    local plast = d.page_label_last and tostring(d.page_label_last)
+    if plast and plast ~= "" then
+        lines[#lines + 1] = { string.format(_("%s pages"), plast), KF.face(13) }
+    elseif d.pages then
+        lines[#lines + 1] = { string.format(_("%d pages"), d.pages), KF.face(13) }
     end
     if series and series.series then
         local s = series.series:upper()
         if series.series_index then s = s .. " \u{00B7} " .. tostring(series.series_index):gsub("%.0$", "") end
-        ty = ty + txt(bb, s, face("cfont", 13), tx, ty, BLACK, tw) + S(4)
+        lines[#lines + 1] = { s, KF.face(13) }
     end
     local authors = d.authors and d.authors:gsub("\n.*", "") or ""
     if authors ~= "" then
         local ok_an, AN = pcall(require, "features/library/kui_author_names")
         if ok_an and AN and AN.displayName then authors = AN.displayName(authors) end
-        txt(bb, authors, small, tx, ty, BLACK, tw)
+        lines[#lines + 1] = { authors, KF.face(13) }
+    end
+    local total, hs = 0, {}
+    for i, l in ipairs(lines) do
+        if l[1] and l[1] ~= "" then
+            local t = TextWidget:new{ text = l[1], face = l[2], padding = 0 }
+            hs[i] = t:getSize().h
+            t:free()
+        else
+            hs[i] = 0
+        end
+        total = total + hs[i]
+    end
+    local avail = h - 2 * math.floor(h * 0.06)
+    local gap = S(4)
+    if #lines > 1 and total + gap * (#lines - 1) > avail then
+        gap = math.max(0, math.floor((avail - total) / (#lines - 1)))
+    end
+    local block = total + gap * (#lines - 1)
+    local ty = y + math.max(math.floor(h * 0.06), math.floor((h - block) / 2))
+    for i, l in ipairs(lines) do
+        if hs[i] > 0 then
+            txt(bb, l[1], l[2], tx, ty, BLACK, tw)
+            ty = ty + hs[i] + gap
+        end
     end
 end
 
@@ -178,10 +217,11 @@ function NameRow:paintTo(bb, x, y)
     self.dimen = Geom:new{ x = x, y = y, w = self.width, h = self.height }
     local pad = S(22)
     local f = face("NotoSerif-Italic.ttf", 20)
-    local cf = face("NotoSerif-Regular.ttf", 16)
+    local KF = require("infra/kbo_fonts")
+    local cf = KF.face(14)  -- KoboUI: "2 BOOKS" in the label font
     local cw = 0
     if self.count then
-        local t = TextWidget:new{ text = self.count, face = cf, padding = 0 }
+        local t = TextWidget:new{ text = KF.caps(self.count), face = cf, padding = 0 }
         local sz = t:getSize()
         cw = sz.w
         t:paintTo(bb, x + self.width - pad - sz.w, y + math.floor((self.height - sz.h) / 2))
@@ -250,16 +290,25 @@ function M.install()
         return r
     end
 
-    local orig_tap = ListMenuItem.onTapSelect
-    ListMenuItem.onTapSelect = function(self, arg, ges)
-        local row = self._kbo_row
-        local d = row and row.dots
-        if d and ges and ges.pos and ges.pos.x >= d.x and ges.pos.x < d.x + d.w
-                and ges.pos.y >= d.y and ges.pos.y < d.y + d.h then
-            self.menu:onMenuHold(self.entry)
-            return true
+    -- The separator lines KOReader puts between rows are as wide as the
+    -- whole screen; with the scrollbar's gutter reserved they ran under the
+    -- scrollbar. Keep rows and lines left-aligned and as wide as the rows.
+    local orig_build = ListMenu._updateItemsBuildUI
+    ListMenu._updateItemsBuildUI = function(self, ...)
+        local r = orig_build(self, ...)
+        if M.isEnabled() and self.name == "filemanager" and self.item_group
+                and self.item_width and self.item_width < Screen:getWidth() then
+            pcall(function()
+                self.item_group.align = "left"
+                for _i, w in ipairs(self.item_group) do
+                    if w.dimen and w.background and not w.entry and w.dimen.w > self.item_width then
+                        w.dimen.w = self.item_width
+                    end
+                end
+                if self.item_group.resetLayout then self.item_group:resetLayout() end
+            end)
         end
-        return orig_tap(self, arg, ges)
+        return r
     end
 
     -- Rows per page: tall book rows, short name rows (like Kobo).
@@ -276,6 +325,9 @@ function M.install()
     local FileChooser = require("ui/widget/filechooser")
     if FileChooser._recalculateDimen == orig_recalc then
         FileChooser._recalculateDimen = ListMenu._recalculateDimen
+    end
+    if FileChooser._updateItemsBuildUI == orig_build then
+        FileChooser._updateItemsBuildUI = ListMenu._updateItemsBuildUI
     end
 end
 

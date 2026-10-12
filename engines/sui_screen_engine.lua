@@ -314,7 +314,8 @@ local function sectionLabel(text, w, right_text, page_nav, landscape_factor, sub
             -- One level below on the named size scale (FS_BODY ->
             -- FS_DETAIL), not the same `fs` as the title.
             local fs_right = math.max(8, math.floor(SUIStyle.FS_DETAIL * scale))
-            local face_right = Font:getFace(SUIStyle.FACE_REGULAR, fs_right)
+            -- KoboUI: page numbers ("1/2") in the sans-serif label font
+            local face_right = require("infra/kbo_fonts").face(fs_right)
             local right_widget = UI.makeColoredText{
                 text    = right_text,
                 face    = face_right,
@@ -390,8 +391,9 @@ local function sectionLabel(text, w, right_text, page_nav, landscape_factor, sub
                 align = "left",
                 content,
                 UI.makeColoredText{
-                    text    = sub_text,
-                    face    = Font:getFace(SUIStyle.FACE_REGULAR, sub_fs),
+                    -- KoboUI: capitals in the sans-serif label font ("12 BOOKS")
+                    text    = require("infra/kbo_fonts").caps(sub_text),
+                    face    = require("infra/kbo_fonts").face(sub_fs),
                     bold    = false,
                     fgcolor = SUIStyle.COLOR.text_secondary,
                     width   = avail_w,

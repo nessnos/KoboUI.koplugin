@@ -1742,7 +1742,7 @@ function GridRenderer.makeModule(spec)
             local fps = ctx and ctx[ck]
             if type(fps) ~= "table" or #fps == 0 then return nil end
             local N_ = require("infra/sui_i18n").ngettext
-            return string.format(N_("%d book", "%d books", #fps), #fps)
+            return string.format(N_("%d book", "%d books", #fps), #fps):upper()  -- Kobo: "5 BOOKS"
         end
     end
 

@@ -118,7 +118,7 @@ end
 
 -- Action catalogue.
 M.ALL_ACTIONS = {
-    { id = "home",             label = _("Library"),          icon = M.ICON.library     },
+    { id = "home",             label = _("My Books"),         icon = M.ICON.library     },
     { id = "homescreen",       label = _("Home"),             icon = M.ICON.ko_home     },
     { id = "collections",      label = _("Collections"),      icon = M.ICON.collections },
     { id = "history",          label = _("History"),          icon = M.ICON.history     },
@@ -408,7 +408,7 @@ function M.setWifiHideWhenOff(v)
 end
 
 function M.homeLabel()
-    return _("Library")
+    return _("My Books")
 end
 
 function M.homeIcon()

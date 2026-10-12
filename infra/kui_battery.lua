@@ -32,7 +32,7 @@ function Battery:paintTo(bb, x, y)
     self.dimen = Geom:new{ x = x, y = y, w = self.width, h = self.height }
     local fg = self.fgcolor or Blitbuffer.COLOR_BLACK
     local h = self.height
-    local b = math.max(1, math.floor(h / 8))           -- outline thickness
+    local b = self.outline or math.max(1, math.floor(h / 8))  -- outline thickness
     local cap_w = math.max(2, math.floor(h / 6))
     local body_w = self.width - cap_w
     -- KoboUI: nearly square corners, like Kobo's battery

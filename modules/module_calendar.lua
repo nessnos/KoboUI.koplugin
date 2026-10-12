@@ -42,6 +42,16 @@ local function getHeightPct(pfx)
     if not v then return HEIGHT_DEF end
     return math.max(HEIGHT_MIN, math.min(HEIGHT_MAX, math.floor(v)))
 end
+-- KoboUI: books in colour on a colour screen (setting "Colours", default on)
+local SETTING_COLOURS = "calendar_colours"
+local function useColours(pfx)
+    if SUISettings:readSetting((pfx or "simpleui_hs_") .. SETTING_COLOURS) == false then return false end
+    local ok, A = pcall(require, "infra/kbo_accent")
+    if not ok then return false end
+    local okc, on = pcall(function() return Screen:isColorEnabled() end)
+    return okc and on == true
+end
+
 local function showTime(pfx)
     return SUISettings:readSetting(pfx .. SETTING_TIME) ~= false
 end
@@ -192,6 +202,32 @@ local SHADES = {
     { bg = Blitbuffer.COLOR_GRAY_9, fg = Blitbuffer.COLOR_BLACK },
 }
 
+-- KoboUI: one colour per book on colour screens — strong enough for a
+-- Kaleido screen, each with a readable text colour.
+local COLOURS = {
+    { rgb = { 0xA8, 0x3A, 0x2C }, fg = Blitbuffer.COLOR_WHITE }, -- red
+    { rgb = { 0x2F, 0x5D, 0x9A }, fg = Blitbuffer.COLOR_WHITE }, -- blue
+    { rgb = { 0xE0, 0xB0, 0x30 }, fg = Blitbuffer.COLOR_BLACK }, -- yellow
+    { rgb = { 0x2E, 0x7D, 0x4F }, fg = Blitbuffer.COLOR_WHITE }, -- green
+    { rgb = { 0xD9, 0x7A, 0x2B }, fg = Blitbuffer.COLOR_BLACK }, -- orange
+    { rgb = { 0x6E, 0x3E, 0x96 }, fg = Blitbuffer.COLOR_WHITE }, -- purple
+    { rgb = { 0x2A, 0x8C, 0x8C }, fg = Blitbuffer.COLOR_WHITE }, -- teal
+    { rgb = { 0xC2, 0x55, 0x7A }, fg = Blitbuffer.COLOR_WHITE }, -- pink
+}
+local function colourShades()
+    local A = require("infra/kbo_accent")
+    local out = {}
+    local night = A.isNight and A.isNight()
+    for i, c in ipairs(COLOURS) do
+        -- the background is painted pre-inverted in dark mode (A.rgb), so
+        -- the text is too, to keep its contrast
+        local fg = c.fg
+        if night then fg = (fg == Blitbuffer.COLOR_WHITE) and Blitbuffer.COLOR_BLACK or Blitbuffer.COLOR_WHITE end
+        out[i] = { bg = A.rgb(c.rgb[1], c.rgb[2], c.rgb[3]), fg = fg }
+    end
+    return out
+end
+
 local CalendarWidget = Widget:extend{ width = 0, height = 0 }
 
 function CalendarWidget:getSize() return Geom:new{ w = self.width, h = self.height } end
@@ -259,6 +295,7 @@ function CalendarWidget:init()
     self.lane_h, self.max_lanes = lane_h, max_lanes
 
     local shade_of, next_shade = {}, 1
+    local PALETTE = useColours(self.pfx) and colourShades() or SHADES
     self.bars = {}
     for wk = 0, nweeks - 1 do
         local spans = {} -- id -> list of {c0, c1}
@@ -301,7 +338,7 @@ function CalendarWidget:init()
             end
             if placed then
                 if not shade_of[it.id] then
-                    shade_of[it.id] = SHADES[(next_shade - 1) % #SHADES + 1]
+                    shade_of[it.id] = PALETTE[(next_shade - 1) % #PALETTE + 1]
                     next_shade = next_shade + 1
                 end
                 local shade = shade_of[it.id]
@@ -380,7 +417,7 @@ function CalendarWidget:paintTo(bb, x, y)
         else
             local by = cy + (b.lane - 1) * self.lane_h
             local bh = self.lane_h - Screen:scaleBySize(2)
-            bb:paintRect(cx + Screen:scaleBySize(2), by, b.w, bh, b.bg)
+            require("infra/kbo_accent").rect(bb, cx + Screen:scaleBySize(2), by, b.w, bh, b.bg)
             local ts = b.text:getSize()
             b.text:paintTo(bb, cx + Screen:scaleBySize(4), by + math.floor((bh - ts.h) / 2))
         end
@@ -458,6 +495,16 @@ function M.getMenuItems(ctx_menu)
                     callback = function() SUISettings:saveSetting(pfx .. SETTING_WEEKSTART, "sunday"); ctx_menu.refresh() end,
                 },
             },
+        },
+        {
+            text           = _lc("Colours"),
+            help_text      = _lc("On a colour screen, each book gets its own colour instead of a shade of grey."),
+            checked_func   = function() return SUISettings:readSetting(pfx .. SETTING_COLOURS) ~= false end,
+            keep_menu_open = true,
+            callback       = function()
+                SUISettings:saveSetting(pfx .. SETTING_COLOURS, SUISettings:readSetting(pfx .. SETTING_COLOURS) == false)
+                ctx_menu.refresh()
+            end,
         },
         {
             text           = _lc("Show reading time per day"),

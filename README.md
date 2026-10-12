@@ -159,7 +159,8 @@ for its settings.
 - **Currently Reading** — cover (optional), title, progress and Kobo-style stats ("PAGE 3 OF 10", "5 HOURS TO GO").
 - **Featured Collection** and **Author / Series Collection** (shuffles to another author or series).
 - **Two Columns** — any two modules side by side.
-- **Reading Calendar** — this month, with the books read each day.
+- **Reading Calendar** — this month, with the books read each day (each book in its own colour on a
+  colour screen; *Colours* in its settings switches back to greys).
 - **Year in Books** — the books you finished each month as stacks of covers. Tap a month to see
   its books or **+ Add a book read this month…** (for books read on paper or another e-reader).
 - **Monthly TBR** — a to-read checklist per month.

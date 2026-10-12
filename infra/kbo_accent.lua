@@ -86,6 +86,14 @@ function M.color()
     return Blitbuffer.COLOR_BLACK
 end
 
+--- Any RGB colour, ready to paint: adjusted for dark mode (inverted) and
+--- for blue-green-red screens, like the accent. Use with M.rect().
+function M.rgb(r, g, b)
+    if M.isNight() then r, g, b = 255 - r, 255 - g, 255 - b end
+    if M.isBGR() then r, b = b, r end
+    return Blitbuffer.ColorRGB32(r, g, b, 0xFF)
+end
+
 --- Paints a filled rectangle in `color`, whether it is a grey or an RGB colour.
 function M.rect(bb, x, y, w, h, color)
     if w <= 0 or h <= 0 then return end

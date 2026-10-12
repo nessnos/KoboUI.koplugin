@@ -351,7 +351,7 @@ function M.getProgressModeMenuItems()
         {
             -- KoboUI: a thin bar with the % under the cover, like the
             -- Featured Collection module.
-            text_func    = function() return _("Progress bar under the cover") end,
+            text_func    = function() return _("Progress text under the cover") end,
             checked_func = function() return M.getProgressMode() == "bar" end,
             callback     = function() _set("bar") end,
         },
@@ -1049,12 +1049,7 @@ local function _installStripPatch(MosaicMenuItem, BookInfoManager, _STRIP_H,
                         pcall(function() cover_w = self._underline_container[1][1]:getSize().w end)
                         cover_w = math.min(cover_w or self.width, self.width - 2 * PAD_H_S)
                         local x0 = math.floor((self.width - cover_w) / 2)
-                        -- the bar only while reading; Unread / Finished are just the word
-                        if state == "reading" then
-                            strip_bb:paintRect(x0, ry, cover_w, bar_h, Blitbuffer_s.COLOR_LIGHT_GRAY)
-                            local fill = math.floor(cover_w * math.max(0, math.min(1, pct)) + 0.5)
-                            if fill > 0 then strip_bb:paintRect(x0, ry, fill, bar_h, Blitbuffer_s.COLOR_BLACK) end
-                        end
+                        -- (no bar: just the text, like Kobo)
                         -- the label in the UI font, left-aligned under the bar
                         local tw = TextWidget_s:new{
                             text = label, face = Font_s:getFace(SUIStyle.FACE_REGULAR, M.getStatusTextSize()), padding = 0,
@@ -1065,7 +1060,7 @@ local function _installStripPatch(MosaicMenuItem, BookInfoManager, _STRIP_H,
                         }
                         local tsz = tw:getSize()
                         -- reading: under the bar; Unread / Finished: in the bar's place
-                        local ty = (state == "reading") and (ry + bar_h + (M._BAR_GAP or 4)) or ry
+                        local ty = ry
                         tw:paintTo(strip_bb, x0, ty)
                         tw:free()
                     end
@@ -1198,7 +1193,7 @@ function M.install()
         if not _bar_rows[fs] then
             local tw = require("ui/widget/textwidget"):new{ text = "Ag",
                 face = require("ui/font"):getFace(SUIStyle.FACE_REGULAR, fs), padding = 0 }
-            _bar_rows[fs] = _STRIP_PAD + _BAR_H + _BAR_GAP + tw:getSize().h + _STRIP_PAD
+            _bar_rows[fs] = _STRIP_PAD + tw:getSize().h + _STRIP_PAD
             tw:free()
         end
         return _bar_rows[fs]

@@ -3358,7 +3358,7 @@ SimpleUIPlugin.addToMainMenu = function(self, menu_items)
                                         value_func = function()
                                             local m = FC.getProgressMode()
                                             if m == "banner" then return _("Banner")
-                                            elseif m == "bar" then return _("Progress bar")
+                                            elseif m == "bar" then return _("Progress text")
                                             elseif m == "native" then return _("Native")
                                             else return _("None") end
                                         end,
@@ -3368,7 +3368,7 @@ SimpleUIPlugin.addToMainMenu = function(self, menu_items)
                                                 value_func = function()
                                                     local m = FC.getProgressMode()
                                                     if m == "banner" then return _("Banner")
-                                                    elseif m == "bar" then return _("Progress bar")
+                                                    elseif m == "bar" then return _("Progress text")
                                                     elseif m == "native" then return _("Native")
                                                     else return _("None") end
                                                 end,
@@ -3382,7 +3382,7 @@ SimpleUIPlugin.addToMainMenu = function(self, menu_items)
                                                     },
                                                     {
                                                         -- KoboUI: thin bar + % under the cover
-                                                        text           = _("Progress bar under the cover"),
+                                                        text           = _("Progress text under the cover"),
                                                         radio          = true,
                                                         checked_func   = function() return FC.getProgressMode() == "bar" end,
                                                         keep_menu_open = true,
@@ -3390,7 +3390,7 @@ SimpleUIPlugin.addToMainMenu = function(self, menu_items)
                                                     },
                                                     {
                                                         text_func      = function() return _("Text size under the cover") end,
-                                                        help_text      = _("Size of \"19% Read\", \"Unread\" and \"Finished\" under the covers (Progress bar under the cover)."),
+                                                        help_text      = _("Size of \"19% Read\", \"Unread\" and \"Finished\" under the covers (Progress text under the cover)."),
                                                         enabled_func   = function() return FC.getProgressMode() == "bar" end,
                                                         value_func     = function() return tostring(FC.getStatusTextSize()) end,
                                                         keep_menu_open = true,

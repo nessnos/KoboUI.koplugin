@@ -126,10 +126,9 @@ entries if you use a Bluetooth plugin.
 - **Kobo list view:** books show the cover, title, pages, series, author, and on the right Unread /
   "19% Read" / Finished, the time left, and the file type and size (long-press a book for its menu). Authors, Series,
   Collections and Tags are a plain list of names with the number of books.
-- **Progress under covers:** Settings → Library → Cover Settings → Badges → Progress → Type → *Progress bar under
-  the cover* shows "19% Read" with a thin bar above it under books you're reading, and "Unread" or
-  "Finished" under the others (instead of the corner badge). *Text size under the cover*, in the
-  same menu, sets how big that text is.
+- **Progress under covers:** Settings → Library → Cover Settings → Badges → Progress → Type →
+  *Progress text under the cover* shows "19% Read", "Unread" or "Finished" under each book (instead of
+  the corner badge); *Text size under the cover*, in the same menu, sets its size.
 - **Titles under covers** (Settings → Library → *Titles Under Covers*): choose the tabs that show the
   title or name under each cover — by default Authors, Series, Collections and Tags, not Books.
 - **Vertical scrolling** (on by default; Settings → Library): swipe up and down; Kobo's scrollbar on

@@ -37,7 +37,7 @@ Made for Kobo e-readers (colour screens included), and works on any device KORea
   with Back comes back.
 - **Accent colour:** the current tab is bold and, on a colour screen, Kobo red (or blue, green, purple).
 - **Navigation bar** at the bottom, with a **Current Book** tab showing the cover of the book you're
-  reading, a **Menu** tab for KOReader's own menu, and groups.
+  reading, a **My Books** tab for the Library, a **Menu** tab for KOReader's own menu, and groups.
 - **Home screen modules:** Currently Reading, Recent, To Be Read, Featured Collection, Author / Series
   Collection, Two Columns, Reading Calendar, Year in Books, Monthly TBR, Quote, Clock, Reading Goals,
   Reading Stats, Heatmap and more.
@@ -45,6 +45,10 @@ Made for Kobo e-readers (colour screens included), and works on any device KORea
   grouping, "last opened" sort, authors sorted by last name, collection shuffle, back to the page you
   were on.
 - **Kobo-style settings pages** (serif titles, italic rows).
+- **Two fonts, like Kobo:** details in capitals — time left, pages, book counts, module subtitles —
+  plus the navigation bar and the Library tabs use a sans-serif **Label Font**; everything else uses
+  the UI font. Settings → Style → *Label Font*: by default KOReader's own sans-serif (Noto Sans);
+  any installed font can be chosen.
 - No "Opening file…" / "Closing book…" popups.
 
 ## Requirements
@@ -70,7 +74,7 @@ Your SimpleUI / KindleUI Home screen, modules and bars carry over.
 - **KOReader's own menu:** swipe down from the top of the screen, put the **Menu** tab in the
   navigation bar, or KoboUI settings → **KOReader Menu**.
 - **Home screen layout:** Settings → Home Screen → **Edit Home Screen Layout** → Add Module.
-- **Status bar icons:** long-press the status bar → **Kobo Status Bar** → **Icons**.
+- **Status bar buttons:** KoboUI settings → **Status Bar** (or long-press the status bar).
 
 ---
 
@@ -80,18 +84,24 @@ Tap an icon to open its panel; tap it again, or anywhere outside, to close it. T
 while a panel is open switches to that panel. Tapping elsewhere in the bar does nothing — swipe down
 for KOReader's menu.
 
-**Settings** (long-press the status bar → *Kobo Status Bar*):
+**Settings** (KoboUI settings → **Status Bar**, or long-press the status bar). The Kobo status bar
+is always on (on the Home screen and in My Books; inside a book KOReader's own screen is
+unchanged); there's no separate quick-settings panel — the status bar's buttons are where you add
+and remove actions.
 
-- **Kobo-style Status Bar** — switch it off to get the plain status bar back.
-- **Icons** — one page per icon:
-  - *Show in the status bar*, *Name*, *Icon* (any symbol from KOReader's icon font or an image);
-  - *Extra drop-down entries* — your own entries at the end of that icon's panel, each with a name and
-    an action;
-  - *Add a button* — a new icon, e.g. "Calibre". Choose *When tapped: run an action* (pick it) or
-    *When tapped: open a drop-down* (add its entries);
-  - *Arrange icons*.
-- **Show Battery Percentage** next to the battery icon.
+- **Buttons** — one page per button: *Show in the status bar*, *Name*, *Icon*, and *Extra drop-down
+  entries*.
+- **Arrange buttons** — drag your own button where you want it (e.g. where Sync was).
+- **Add a custom button** — e.g. "Calibre": name it, and its page opens to choose the icon and
+  *When tapped: run an action* (pick it) or *When tapped: open a drop-down* (add its entries).
+- **Add a button from KOReader's menu** — long-press any item of KOReader's menu and it becomes a
+  button that opens it.
+- **Show Battery Percentage** next to the battery icon (the battery is always horizontal).
 - **Sync Action** — what *Sync now* does.
+- **Clock and Text Items** — the clock on the left (in the label font).
+
+**Icons:** the icon picker's **Line** tab has thin line icons drawn like the status bar's own (same
+line thickness); **Symbols** has every symbol of KOReader's icon font, **Images** your own icons.
 
 **Actions** can be any KoboUI action, any KOReader action, or anything in KOReader's menu: choose
 *Pick from KOReader's menu (capture)*, go to the item and **long-press** it. A long-pressed submenu (a
@@ -104,17 +114,22 @@ entries if you use a Bluetooth plugin.
 
 - **Tabs:** Books, Authors, Series, Collections (and Tags: **…** → *Show Tags tab*). The Library
   remembers the last tab.
-- **Filter:** All, Unread, Reading, Finished, with counts, like Kobo: *Finished* = marked Finished,
+- **Filter:** multiple choice — tick any of Unread, Reading, Finished (e.g. Unread + Reading for
+  everything not finished), or All; with counts, like Kobo: *Finished* = marked Finished,
   *Reading* = started (or On hold), *Unread* = never started. It applies to every tab and is
   remembered (the Series bookshelf always shows everything).
 - **Sort:** Recent, Date added, Title, Author, Series, File size, File type. On Authors: Last name or
   First name.
-- **…:** Grid / List view (remembered **per tab**: e.g. a list for Authors, a grid for Books), Titles
+- **…:** Cover view / List view (remembered **per tab**: e.g. a list for Authors, covers for Books), Titles
   under covers (per tab), Group series, Reverse order, Bookshelf / Folder view (Series), Manage
   collections (Collections), Show / Hide Tags tab.
 - **Kobo list view:** books show the cover, title, pages, series, author, and on the right Unread /
-  "19% Read" / Finished, the time left, file type and size, and **…** for the book menu. Authors, Series,
+  "19% Read" / Finished, the time left, and the file type and size (long-press a book for its menu). Authors, Series,
   Collections and Tags are a plain list of names with the number of books.
+- **Progress under covers:** Settings → Library → Cover Settings → Badges → Progress → Type → *Progress bar under
+  the cover* shows "19% Read" with a thin bar above it under books you're reading, and "Unread" or
+  "Finished" under the others (instead of the corner badge). *Text size under the cover*, in the
+  same menu, sets how big that text is.
 - **Titles under covers** (Settings → Library → *Titles Under Covers*): choose the tabs that show the
   title or name under each cover — by default Authors, Series, Collections and Tags, not Books.
 - **Vertical scrolling** (on by default; Settings → Library): swipe up and down; Kobo's scrollbar on
@@ -142,11 +157,12 @@ Settings → Bars → **Navigation Bar**: tabs, tab style (icons, text or both) 
 Add them from **Settings → Home Screen → Edit Home Screen Layout → Add Module**; long-press a module
 for its settings.
 
-- **Currently Reading** — cover (optional), title, progress, "Page 3 of 10".
+- **Currently Reading** — cover (optional), title, progress and Kobo-style stats ("PAGE 3 OF 10", "5 HOURS TO GO").
 - **Featured Collection** and **Author / Series Collection** (shuffles to another author or series).
 - **Two Columns** — any two modules side by side.
 - **Reading Calendar** — this month, with the books read each day.
-- **Year in Books** — the books you finished each month as stacks of covers.
+- **Year in Books** — the books you finished each month as stacks of covers. Tap a month to see
+  its books or **+ Add a book read this month…** (for books read on paper or another e-reader).
 - **Monthly TBR** — a to-read checklist per month.
 - **And more:** Recent, To Be Read, New Books, Cover Deck, Collections, Quote of the Day, Clock,
   Reading Goals, Reading Stats, Reading Heatmap, Quick Actions, Action List, Spacer.

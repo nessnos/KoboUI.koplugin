@@ -333,15 +333,15 @@ local function buildScreens(st)
                 on_tap       = function() ctx.push("home_screen_settings") end,
             },
             SUI.ListRow{
-                title        = _("Quick Settings"),
-                subtitle     = _("Top menu buttons, sliders and device name"),
+                title        = _("Status Bar"),
+                subtitle     = _("Buttons, their actions and drop-downs, clock"),
                 inner_w      = iw,
                 show_chevron = true,
                 on_tap       = function() ctx.push("quick_settings") end,
             },
             SUI.ListRow{
                 title        = _("Bars"),
-                subtitle     = _("Status bar, navigation bar, title bar and pagination"),
+                subtitle     = _("Navigation bar, title bar and pagination"),
                 inner_w      = iw,
                 show_chevron = true,
                 on_tap       = function() ctx.push("bars_settings") end,
@@ -1108,7 +1108,10 @@ local function buildScreens(st)
 
     local function buildQuickSettings(ctx)
         return buildPluginMenuScreen(ctx, function(ctx_menu)
-            return require("features/quickpanel/qp_settings").makeMenuItems(ctx_menu)
+            -- KoboUI: Quick Settings and the status bar are one page now.
+            local plugin = getPlugin()
+            if plugin and not plugin._makeTopbarMenu and plugin.addToMainMenu then plugin:addToMainMenu({}) end
+            return plugin and plugin._makeTopbarMenu and plugin._makeTopbarMenu(ctx_menu) or {}
         end)
     end
 
@@ -1156,7 +1159,7 @@ end
 local function makeScreenTitles(st)
     return {
         __root__               = _("KoboUI"),
-        quick_settings         = _("Quick Settings"),
+        quick_settings         = _("Status Bar"),
         home_screen_settings   = _("Home Screen"),
         custom_screens         = _("Extra Custom Screens"),
         bars_settings          = _("Bars"),

@@ -56,7 +56,8 @@ M.LABELS = {
 
 local function S(n) return Screen:scaleBySize(n) end
 
-function M.isEnabled() return SUISettings:nilOrTrue(M.KEY_ON) end
+-- KoboUI: always on (no setting any more).
+function M.isEnabled() return true end
 
 
 function M.btAction() return SUISettings:readSetting("koboui_bt_action") end
@@ -207,6 +208,19 @@ function M.paintIcon(bb, key, r, info, inverted, size)
     end
     local it = M.getItem(key) or { id = key }
     -- your own picture (any icon, built-in or custom button)
+    -- KoboUI line icons (icons/line, icons/kobo): drawn exactly like the
+    -- built-in ones, same size and line thickness.
+    if it.custom and not it.icon then
+        -- a new button: a thin star until an icon is chosen
+        local star = require("infra/sui_paths").getPluginDir() .. "icons/line/star.svg"
+        D.paintIcon(bb, star, cx - math.floor(size / 2), cy - math.floor(size / 2), size, fg)
+        return
+    end
+    if type(it.icon) == "string" and it.icon:match("%.svg$")
+            and (it.icon:find("/icons/line/", 1, true) or it.icon:find("/icons/kobo/", 1, true)) then
+        D.paintIcon(bb, it.icon, cx - math.floor(size / 2), cy - math.floor(size / 2), size, fg)
+        return
+    end
     if it.icon or it.custom then
         local QPI = require("features/quickpanel/qp_icons")
         local w = QPI.widget(it.icon or "nerd:EBCD", math.floor(size * 0.9), fg, M.itemLabel(it))
@@ -219,7 +233,9 @@ function M.paintIcon(bb, key, r, info, inverted, size)
         local KUIBattery = require("infra/kui_battery")
         local bh = math.floor(size * 0.46)
         local b = KUIBattery:new{ level = info.battery or 0, charging = info.charging,
-            height = bh, fgcolor = fg }
+            height = bh, fgcolor = fg,
+            -- thin outline, like the line icons next to it
+            outline = math.max(1, math.floor(size / 24 + 0.5)) }
         local bs = b:getSize()
         b:paintTo(bb, cx - math.floor(bs.w / 2), cy - math.floor(bs.h / 2))
         return
@@ -244,7 +260,7 @@ end
 --- The right-hand group of icons for the status bar.
 function M.buildIcons(info, bar_h, fs)
     M._rects = {}
-    local size = math.max(S(14), math.floor(bar_h * 0.64))
+    local size = math.max(S(14), math.floor(bar_h * 0.55))
     local cell_w = size + S(24)
     local g = HorizontalGroup:new{ align = "center" }
     for _i, it in ipairs(M.getItems()) do
@@ -390,7 +406,37 @@ end
 -- ---------------------------------------------------------------------------
 -- Settings (Status Bar settings page)
 -- ---------------------------------------------------------------------------
-function M.menuItems(plugin, ctx_menu)
+--- Opens the settings page of one button (its name, icon, action…).
+function M.openButtonPage(plugin, id)
+    local SUIWindow = require("engines/sui_window")
+    local function buildRoot(ctx)
+        local ctx_menu = SUIWindow.makeCtxMenu(ctx)
+        return SUIWindow.MenuTable{
+            items          = M.menuItems(plugin, ctx_menu, id),
+            inner_w        = ctx.inner_w,
+            repaint        = function() ctx.repaint() end,
+            lock_overlay   = ctx.lockOverlay,
+            unlock_overlay = ctx.unlockOverlay,
+            push_stack     = function(sid, params)
+                if type(sid) == "string" then ctx.push(sid, params) else ctx.push("nested_menu", params) end
+            end,
+            on_close       = function() end,
+        }
+    end
+    local win = SUIWindow:new{
+        name    = "sui_win_context",
+        title   = function(ctx)
+            local cur = ctx.current()
+            if cur and cur.id == "nested_menu" then return cur.params.title or "" end
+            return M.itemLabel(M.getItem(id) or { id = id })
+        end,
+        screens = SUIWindow.makeSettingsScreens(buildRoot),
+        kindle_style = true,
+    }
+    win:show()
+end
+
+function M.menuItems(plugin, ctx_menu, page_id)
     local function rebuild()
         local ok_tb, TB = pcall(require, "screens/sui_topbar")
         if ok_tb and TB.invalidateDimCache then pcall(TB.invalidateDimCache) end
@@ -566,6 +612,71 @@ function M.menuItems(plugin, ctx_menu)
         return sub
     end
 
+    -- Adding a button, like KindleUI's quick settings: name it (or capture
+    -- an item of KOReader's menu), then its page opens to pick the icon and
+    -- the action.
+    local function addButtonItem()
+        return {
+            text = _("Add a custom button"),
+            help_text = _("A new icon in the status bar (e.g. \"Calibre\"): give it a name, then choose its icon and what a tap does — run an action, or open a drop-down with your own entries."),
+            keep_menu_open = true,
+            callback = function()
+                QS.askText(_("Button name"), "", _("e.g. Calibre"), function(t)
+                    local id = M.addCustom(t or _("Button"))
+                    rebuild(); refresh()
+                    M.openButtonPage(plugin, id)
+                end)
+            end,
+        }
+    end
+    local function captureButtonItem()
+        return {
+            text = _("Add a button from KOReader's menu"),
+            help_text = _("Capture mode: opens KOReader's menu; long-press any item (a plugin, a setting, a submenu) and it becomes a new status-bar button that opens it."),
+            callback = function()
+                require("features/quickpanel/qp_capture").start(function(action)
+                    if action then
+                        local id = M.addCustom(action.title)
+                        M.updateItem(id, { action = action, mode = "action" })
+                        rebuild()
+                        M.openButtonPage(plugin, id)
+                    else
+                        reopen()
+                    end
+                end)
+            end,
+        }
+    end
+
+    local function arrangeItem()
+        return {
+            text = _("Arrange buttons"),
+            help_text = _("Change the order of the status bar buttons, e.g. put your own button where Sync was."),
+            keep_menu_open = true,
+            callback = function()
+                local SortWidget = require("ui/widget/sortwidget")
+                local list = M.getItems()
+                local sort_items = {}
+                for _i, x in ipairs(list) do
+                    sort_items[#sort_items + 1] = {
+                        text = M.itemLabel(x) .. (M.isIconShown(x) and "" or ("  (" .. _("hidden") .. ")")),
+                        item = x,
+                    }
+                end
+                UIManager:show(SortWidget:new{
+                    title = _("Arrange buttons"),
+                    item_table = sort_items,
+                    covers_fullscreen = true,
+                    callback = function()
+                        local new = {}
+                        for _i, x in ipairs(sort_items) do new[#new + 1] = x.item end
+                        M.setItems(new); rebuild(); refresh()
+                    end,
+                })
+            end,
+        }
+    end
+
     local function iconsItems()
         local items = {}
         for _i, it in ipairs(M.getItems()) do
@@ -582,62 +693,24 @@ function M.menuItems(plugin, ctx_menu)
             }
         end
         items[#items].separator = true
-        items[#items + 1] = {
-            text = _("Add a button"),
-            help_text = _("A new icon in the status bar (e.g. \"Calibre\"): choose its name and icon, and whether a tap runs one action or opens a drop-down with your own entries."),
-            keep_menu_open = true,
-            callback = function()
-                QS.askText(_("Button name"), "", _("e.g. Calibre"), function(t)
-                    M.addCustom(t or _("Button"))
-                    rebuild(); refresh()
-                end)
-            end,
-        }
-        items[#items + 1] = {
-            text = _("Arrange icons"),
-            keep_menu_open = true,
-            callback = function()
-                local SortWidget = require("ui/widget/sortwidget")
-                local list = M.getItems()
-                local sort_items = {}
-                for _i, x in ipairs(list) do
-                    sort_items[#sort_items + 1] = {
-                        text = M.itemLabel(x) .. (M.isIconShown(x) and "" or ("  (" .. _("hidden") .. ")")),
-                        item = x,
-                    }
-                end
-                UIManager:show(SortWidget:new{
-                    title = _("Arrange icons"),
-                    item_table = sort_items,
-                    covers_fullscreen = true,
-                    callback = function()
-                        local new = {}
-                        for _i, x in ipairs(sort_items) do new[#new + 1] = x.item end
-                        M.setItems(new); rebuild(); refresh()
-                    end,
-                })
-            end,
-        }
+        items[#items + 1] = addButtonItem()
+        items[#items + 1] = captureButtonItem()
+        items[#items + 1] = arrangeItem()
         return items
     end
 
+    if page_id then return itemPage(page_id) end
+
     return {
         {
-            text = _("Kobo-style Status Bar"),
-            help_text = _("Clock on the left and a row of icons on the right, like on a Kobo. Tap an icon to open its panel (light, Wi-Fi, battery, sync…); search opens the library search. Swipe down from the top of the screen to open KOReader's menu."),
-            keep_menu_open = true,
-            checked_func = function() return M.isEnabled() end,
-            callback = function()
-                SUISettings:saveSetting(M.KEY_ON, not M.isEnabled())
-                rebuild()
-            end,
-        },
-        {
-            text = _("Icons"),
-            help_text = _("Show, hide, rename, re-icon and arrange the icons, add entries to their drop-downs, or add your own buttons."),
+            text = _("Buttons"),
+            help_text = _("Show, hide, rename, re-icon and arrange the status-bar buttons, add entries to their drop-downs, or add your own buttons."),
             enabled_func = function() return M.isEnabled() end,
             sub_item_table_func = iconsItems,
         },
+        arrangeItem(),
+        (function() local it = addButtonItem(); it.enabled_func = function() return M.isEnabled() end; return it end)(),
+        (function() local it = captureButtonItem(); it.enabled_func = function() return M.isEnabled() end; it.separator = true; return it end)(),
         {
             text = _("Show Battery Percentage"),
             enabled_func = function() return M.isEnabled() end,

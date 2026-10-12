@@ -114,7 +114,7 @@ local function labelWidget(text, sub, w, lf, nav)
         local gap = Screen:scaleBySize(8)
         local ind = TextWidget:new{
             text = string.format("%d/%d", nav.page, nav.npages),
-            face = Font:getFace(SUIStyle.FACE_REGULAR, math.max(7, math.floor(SUIStyle.FS_DETAIL * scale))),
+            face = require("infra/kbo_fonts").face(math.max(7, math.floor(SUIStyle.FS_DETAIL * scale))),
             fgcolor = SUIStyle.COLOR and SUIStyle.COLOR.text_primary or Blitbuffer.COLOR_BLACK,
         }
         local probe = TextWidget:new{ text = "Ag", face = Font:getFace(SUIStyle.FACE_REGULAR, fs), bold = true }
@@ -154,8 +154,8 @@ local function labelWidget(text, sub, w, lf, nav)
     }
     if sub and sub ~= "" then
         vg[#vg + 1] = TextWidget:new{
-            text = sub,
-            face = Font:getFace(SUIStyle.FACE_REGULAR, math.max(7, math.floor(SUIStyle.FS_DETAIL * scale))),
+            text = require("infra/kbo_fonts").caps(sub),
+            face = require("infra/kbo_fonts").face(math.max(7, math.floor(SUIStyle.FS_DETAIL * scale))),
             fgcolor = SUIStyle.COLOR and SUIStyle.COLOR.text_secondary or Blitbuffer.COLOR_DARK_GRAY,
             max_width = math.max(1, w),
             truncate_with_ellipsis = true,

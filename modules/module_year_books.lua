@@ -78,6 +78,28 @@ end
 local _cache = {}
 function M.invalidateCache() _cache = {} end
 
+-- Books added by hand (read on paper or on another e-reader): KoboUI keeps
+-- their paths here so they show up even if KOReader never opened them.
+-- Their finish date lives in the book's own sidecar, like any other.
+local MANUAL_KEY = "koboui_year_books_manual"
+local function manualList()
+    local t = SUISettings:readSetting(MANUAL_KEY)
+    return type(t) == "table" and t or {}
+end
+local function setManual(fp, on)
+    local t, out, found = manualList(), {}, false
+    for _i, p in ipairs(t) do
+        if p == fp then found = true; if on then out[#out + 1] = p end
+        else out[#out + 1] = p end
+    end
+    if on and not found then out[#out + 1] = fp end
+    SUISettings:saveSetting(MANUAL_KEY, out)
+end
+local function isManual(fp)
+    for _i, p in ipairs(manualList()) do if p == fp then return true end end
+    return false
+end
+
 local function finishDate(summary)
     if type(summary) ~= "table" then return nil end
     local d = summary.date_finished
@@ -108,13 +130,20 @@ function M.getYear(year)
     local hit = _cache[key]
     if hit and hit.nhist == nhist and hit.day == os.date("%Y-%m-%d") then return hit end
     local data = { nhist = nhist, day = os.date("%Y-%m-%d"), months = {}, total = 0 }
+    -- (the cache is also dropped when a book is added by hand)
     for m = 1, 12 do data.months[m] = {} end
     local ystr = tostring(year)
     local seen = {}
+    local files = {}
     if hist and hist.hist then
         for i = 1, math.min(nhist, 3000) do
             local e = hist.hist[i]
-            local fp = e and e.file
+            if e and e.file then files[#files + 1] = e.file end
+        end
+    end
+    for _i, fp in ipairs(manualList()) do files[#files + 1] = fp end
+    do
+        for _i, fp in ipairs(files) do
             if fp and not seen[fp] and lfs.attributes(fp, "mode") == "file" then
                 seen[fp] = true
                 local summary, title, authors = readSummary(fp)
@@ -130,7 +159,8 @@ function M.getYear(year)
                                 authors = authors or (bi and bi.authors)
                             end
                             title = title or (fp:match("([^/]+)%.[^.]+$") or fp)
-                            table.insert(data.months[m], { fp = fp, title = title, authors = authors, date = d })
+                            table.insert(data.months[m], { fp = fp, title = title, authors = authors, date = d,
+                                manual = isManual(fp) })
                             data.total = data.total + 1
                         end
                     end
@@ -401,7 +431,7 @@ local function bookOptions(menu, year, month, b, open_fn)
     local function reopen()
         UIManager:close(menu)
         refreshHome()
-        if #(M.getYear(year).months[month] or {}) > 0 then showMonth(year, month, open_fn) end
+        showMonth(year, month, open_fn)
     end
     dialog = ButtonDialog:new{
         title = b.title,
@@ -430,7 +460,12 @@ local function bookOptions(menu, year, month, b, open_fn)
             {{ text = _("Remove from Year in Books"), callback = function()
                 UIManager:close(dialog)
                 writeSummary(b.fp, function(sm) sm.exclude_from_goals = true end)
-                UI.Notify.toast(_("Removed. It stays marked Finished, and no longer counts toward your reading goal."))
+                if b.manual then
+                    setManual(b.fp, false)
+                    UI.Notify.toast(_("Removed from Year in Books."))
+                else
+                    UI.Notify.toast(_("Removed. It stays marked Finished, and no longer counts toward your reading goal."))
+                end
                 reopen()
             end }},
             {{ text = _("Cancel"), callback = function() UIManager:close(dialog) end }},
@@ -439,26 +474,169 @@ local function bookOptions(menu, year, month, b, open_fn)
     UIManager:show(dialog)
 end
 
+-- ---------------------------------------------------------------------------
+-- Adding a book by hand
+-- ---------------------------------------------------------------------------
+
+-- Every book in the library (home folder, sub-folders included).
+local function libraryBooks()
+    local home = G_reader_settings and G_reader_settings:readSetting("home_dir")
+    if not home or lfs.attributes(home, "mode") ~= "directory" then
+        local ok, dir = pcall(function() return require("apps/filemanager/filemanagerutil").getDefaultDir() end)
+        home = ok and dir or nil
+    end
+    if not home then return {} end
+    local ok_dr, DocumentRegistry = pcall(require, "document/documentregistry")
+    local ok_bim, bim = pcall(require, "bookinfomanager")
+    local out = {}
+    local function walk(dir, depth)
+        if depth > 8 or #out >= 5000 then return end
+        local ok_it, iter, st = pcall(lfs.dir, dir)
+        if not ok_it then return end
+        for name in iter, st do
+            if name ~= "." and name ~= ".." and name:sub(1, 1) ~= "." and not name:match("%.sdr$") then
+                local fp = dir .. "/" .. name
+                local mode = lfs.attributes(fp, "mode")
+                if mode == "directory" then
+                    walk(fp, depth + 1)
+                elseif mode == "file" and ok_dr and DocumentRegistry:hasProvider(fp) then
+                    local bi = ok_bim and bim and bim:getBookInfo(fp, false)
+                    local title = (bi and bi.title) or name:gsub("%.[^.]+$", "")
+                    local authors = bi and bi.authors
+                    out[#out + 1] = { fp = fp, title = title, authors = authors }
+                end
+            end
+        end
+    end
+    walk(home, 0)
+    table.sort(out, function(a, b) return a.title:lower() < b.title:lower() end)
+    return out
+end
+
+-- Marks `fp` Finished on `date` and puts it in the chart.
+local function addBook(fp, date)
+    writeSummary(fp, function(sm)
+        sm.status = "complete"
+        sm.date_finished = date
+        sm.exclude_from_goals = nil
+        if type(sm.modified) ~= "string" then sm.modified = date end
+    end)
+    setManual(fp, true)
+    M.invalidateCache()
+end
+
+-- Asks the day the book was finished (year and month already set), then adds it.
+local function askDate(book, year, month, done)
+    local today = os.date("*t")
+    local day = (year == today.year and month == today.month) and today.day or 1
+    local DateTimeWidget = require("ui/widget/datetimewidget")
+    UIManager:show(DateTimeWidget:new{
+        year = year, month = month, day = day,
+        ok_text = _("Add"),
+        title_text = _("Finished on"),
+        callback = function(t)
+            local date = string.format("%04d-%02d-%02d", t.year, t.month, t.day)
+            addBook(book.fp, date)
+            UI.Notify.toast(string.format(_("Added to %s %d."), MONTHS[t.month], t.year))
+            refreshHome()
+            if done then done(t.year, t.month) end
+        end,
+    })
+end
+
+-- A list of the library's books to choose from, with a search at the top.
+local function pickBook(on_pick, filter)
+    local Menu = require("ui/widget/menu")
+    local all = libraryBooks()
+    local items, menu = {}, nil
+    items[#items + 1] = {
+        text = filter and string.format(_("Search: %s"), filter) or _("Search…"),
+        bold = true,
+        callback = function()
+            local InputDialog = require("ui/widget/inputdialog")
+            local dlg
+            dlg = InputDialog:new{
+                title = _("Search title or author"),
+                input = filter or "",
+                buttons = {{
+                    { text = _("Cancel"), id = "close", callback = function() UIManager:close(dlg) end },
+                    { text = _("Search"), is_enter_default = true, callback = function()
+                        local q = dlg:getInputText()
+                        UIManager:close(dlg)
+                        UIManager:close(menu)
+                        pickBook(on_pick, (q and q ~= "") and q or nil)
+                    end },
+                }},
+            }
+            UIManager:show(dlg)
+            dlg:onShowKeyboard()
+        end,
+    }
+    local q = filter and filter:lower()
+    for _i, b in ipairs(all) do
+        local hay = (b.title .. " " .. (b.authors or "")):lower()
+        if not q or hay:find(q, 1, true) then
+            items[#items + 1] = {
+                text = b.title .. ((b.authors and b.authors ~= "") and ("  —  " .. b.authors:gsub("\n.*", " et al.")) or ""),
+                callback = function()
+                    UIManager:close(menu)
+                    on_pick(b)
+                end,
+            }
+        end
+    end
+    if #items == 1 then
+        items[#items + 1] = { text = _("No books found"), dim = true, callback = function() end }
+    end
+    menu = Menu:new{
+        title = _("Choose a book"),
+        item_table = items,
+        is_borderless = true,
+        is_popout = false,
+        covers_fullscreen = true,
+        width = Screen:getWidth(),
+        height = Screen:getHeight(),
+    }
+    UIManager:show(menu)
+end
+
+--- Adds a book to Year in Books: choose the book, then the day it was
+--- finished. `year`/`month` preset the date (default: this month).
+function M.addBookFlow(year, month, done)
+    local today = os.date("*t")
+    year, month = year or today.year, month or today.month
+    pickBook(function(book) askDate(book, year, month, done) end)
+end
+
 -- List of the books finished in a month. Tap (or hold) one for its
 -- options: open it, change its finish date, or remove it from the chart.
 showMonth = function(year, month, open_fn)
     local data = M.getYear(year)
     local list = data.months[month] or {}
-    if #list == 0 then return end
     local Menu = require("ui/widget/menu")
     local menu
     local items = {}
+    items[#items + 1] = {
+        text = _("+ Add a book read this month…"),
+        bold = true,
+        callback = function()
+            UIManager:close(menu)
+            M.addBookFlow(year, month, function(y, m) showMonth(y, m, open_fn) end)
+        end,
+    }
     for _i, b in ipairs(list) do
         local day = tonumber(b.date:sub(9, 10))
         items[#items + 1] = {
             text = b.title .. ((b.authors and b.authors ~= "") and ("  —  " .. b.authors:gsub("\n.*", " et al.")) or ""),
-            mandatory = day and string.format("%d %s", day, MONTHS[month]:sub(1, 3)) or nil,
+            mandatory = day and (string.format("%d %s", day, MONTHS[month]:sub(1, 3))
+                .. (b.manual and ("  " .. _("added")) or "")) or nil,
             callback = function() bookOptions(menu, year, month, b, open_fn) end,
             book = b,
         }
     end
     menu = Menu:new{
-        title = string.format(#list == 1 and _("%s %d · 1 book") or _("%s %d · %d books"), MONTHS[month], year, #list),
+        title = #list == 0 and string.format(_("%s %d"), MONTHS[month], year)
+            or string.format(#list == 1 and _("%s %d · 1 book") or _("%s %d · %d books"), MONTHS[month], year, #list),
         item_table = items,
         is_borderless = true,
         is_popout = false,
@@ -523,6 +701,11 @@ function M.getMenuItems(ctx_menu)
                 SUISettings:saveSetting(pfx .. SETTING_COVERS, not showCovers(pfx))
                 ctx_menu.refresh()
             end,
+        },
+        {
+            text     = _lc("Add a book read elsewhere…"),
+            help_text = _lc("For a book you read on paper or on another e-reader: choose it from your library and the day you finished it. It is marked Finished and counted in that month."),
+            callback = function() M.addBookFlow() end,
         },
         Config.makeLabelToggleItem("year_books", _("Year in Books"), ctx_menu.refresh, _lc),
     }

@@ -344,6 +344,28 @@ local function _bstats_evict()
     end
 end
 
+-- KoboUI: Kobo writes book stats in capitals with whole units
+-- ("5 HOURS TO GO", "12 MINS READ", "PAGE 3 OF 10").
+local function koboCaps(s)
+    if not s or s == "" then return s end
+    local ok, U = pcall(require, "ffi/utf8proc")
+    if ok and U and U.uppercase_dumb then
+        local ok2, r = pcall(U.uppercase_dumb, s)
+        if ok2 and r then return r end
+    end
+    return s:upper()
+end
+local function koboTime(secs)
+    secs = math.floor(secs or 0)
+    local h = math.floor(secs / 3600 + 0.5)
+    if h >= 1 then
+        return string.format(N_("%d hour", "%d hours", h), h)
+    end
+    local m = math.floor(secs / 60 + 0.5)
+    if secs > 0 then m = math.max(1, m) end
+    return string.format(N_("%d min", "%d mins", m), m)
+end
+
 local function fmtTime(secs)
     secs = math.floor(secs or 0)
     if secs <= 0 then return "0m" end
@@ -909,7 +931,7 @@ function M.build(w, ctx)
     local info_fs   = math.floor(SUIStyle.FS_DETAIL * scale * lbl_scale)
     local bar_h     = math.max(1, math.floor(Screen:scaleBySize(8) * scale))
     local face_title = Font:getFace(SUIStyle.FACE_REGULAR, math.max(8, title_fs))
-    local face_info  = Font:getFace(SUIStyle.FACE_REGULAR, math.max(7, info_fs))
+    local face_info  = require("infra/kbo_fonts").face(math.max(7, info_fs))  -- KoboUI: sans-serif stats
 
     -- Title widget (capped to full cover block including side peeks)
     local title_widget
@@ -1010,18 +1032,18 @@ function M.build(w, ctx)
                 if _showElemFrom(c, pfx, key) then
                     local text
                     if key == "percent" then
-                        text = string.format(_("%d%% Read"), math.floor((nd.percent or 0) * 100 + 0.5))
+                        text = koboCaps(string.format(_("%d%% Read"), math.floor((nd.percent or 0) * 100 + 0.5)))
                     elseif nb then
                         if key == "book_days" and nb.days and nb.days > 0 then
-                            text = string.format(N_("%d day of reading", "%d days of reading", nb.days), nb.days)
+                            text = koboCaps(string.format(N_("%d day of reading", "%d days of reading", nb.days), nb.days))
                         elseif key == "book_time" and nb.total_secs and nb.total_secs > 0 then
-                            text = string.format(_("%s read"), fmtTime(nb.total_secs))
+                            text = koboCaps(string.format(_("%s read"), koboTime(nb.total_secs)))
                         elseif key == "book_remaining" then
                             local avg_t = (nb.avg_time and nb.avg_time > 0) and nb.avg_time or nd.avg_time
                             if avg_t and avg_t > 0 and nd.pages and nd.pages > 0 then
                                 local secs_left = math.floor(avg_t * nd.pages * (1 - (nd.percent or 0)))
                                 if secs_left > 0 then
-                                    text = string.format(_("%s remaining"), fmtTime(secs_left))
+                                    text = koboCaps(string.format(_("%s to go"), koboTime(secs_left)))
                                 end
                             end
                         end

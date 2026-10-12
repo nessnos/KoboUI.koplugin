@@ -156,6 +156,16 @@ function SimpleUIPlugin:init()
     if self.ui and self.ui.simpleui == nil then
         self.ui.simpleui = self
     end
+    -- KoboUI: the Kobo status bar is always on (it can't be switched off).
+    pcall(function()
+        local SUISettings = require("infra/sui_store")
+        if SUISettings:readSetting("simpleui_topbar_enabled") == false then
+            SUISettings:saveSetting("simpleui_topbar_enabled", true)
+        end
+        if SUISettings:readSetting("koboui_statusbar") == false then
+            SUISettings:saveSetting("koboui_statusbar", true)
+        end
+    end)
     -- Conflicting plugins/patches: disable or block before UI setup.
     do
         local ok_cc, compat = pcall(require, "infra/sui_compat_check")
@@ -2537,6 +2547,23 @@ function SimpleUIPlugin:onBookMetadataChanged(_prop_updated)
         end
     end
 end
+
+-- KoboUI: in dark (night) mode the screen is shown inverted, so the accent
+-- colour is painted inverted to come out right (infra/kbo_accent.lua). The
+-- bars keep the colour they were built with: rebuild them once the mode has
+-- switched. (Not consumed: KOReader still handles the event itself.)
+local function _rebuildForNightMode(self)
+    local UIManager = require("ui/uimanager")
+    UIManager:scheduleIn(0.2, function()
+        pcall(function() self:_scheduleRebuild() end)
+        local FM = package.loaded["apps/filemanager/filemanager"]
+        if FM and FM.instance and FM.instance.file_chooser then
+            pcall(function() FM.instance.file_chooser:refreshPath() end)
+        end
+    end)
+end
+function SimpleUIPlugin:onToggleNightMode() _rebuildForNightMode(self) end
+function SimpleUIPlugin:onSetNightMode() _rebuildForNightMode(self) end
 
 function SimpleUIPlugin:onFrontlightStateChanged()
     if self._simpleui_suspended then return end

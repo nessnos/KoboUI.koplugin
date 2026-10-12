@@ -744,6 +744,7 @@ function M.buildTabCell(action_id, active, tab_w, mode)
         label_fs                 = M.TAB_LABEL_FS(),
         icon_txt_sp              = M.ICON_TXT_SP(),
         indic_h                  = M.INDIC_H(),
+        sep_h                    = M.SEP_H(),
         mode                     = mode,
         bar_style                = bar_style,
         fgcolor                  = _getBarFg(),

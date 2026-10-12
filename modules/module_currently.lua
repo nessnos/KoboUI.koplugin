@@ -80,7 +80,7 @@ local _BASE_PCT_FS       = SUIStyle.FS_DETAIL     -- 15: pct text
 local _BASE_STATS_FS     = SUIStyle.FS_DETAIL     -- 15: stats text
 local _BASE_INLINEPCT_FS = SUIStyle.FS_DETAIL     -- 15: pct label inside the bar
 local _BASE_DESC_FS      = SUIStyle.FS_DETAIL     -- 15: description text
-local _BASE_SERIES_FS    = SUIStyle.FS_CAPTION    -- 12: series text (smaller than author)
+local _BASE_SERIES_FS    = SUIStyle.FS_CAPTION + 2 -- 14: series text (KoboUI: a little bigger)
 
 -- Description is clamped to a fixed number of lines rather than a dynamic
 -- "remaining space" layout, because every other element in this module
@@ -189,6 +189,28 @@ end
 
 
 -- Formats a duration in seconds as "Xh Ym", "Xh", or "Ym".
+-- KoboUI: Kobo writes book stats in capitals with whole units
+-- ("5 HOURS TO GO", "12 MINS READ", "PAGE 3 OF 10").
+local function koboCaps(s)
+    if not s or s == "" then return s end
+    local ok, U = pcall(require, "ffi/utf8proc")
+    if ok and U and U.uppercase_dumb then
+        local ok2, r = pcall(U.uppercase_dumb, s)
+        if ok2 and r then return r end
+    end
+    return s:upper()
+end
+local function koboTime(secs)
+    secs = math.floor(secs or 0)
+    local h = math.floor(secs / 3600 + 0.5)
+    if h >= 1 then
+        return string.format(N_("%d hour", "%d hours", h), h)
+    end
+    local m = math.floor(secs / 60 + 0.5)
+    if secs > 0 then m = math.max(1, m) end
+    return string.format(N_("%d min", "%d mins", m), m)
+end
+
 local function fmtTime(secs)
     secs = math.floor(secs or 0)
     if secs <= 0 then return "0m" end
@@ -300,12 +322,12 @@ local function _pageText(nd)
     -- Stable page numbers when the book uses them (KOReader: Settings →
     -- Stable page numbers → use them in the reader).
     if nd and nd.page_label and nd.page_label ~= "" and nd.page_label_last and nd.page_label_last ~= "" then
-        return string.format(_("Page %s of %s"), tostring(nd.page_label), tostring(nd.page_label_last))
+        return koboCaps(string.format(_("Page %s of %s"), tostring(nd.page_label), tostring(nd.page_label_last)))
     end
     local pages = nd and tonumber(nd.pages)
     if not pages or pages <= 0 then return nil end
     local cur = math.max(1, math.min(pages, math.floor((nd.percent or 0) * pages + 0.5)))
-    return string.format(_("Page %d of %d"), cur, pages)
+    return koboCaps(string.format(_("Page %d of %d"), cur, pages))
 end
 
 
@@ -611,7 +633,7 @@ function M.build(w, ctx)
     local face_series = Font:getFace(SUIStyle.FACE_REGULAR, series_fs)
     local face_desc   = Font:getFace(SUIStyle.FACE_REGULAR, desc_fs)
     local face_pct    = Font:getFace(SUIStyle.FACE_REGULAR, pct_fs)
-    local face_s      = Font:getFace(SUIStyle.FACE_REGULAR, stats_fs)
+    local face_s      = require("infra/kbo_fonts").face(stats_fs)  -- KoboUI: sans-serif stats
 
     -- Use prefetched book data. After onCloseDocument, _cached_books_state is
     -- cleared and prefetchBooks() re-reads the sidecar, so this is always fresh.
@@ -903,8 +925,8 @@ function M.build(w, ctx)
             local function _update(nb, nd)
                 local has_d = nb and nb.days and nb.days > 0
                 local days_lbl = has_d
-                    and string.format(N_("%d day of reading", "%d days of reading", nb.days), nb.days)
-                    or  string.format(N_("%d day of reading", "%d days of reading", 0), 0)
+                    and koboCaps(string.format(N_("%d day of reading", "%d days of reading", nb.days), nb.days))
+                    or  koboCaps(string.format(N_("%d day of reading", "%d days of reading", 0), 0))
                 _updateColoredText(days_w, days_lbl, has_d and CLR_TEXT_SUB_EFF or CLR_PH_EFF)
             end
             _update(bstats, bd)
@@ -920,8 +942,8 @@ function M.build(w, ctx)
             local function _update(nb, nd)
                 local has_d = nb and nb.total_secs and nb.total_secs > 0
                 local text = has_d
-                             and string.format(_("%s read"), fmtTime(nb.total_secs))
-                             or  string.format(_("%s read"), "—")
+                             and koboCaps(string.format(_("%s read"), koboTime(nb.total_secs)))
+                             or  koboCaps(string.format(_("%s read"), "—"))
                 _updateColoredText(time_w, text, has_d and CLR_TEXT_SUB_EFF or CLR_PH_EFF)
             end
             _update(bstats, bd)
@@ -943,11 +965,11 @@ function M.build(w, ctx)
                     elseif nd.avg_time and nd.avg_time > 0 then avg_t = nd.avg_time end
                     
                     if not avg_t or not nd.pages or nd.pages <= 0 then
-                        _updateColoredText(remain_w, string.format(_("%s remaining"), "—"), CLR_PH_EFF)
+                        _updateColoredText(remain_w, koboCaps(string.format(_("%s to go"), "—")), CLR_PH_EFF)
                     else
                         local pages_left = nd.pages * (1 - (nd.percent or 0))
                         local secs_left  = math.floor(avg_t * pages_left)
-                        if secs_left > 0 then _updateColoredText(remain_w, string.format(_("%s remaining"), fmtTime(secs_left)), CLR_TEXT_SUB_EFF)
+                        if secs_left > 0 then _updateColoredText(remain_w, koboCaps(string.format(_("%s to go"), koboTime(secs_left))), CLR_TEXT_SUB_EFF)
                         else _updateColoredText(remain_w, "", CLR_PH_EFF) end
                     end
                 end
@@ -993,23 +1015,34 @@ function M.build(w, ctx)
                     local parts = {}
                     for _i, e in ipairs(elem_order) do
                         if e == "book_time" and show.time and nb and nb.total_secs > 0 then
-                            parts[#parts+1] = string.format(_("%s read"), fmtTime(nb.total_secs))
+                            parts[#parts+1] = koboCaps(string.format(_("%s read"), koboTime(nb.total_secs)))
                         elseif e == "book_remaining" and show.remain and secs_left then
-                            parts[#parts+1] = string.format(_("%s left"), fmtTime(secs_left))
+                            parts[#parts+1] = koboCaps(string.format(_("%s to go"), koboTime(secs_left)))
                         elseif e == "book_days" and show.days and nb and nb.days > 0 then
-                            parts[#parts+1] = string.format(N_("%d day of reading", "%d days of reading", nb.days), nb.days)
+                            parts[#parts+1] = koboCaps(string.format(N_("%d day of reading", "%d days of reading", nb.days), nb.days))
                         elseif e == "book_pages" and show.pages and _pageText(nd) then
                             parts[#parts+1] = _pageText(nd)
                         end
                     end
 
                     if #parts > 0 then
-                        return table.concat(parts, " · "), CLR_TEXT_SUB_EFF, true
+                        -- KoboUI: whole parts only — drop the last ones that
+                        -- don't fit instead of cutting one in the middle.
+                        local joined = table.concat(parts, " · ")
+                        while #parts > 1 do
+                            local probe = TextWidget:new{ text = joined, face = face_s, padding = 0 }
+                            local pw = probe:getSize().w
+                            probe:free()
+                            if pw <= tw then break end
+                            parts[#parts] = nil
+                            joined = table.concat(parts, " · ")
+                        end
+                        return joined, CLR_TEXT_SUB_EFF, true
                     end
 
                     local any_active = (show.days or show.time or show.remain or show.pages)
                     if any_active then
-                        return string.format(_("%s read"), "—"), CLR_PH_EFF, true
+                        return koboCaps(string.format(_("%s read"), "—")), CLR_PH_EFF, true
                     end
                     return "", CLR_PH_EFF, false
                 end

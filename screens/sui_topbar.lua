@@ -169,7 +169,7 @@ end
 function M.TOPBAR_FS()
     return _cached("topbar_fs", function()
         -- KoboUI: Kobo's clock is small next to the icons
-        if _koboBar() then return math.floor(SUIStyle.FS_BODY * 0.78 * _getTopbarScale()) end
+        if _koboBar() then return math.floor(SUIStyle.FS_BODY * 0.95 * _getTopbarScale()) end
         return math.floor(SUIStyle.FS_BODY * _getTopbarScale())   -- 18: text size (FS_BODY)
     end)
 end
@@ -190,8 +190,16 @@ function M.TOPBAR_PAD_BOT()
         return math.floor(Screen:scaleBySize(8) * _getTopbarScale())
     end)
 end
+-- KoboUI: the Kobo status bar sits lower, about twice as far from the
+-- bezel (v1.1.4). A plain gap above the row, so the icons keep their size.
+function M.TOPBAR_DROP()
+    return _cached("tb_drop", function()
+        if _koboBar() then return math.floor(Screen:scaleBySize(15) * _getTopbarScale()) end
+        return 0
+    end)
+end
 function M.TOTAL_TOP_H()
-    return M.TOPBAR_H() + M.TOPBAR_PAD_TOP() + M.TOPBAR_PAD_BOT()
+    return M.TOPBAR_H() + M.TOPBAR_PAD_TOP() + M.TOPBAR_PAD_BOT() + M.TOPBAR_DROP()
 end
 
 -- ---------------------------------------------------------------------------
@@ -394,7 +402,8 @@ function M.buildTopbarWidget()
     local pad_top   = M.TOPBAR_PAD_TOP()
     local pad_bot   = M.TOPBAR_PAD_BOT()
     local total_h   = M.TOPBAR_H() + pad_top + pad_bot
-    local face      = Font:getFace(SUIStyle.FACE_REGULAR, M.TOPBAR_FS())
+    -- KoboUI: the clock (and other text in the bar) uses the sans-serif label font
+    local face      = require("infra/kbo_fonts").face(M.TOPBAR_FS())
     local icon_face = Font:getFace(SUIStyle.FACE_ICONS, M.TOPBAR_FS())
     local info      = M.getTopbarInfo()
     local tb_cfg    = getTopbarConfigCached()
@@ -462,10 +471,8 @@ function M.buildTopbarWidget()
         local first = true
         local fg = _getBarFg()
         for _, key in ipairs(order) do
-            -- KoboUI: KindleOS-style horizontal battery ("82% ▭"), unless
-            -- the classic battery glyph was chosen (Status Bar settings).
-            if key == "battery" and (tb_cfg.side[key] or "hidden") ~= "hidden" and info.battery
-                    and SUISettings:readSetting("kindleui_battery_style") ~= "classic" then
+            -- KoboUI: always a horizontal battery ("82% ▭").
+            if key == "battery" and (tb_cfg.side[key] or "hidden") ~= "hidden" and info.battery then
                 if not first then
                     group[#group + 1] = TextWidget:new{ text = "  ", face = face, fgcolor = fg }
                 end
@@ -562,6 +569,7 @@ function M.buildTopbarWidget()
     local root = FrameContainer:new{
         bordersize    = 0, padding = 0, margin = 0,
         padding_left  = side_m, padding_right = side_m,
+        padding_top   = M.TOPBAR_DROP(),
         background    = bar_bg,
         row,
     }

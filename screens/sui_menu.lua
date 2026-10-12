@@ -841,7 +841,7 @@ SimpleUIPlugin.addToMainMenu = function(self, menu_items)
     end
 
 
-    local function makeTopbarMenu(ctx_menu)
+    local function makeTopbarMenuBase(ctx_menu)
         return {
             {
                 text_func    = function()
@@ -864,12 +864,12 @@ SimpleUIPlugin.addToMainMenu = function(self, menu_items)
                 separator = true,
             },
             {
-                text = _("Items"),
+                text = _("Clock and Text Items"),
                 sub_item_table_func = function() return makeTopbarItemsMenu(ctx_menu) end,
                 sui_build = ctx_menu and ctx_menu.is_sui and function(ctx, _item)
                     local SUIWindow = require("engines/sui_window")
                     return SUIWindow.ListRow{
-                        title        = _("Items"),
+                        title        = _("Clock and Text Items"),
                         subtitle     = function()
                             local cfg = Config.getTopbarConfig()
                             local names = {}
@@ -958,7 +958,7 @@ SimpleUIPlugin.addToMainMenu = function(self, menu_items)
                             end
                             
                             ctx.push("arrange", {
-                                title = _("Items"),
+                                title = _("Clock and Text Items"),
                                 items = sort_items,
                                 empty_text = _("No items selected."),
                                 on_delete = function(item)
@@ -1075,27 +1075,6 @@ SimpleUIPlugin.addToMainMenu = function(self, menu_items)
                     })
                 end,
             },
-            -- KoboUI: the Kobo status bar (icons with drop-down panels).
-            {
-                text = _("Kobo Status Bar"),
-                help_text = _("The clock and the row of icons that open drop-down panels (light, Wi-Fi, battery, sync, search)."),
-                sub_item_table_func = function()
-                    return require("screens/kbo_statusbar").menuItems(plugin, ctx_menu)
-                end,
-            },
-            {
-                text           = _("Horizontal battery"),
-                help_text      = _("Shows the battery as a horizontal battery after the percentage (only when the Kobo-style status bar is off). Switch off for the classic battery symbol."),
-                keep_menu_open = true,
-                checked_func   = function() return SUISettings:readSetting("kindleui_battery_style") ~= "classic" end,
-                callback = function()
-                    local classic = SUISettings:readSetting("kindleui_battery_style") == "classic"
-                    SUISettings:saveSetting("kindleui_battery_style", classic and "kindle" or "classic")
-                    local ok_tb, TB = pcall(require, "screens/sui_topbar")
-                    if ok_tb and TB.invalidateConfigCache then pcall(TB.invalidateConfigCache) end
-                    plugin:_scheduleRebuild()
-                end,
-            },
             {
                 text           = _("Hide Wi-Fi Icon When Off"),
                 keep_menu_open = true,
@@ -1123,6 +1102,22 @@ SimpleUIPlugin.addToMainMenu = function(self, menu_items)
     -- -----------------------------------------------------------------------
     -- Bottom bar menu builder
     -- -----------------------------------------------------------------------
+
+    -- KoboUI: one Status Bar page — the bar itself, then its buttons (each
+    -- with an icon and an action or a drop-down), then the clock/text items.
+    -- (KindleUI's separate Quick Settings panel is gone.)
+    local function makeTopbarMenu(ctx_menu)
+        local base = makeTopbarMenuBase(ctx_menu)
+        local ok, SB = pcall(require, "screens/kbo_statusbar")
+        if not ok then return base end
+        local kobo = SB.menuItems(plugin, ctx_menu)
+        -- (no "Enable Status Bar": KoboUI always has its status bar)
+        local out = {}
+        for _i, it in ipairs(kobo) do out[#out + 1] = it end
+        if out[#out] then out[#out].separator = true end
+        for i = 2, #base do out[#out + 1] = base[i] end
+        return out
+    end
 
     local function makeNavbarMenu(ctx_menu)
         return {
@@ -2645,7 +2640,7 @@ SimpleUIPlugin.addToMainMenu = function(self, menu_items)
             },
             {
                 text = _("Book Cover Transition"),
-                help_text = _("Briefly show the book cover full-screen when opening or closing a book, masking the page-layout flash. Normally requires the book to already be indexed by the cover browser (its cover must have been seen at least once in a grid/list view) — see \"High-Quality Cover\" below to also cover un-indexed books."),
+                help_text = _("Briefly show the book cover full-screen when opening or closing a book, masking the page-layout flash. Normally requires the book to already be indexed by the cover browser (its cover must have been seen at least once in a cover/list view) — see \"High-Quality Cover\" below to also cover un-indexed books."),
                 sub_item_table = {
                     {
                         text           = _("Show on Open"),
@@ -2815,11 +2810,6 @@ SimpleUIPlugin.addToMainMenu = function(self, menu_items)
 
     local function makeBarsMenuItems(ctx_menu)
         return {
-            -- KoboUI: the top menu (quick settings panel) is a bar too.
-            { text = _("Quick Settings (top menu)"),
-              sub_item_table_func = function()
-                  return require("features/quickpanel/qp_settings").makeMenuItems(ctx_menu)
-              end },
             { text = _("Status Bar"),     sub_item_table_func = function() return makeTopbarMenu(ctx_menu) end },
             { text = _("Navigation Bar"),  sub_item_table_func = function() return makeNavbarMenu(ctx_menu) end },
             { text = _("Title Bar"),      sub_item_table_func = function() return makeTitleBarMenu(ctx_menu) end },
@@ -3008,7 +2998,7 @@ SimpleUIPlugin.addToMainMenu = function(self, menu_items)
             },
             {
                 text = _("Titles Under Covers"),
-                help_text = _("Which Library views show the title (or the author, series or collection name) under each cover, in grid view."),
+                help_text = _("Which Library views show the title (or the author, series or collection name) under each cover, in cover view."),
                 sub_item_table_func = function()
                     local FCv = require("features/library/sui_foldercovers")
                     local labels = { books = _("Books"), author = _("Authors"), series = _("Series"),
@@ -3042,6 +3032,13 @@ SimpleUIPlugin.addToMainMenu = function(self, menu_items)
                 sub_item_table_func = function()
                     local A = require("infra/kbo_accent")
                     local items = {}
+                    local function repaintAll()
+                        plugin:_scheduleRebuild()
+                        local FM = package.loaded["apps/filemanager/filemanager"]
+                        if FM and FM.instance and FM.instance.file_chooser then
+                            UIManager:nextTick(function() pcall(function() FM.instance.file_chooser:refreshPath() end) end)
+                        end
+                    end
                     for _i, c in ipairs(A.CHOICES) do
                         local id = c.id
                         items[#items + 1] = {
@@ -3361,6 +3358,7 @@ SimpleUIPlugin.addToMainMenu = function(self, menu_items)
                                         value_func = function()
                                             local m = FC.getProgressMode()
                                             if m == "banner" then return _("Banner")
+                                            elseif m == "bar" then return _("Progress bar")
                                             elseif m == "native" then return _("Native")
                                             else return _("None") end
                                         end,
@@ -3370,6 +3368,7 @@ SimpleUIPlugin.addToMainMenu = function(self, menu_items)
                                                 value_func = function()
                                                     local m = FC.getProgressMode()
                                                     if m == "banner" then return _("Banner")
+                                                    elseif m == "bar" then return _("Progress bar")
                                                     elseif m == "native" then return _("Native")
                                                     else return _("None") end
                                                 end,
@@ -3380,6 +3379,38 @@ SimpleUIPlugin.addToMainMenu = function(self, menu_items)
                                                         checked_func   = function() return FC.getProgressMode() == "banner" end,
                                                         keep_menu_open = true,
                                                         callback       = function() FC.setProgressMode("banner"); FC.invalidateCache(); _refreshFC() end,
+                                                    },
+                                                    {
+                                                        -- KoboUI: thin bar + % under the cover
+                                                        text           = _("Progress bar under the cover"),
+                                                        radio          = true,
+                                                        checked_func   = function() return FC.getProgressMode() == "bar" end,
+                                                        keep_menu_open = true,
+                                                        callback       = function() FC.setProgressMode("bar"); FC.invalidateCache(); _refreshFC() end,
+                                                    },
+                                                    {
+                                                        text_func      = function() return _("Text size under the cover") end,
+                                                        help_text      = _("Size of \"19% Read\", \"Unread\" and \"Finished\" under the covers (Progress bar under the cover)."),
+                                                        enabled_func   = function() return FC.getProgressMode() == "bar" end,
+                                                        value_func     = function() return tostring(FC.getStatusTextSize()) end,
+                                                        keep_menu_open = true,
+                                                        separator      = true,
+                                                        callback       = function(touchmenu_instance)
+                                                            local SpinWidget = require("ui/widget/spinwidget")
+                                                            UIManager:show(SpinWidget:new{
+                                                                title_text    = _("Text size under the cover"),
+                                                                value         = FC.getStatusTextSize(),
+                                                                value_min     = FC.STATUS_FS_MIN,
+                                                                value_max     = FC.STATUS_FS_MAX,
+                                                                value_step    = 1,
+                                                                default_value = FC.STATUS_FS_DEF,
+                                                                callback      = function(spin)
+                                                                    FC.setStatusTextSize(spin.value)
+                                                                    FC.invalidateCache(); _refreshFC()
+                                                                    if touchmenu_instance and touchmenu_instance.updateItems then touchmenu_instance:updateItems() end
+                                                                end,
+                                                            })
+                                                        end,
                                                     },
                                                     {
                                                         text           = _("Native"),
@@ -4535,6 +4566,20 @@ SimpleUIPlugin.addToMainMenu = function(self, menu_items)
                     return items
                 end,
             },
+            -- ── KoboUI: Label Font (sans-serif for stats, counts, nav bar, tabs)
+            {
+                text_func = function()
+                    local ok, KF = pcall(require, "infra/kbo_fonts")
+                    if not ok then return _("Label Font") end
+                    return string.format(_("Label Font  [%s]"), KF.currentName())
+                end,
+                help_text = _("The sans-serif font for Kobo's capitalised details: time left, page, book counts, the navigation bar and the Library tabs. Everything else uses the UI font. By default it is KOReader's own sans-serif, Noto Sans."),
+                sub_item_table_func = function()
+                    local ok, KF = pcall(require, "infra/kbo_fonts")
+                    if not ok then return {} end
+                    return KF.menuItems()
+                end,
+            },
             -- ── Global Text Size ──────────────────────────────────────────
             -- Global scale applied to every KOReader UI text size, via a
             -- patch on ui/font.lua's Font:getFace() (sui_patches.lua
@@ -4765,12 +4810,10 @@ SimpleUIPlugin.addToMainMenu = function(self, menu_items)
             -- ── Home Screen ──────────────────────────────────────────────────
             -- All settings that apply to the homescreen context live here.
             { text = _("Home Screen"), sub_item_table_func = makeHomescreenMenu },
-            -- ── KoboUI: Quick Settings (the top menu) ─────────────────────
+            -- ── KoboUI: the status bar (buttons, actions, drop-downs) ────────
             {
-                text = _("Quick Settings"),
-                sub_item_table_func = function()
-                    return require("features/quickpanel/qp_settings").makeMenuItems(nil)
-                end,
+                text = _("Status Bar"),
+                sub_item_table_func = function() return plugin._makeTopbarMenu and plugin._makeTopbarMenu(nil) or {} end,
             },
             -- ── Library ──────────────────────────────────────────────────────
             -- Book-browser settings: folder covers, series grouping, browse by meta.

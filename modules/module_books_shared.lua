@@ -820,6 +820,8 @@ function SH.getBookData(filepath, prefetched)
         page_label      = page_label,
         page_label_last = page_label_last,
         avg_time    = avg_time,
+        md5         = md5,
+        stat_pages  = stat_pages,
         status      = status, -- "complete" | "abandoned" | nil ("reading"/unset)
     }
 end

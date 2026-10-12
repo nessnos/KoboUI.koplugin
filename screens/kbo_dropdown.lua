@@ -247,7 +247,21 @@ function D.sliderRow(opts)
         if final then r._live = nil end
         return true
     end
-    function row.tap(r, pos, dd) return row.pan(r, pos, dd, true) end
+    function row.tap(r, pos, dd)
+        -- KoboUI: a tap on the end icons (☼ / ☾) steps by one instead of
+        -- jumping to the end of the rail
+        local a, b, kr = geom(r)
+        local step
+        if pos.x < a - kr then step = -1 elseif pos.x > b + kr then step = 1 end
+        if step then
+            local cur = tonumber(opts.get()) or opts.min
+            local v = math.max(opts.min, math.min(opts.max, math.floor(cur + 0.5) + step))
+            if v ~= cur then pcall(opts.set, v, true) end
+            dd:refreshRow(r, true)
+            return true
+        end
+        return row.pan(r, pos, dd, true)
+    end
     return row
 end
 
@@ -397,6 +411,29 @@ function DropDown:_layout()
         h = h + (r.height or 0)
     end
     local a = self.anchor or Geom:new{ x = sw - S(40), y = 0, w = S(40), h = S(40) }
+    -- KoboUI: "side" — the card beside the anchor (like Kobo's book "…"
+    -- menu), its caret on the card's left (or right) edge pointing at it.
+    if self.placement == "side" then
+        local sh = Screen:getHeight()
+        local margin = S(12)
+        self.caret_h = self.caret and S(14) or 0
+        local acy = a.y + math.floor(a.h / 2)
+        local x = a.x + a.w + self.caret_h
+        self.caret_side = "left"
+        if x + w > sw - margin then
+            x = a.x - self.caret_h - w
+            self.caret_side = "right"
+        end
+        x = math.max(margin, math.min(sw - margin - w, x))
+        local y = acy - math.floor(h / 2)
+        y = math.max(margin, math.min(sh - margin - h, y))
+        if h > sh - 2 * margin then h = sh - 2 * margin end
+        self.card = Geom:new{ x = x, y = y, w = w, h = h }
+        self.pad_v = pad_v
+        self.acy = math.max(y + S(24), math.min(y + h - S(24), acy))
+        return
+    end
+    self.caret_side = nil
     local acx = a.x + math.floor(a.w / 2)
     local margin = S(12)
     local x
@@ -418,7 +455,12 @@ end
 --- The region this panel paints (card + caret + anchor).
 function DropDown:paintRegion()
     local c = self.card
-    local r = Geom:new{ x = c.x, y = c.y - self.caret_h, w = c.w, h = c.h + self.caret_h }
+    local r
+    if self.caret_side then
+        r = Geom:new{ x = c.x - self.caret_h, y = c.y, w = c.w + 2 * self.caret_h, h = c.h }
+    else
+        r = Geom:new{ x = c.x, y = c.y - self.caret_h, w = c.w, h = c.h + self.caret_h }
+    end
     if self.anchor then r = r:combine(self.anchor) end
     return r
 end
@@ -431,8 +473,19 @@ function DropDown:paintTo(bb, x, y)
     local bw = math.max(2, S(1.5))
     bb:paintRect(c.x, c.y, c.w, c.h, WHITE)
     bb:paintBorder(c.x, c.y, c.w, c.h, bw, BLACK)
+    -- caret on the left/right border ("side" placement)
+    if self.caret and self.caret_side then
+        local ch = self.caret_h
+        for i = 0, ch do
+            local hh = math.floor(ch * i / ch)
+            local xx = (self.caret_side == "left") and (c.x - ch + i) or (c.x + c.w - 1 + ch - i)
+            bb:paintRect(xx, self.acy - hh, 1, hh * 2 + 1, BLACK)
+            if hh - bw > 0 then bb:paintRect(xx, self.acy - hh + bw, 1, (hh - bw) * 2 + 1, WHITE) end
+        end
+        local ex = (self.caret_side == "left") and c.x or (c.x + c.w - bw)
+        bb:paintRect(ex, self.acy - ch + bw, bw, (ch - bw) * 2 + 1, WHITE)
     -- caret: a triangle on the top border, pointing at the anchor
-    if self.caret then
+    elseif self.caret then
         local ch = self.caret_h
         local half = ch
         for i = 0, ch do

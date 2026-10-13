@@ -24,7 +24,7 @@ Made for Kobo e-readers (colour screens included), and works on any device KORea
   the right. Tap an icon for its drop-down panel (the icon turns white on a black circle):
   - **Light** — Brightness slider (the % above the knob), Natural light slider (sun → moon) with an
     *AUTO* switch when KOReader's Auto warmth plugin is on, and a Dark mode switch;
-  - **Wi-Fi** — *WI-FI: ENABLED* switch, the networks around you (tap one to connect), *Wi-Fi Settings*;
+  - **Wi-Fi** — *WI-FI: ENABLED* switch; turning Wi-Fi on happens inside the panel (*Turning on Wi-Fi…*, *Looking for networks…*, *Connecting to …*) with no KOReader pop-ups. A saved network is joined on its own; otherwise the networks around you are listed — tap one to join it (a password box opens for a new locked network, and a username + password box for work or school networks — WPA-Enterprise/802.1X, e.g. eduroam; long-press a network to type them again). *Wi-Fi Settings*;
   - **Battery** — "eReader: 33%", *Energy saving settings*, *Battery statistics*;
   - **Sync** — *Sync now* runs the action you choose (for example a sync plugin), with the time of the
     last sync, and *Check for software updates*;
@@ -198,6 +198,7 @@ KoboUI is built on KindleUI (same author), which is built on SimpleUI. The Kobo 
 | `screens/kbo_statusbar.lua` | Status-bar icons, custom buttons, their settings. |
 | `screens/kbo_dropdown.lua` | The drop-down panel and its rows (switch, slider, list, link…). |
 | `screens/kbo_panels.lua` | Light, Wi-Fi, Bluetooth, Battery, Sync, Search panels. |
+| `infra/kbo_wifi_eap.lua` | Work/school Wi-Fi (username + password, WPA-Enterprise) on Kobo. |
 | `features/library/kbo_library_header.lua` | Library tabs, Filter / Sort / … row and menus. |
 | `infra/kbo_accent.lua` | The accent colour (RGB on colour screens). |
 | `icons/kobo/` | The status-bar line icons. |

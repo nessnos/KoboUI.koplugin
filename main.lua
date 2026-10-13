@@ -156,6 +156,8 @@ function SimpleUIPlugin:init()
     if self.ui and self.ui.simpleui == nil then
         self.ui.simpleui = self
     end
+    -- KoboUI: Wi-Fi networks with a username + password (work/school, EAP).
+    pcall(function() require("infra/kbo_wifi_eap").install() end)
     -- KoboUI: the Kobo status bar is always on (it can't be switched off).
     pcall(function()
         local SUISettings = require("infra/sui_store")

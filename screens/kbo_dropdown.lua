@@ -299,6 +299,7 @@ function D.itemRow(opts)
             math.max(S(40), x + w - pad - rw - cx), opts.bold)
     end
     if opts.tap then row.tap = function(r, pos, dd) return opts.tap(dd) end end
+    if opts.hold then row.hold = function(r, pos, dd) return opts.hold(dd) end end
     if opts.dim then
         local inner = row.paint
         row.paint = function(r, bb, x, y, w) opts.color = GREY; return inner(r, bb, x, y, w) end
@@ -576,6 +577,14 @@ function DropDown:onDDTap(_args, ges)
 end
 
 function DropDown:onDDHold(_args, ges)
+    local pos = ges.pos
+    if self:_inCard(pos) then
+        local r = self:_rowAt(pos)
+        if r and r.hold then
+            local ok, err = pcall(r.hold, r, pos, self)
+            if not ok then logger.warn("koboui: drop-down hold failed:", err) end
+        end
+    end
     return true
 end
 

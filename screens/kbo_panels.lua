@@ -7,9 +7,13 @@ screens/kbo_dropdown.lua draws them):
   Light      Brightness slider (value above the knob); Natural light slider
              (sun → moon) with an AUTO switch when KOReader's Auto warmth
              plugin is there; Dark mode switch.
-  Wi-Fi      WI-FI: ENABLED switch; the networks around (scanned when the
-             panel opens; tap one to connect in KOReader's network list);
-             Wi-Fi Settings (KOReader's Network menu).
+  Wi-Fi      WI-FI: ENABLED switch; turning it on happens inside the panel
+             ("Turning on Wi-Fi…", "Looking for networks…", "Connecting to
+             X…") instead of KOReader's pop-ups: a saved network is joined on
+             its own, else the networks around are listed — tap one to join
+             (a password box opens for a new locked one, a username +
+             password box for work/school "Enterprise" networks — see
+             infra/kbo_wifi_eap.lua; long-press to type them again). Wi-Fi Settings (KOReader's Network menu).
   Bluetooth  the action you chose for it (KOReader has no Bluetooth on Kobo).
   Battery    "eReader: 33%"; Energy saving settings; Battery statistics.
   Sync       "Sync now" runs the action you chose (e.g. a sync plugin captured
@@ -136,9 +140,17 @@ end
 -- ---------------------------------------------------------------------------
 local _nets       -- last scan result
 local _scanning = false
+-- What the panel is doing, shown in its rows instead of KOReader's pop-ups:
+--   nil | "turning_on" | "scanning" | "connecting" | "failed"
+local _wifi = { state = nil, target = nil, msg = nil }
+local _failed = {}        -- ssid -> true: the last try failed (tap asks the password again)
+local _pending_cb         -- KOReader's "connected" callback, while we wait for the user to pick
 
 local function NM()
     local ok, NetworkMgr = pcall(require, "ui/network/manager")
+    if ok and NetworkMgr then
+        pcall(function() require("infra/kbo_wifi_eap").install() end)
+    end
     return ok and NetworkMgr or nil
 end
 
@@ -159,82 +171,345 @@ local function currentSSID()
     return type(ssid) == "string" and ssid ~= "" and ssid or nil
 end
 
+local function isLocked(n)
+    local f = n and n.flags and tostring(n.flags) or ""
+    return f:find("WPA") ~= nil or f:find("WEP") ~= nil or f:find("SAE") ~= nil
+end
+
+local function sortNets(list)
+    table.sort(list, function(a, b) return (a.signal_quality or 0) > (b.signal_quality or 0) end)
+end
+
+--- Runs fn while KOReader's own "Scanning…", "Authenticating…", "Connected"
+--- pop-ups are kept off the screen: the drop-down shows those steps instead.
+local function quiet(fn, ...)
+    local InfoMessage = require("ui/widget/infomessage")
+    local function isInfo(w)
+        local mt = type(w) == "table" and getmetatable(w)
+        local guard = 0
+        while mt and guard < 10 do
+            if mt == InfoMessage then return true end
+            mt = getmetatable(mt)
+            guard = guard + 1
+        end
+        return false
+    end
+    local hidden = setmetatable({}, { __mode = "k" })
+    local orig_show, orig_close = UIManager.show, UIManager.close
+    UIManager.show = function(self, w, ...)
+        if isInfo(w) then hidden[w] = true; return end
+        return orig_show(self, w, ...)
+    end
+    UIManager.close = function(self, w, ...)
+        if hidden[w] then hidden[w] = nil; return end
+        return orig_close(self, w, ...)
+    end
+    local res = { n = 0 }
+    local function pack(...) res = { n = select("#", ...), ... } end
+    pack(pcall(fn, ...))
+    UIManager.show, UIManager.close = orig_show, orig_close
+    if not res[1] then
+        logger.warn("koboui: Wi-Fi step failed:", res[2])
+        return nil, tostring(res[2])
+    end
+    return (table.unpack or unpack)(res, 2, res.n)
+end
+
+--- Rebuilds the panel and paints it now (the next steps block the UI).
+local function show(dd, state, target, msg)
+    _wifi.state, _wifi.target, _wifi.msg = state, target, msg
+    if dd and not dd._closed then
+        dd:refresh()
+        UIManager:forceRePaint()
+    end
+end
+
+local function refreshTopbar()
+    pcall(function() require("screens/sui_topbar").scheduleRefreshAll() end)
+end
+
 local function scan(dd)
     if _scanning or not wifiOn() then return end
     _scanning = true
     dd:refresh()
     UIManager:scheduleIn(0.2, function()
         local nm = NM()
-        local ok, list = pcall(function() return nm and nm:getNetworkList() end)
+        local list = nm and quiet(nm.getNetworkList, nm)
         _scanning = false
-        if ok and type(list) == "table" then
-            table.sort(list, function(a, b) return (a.signal_quality or 0) > (b.signal_quality or 0) end)
+        if type(list) == "table" then
+            sortNets(list)
             _nets = list
         end
         if not dd._closed then dd:refresh() end
     end)
 end
 
+--- Connected: get an address and let KOReader know (status icon, sync plugins…).
+local function finishConnect(dd, ssid, cb)
+    local nm = NM()
+    show(dd, "connecting", ssid)
+    quiet(nm.obtainIP, nm)
+    nm.lease_ssid = ssid
+    _failed[ssid] = nil
+    for _i, n in ipairs(_nets or {}) do n.connected = (n.ssid == ssid) or nil end
+    if cb then
+        pcall(cb)
+    else
+        pcall(nm.scheduleConnectivityCheck, nm)
+    end
+    show(dd, nil)
+    refreshTopbar()
+end
+
+--- Takes the place of KOReader's reconnectOrShowNetworkMenu while the panel
+--- turns Wi-Fi on: scan, join the network wpa_supplicant joined or a saved
+--- one, else leave the list in the panel for the user to pick from.
+local function panelReconnect(dd, cb)
+    local nm = NM()
+    show(dd, "scanning")
+    local list, err = quiet(nm.getNetworkList, nm)
+    if type(list) == "table" and #list == 0 then list, err = quiet(nm.getNetworkList, nm) end
+    if type(list) ~= "table" then
+        _nets = {}
+        _pending_cb = cb
+        show(dd, "failed", nil, err or _("Couldn't scan for networks."))
+        return nil
+    end
+    sortNets(list)
+    _nets = list
+    local ssid
+    for _i, n in ipairs(list) do
+        if n.connected then ssid = n.ssid; break end
+    end
+    if not ssid then
+        for _i, n in ipairs(list) do
+            if n.password then
+                show(dd, "connecting", n.ssid)
+                local ok = quiet(nm.authenticateNetwork, nm, n)
+                if ok then ssid = n.ssid; n.connected = true; break end
+            end
+        end
+    end
+    if not ssid and Device:hasWifiManager() then
+        -- wpa_supplicant may still join a network it knows on its own (15 s max, like KOReader)
+        local conf = quiet(nm.getConfiguredNetworks, nm)
+        if type(conf) == "table" and #conf > 0 then
+            show(dd, "connecting")
+            local ffiutil = require("ffi/util")
+            for _i = 1, 60 do
+                ffiutil.usleep(250 * 1000)
+                local nw = quiet(nm.getCurrentNetwork, nm)
+                if type(nw) == "table" and nw.ssid then ssid = nw.ssid; break end
+            end
+        end
+    end
+    if ssid then
+        finishConnect(dd, ssid, cb)
+        return true
+    end
+    -- Nothing saved around: the networks are listed in the panel.
+    _pending_cb = cb
+    show(dd, nil)
+    return nil
+end
+
+local function turnOn(dd)
+    local nm = NM()
+    if not nm then return end
+    _nets = nil
+    show(dd, "turning_on")
+    UIManager:scheduleIn(0.05, function()
+        local orig = rawget(nm, "reconnectOrShowNetworkMenu")
+        local hooked = false
+        nm.reconnectOrShowNetworkMenu = function(_self, cb)
+            hooked = true
+            return panelReconnect(dd, cb)
+        end
+        local status = quiet(nm.enableWifi, nm, nil, false)
+        nm.reconnectOrShowNetworkMenu = orig
+        if not hooked then
+            -- Platforms that don't scan when Wi-Fi turns on (or a connection
+            -- attempt still running): look for networks once it's up.
+            show(dd, status == nil and "failed" or nil, nil,
+                status == nil and _("A previous connection attempt is still running.") or nil)
+            UIManager:scheduleIn(2.5, function()
+                if not dd._closed then dd:refresh(); scan(dd) end
+            end)
+        elseif status == false then
+            show(dd, "failed", nil, _("Couldn't turn on Wi-Fi."))
+        end
+        refreshTopbar()
+    end)
+end
+
+local function turnOff(dd)
+    local nm = NM()
+    if not nm then return end
+    _nets, _pending_cb = nil, nil
+    _wifi.state, _wifi.target, _wifi.msg = nil, nil, nil
+    quiet(nm.disableWifi, nm, nil, true)
+    refreshTopbar()
+    UIManager:scheduleIn(1, function() if not dd._closed then dd:refresh() end end)
+end
+
+local function doConnect(dd, n)
+    local nm = NM()
+    show(dd, "connecting", n.ssid)
+    UIManager:scheduleIn(0.05, function()
+        for _i, c in ipairs(_nets or {}) do
+            if c.connected then
+                quiet(nm.disconnectNetwork, nm, c)
+                quiet(nm.releaseIP, nm)
+                c.connected = nil
+            end
+        end
+        local ok, err = quiet(nm.authenticateNetwork, nm, n)
+        if ok then
+            local cb = _pending_cb
+            _pending_cb = nil
+            n.connected = true
+            finishConnect(dd, n.ssid, cb)
+        else
+            _failed[n.ssid] = true
+            show(dd, "failed", n.ssid, type(err) == "string" and err ~= "" and err or _("Connection failed"))
+        end
+    end)
+end
+
+local function askPassword(dd, n)
+    local InputDialog = require("ui/widget/inputdialog")
+    local dlg
+    dlg = InputDialog:new{
+        title = n.ssid,
+        input = n.password or "",
+        input_hint = _("Password"),
+        text_type = "password",
+        buttons = { {
+            { text = _("Cancel"), id = "close", callback = function() UIManager:close(dlg) end },
+            { text = _("Connect"), is_enter_default = true, callback = function()
+                local pw = dlg:getInputText()
+                if not pw or pw == "" then return end
+                UIManager:close(dlg)
+                if pw ~= n.password then
+                    n.password, n.psk = pw, nil
+                    pcall(function() NM():saveNetwork(n) end)
+                end
+                doConnect(dd, n)
+            end },
+        } },
+    }
+    UIManager:show(dlg)
+    dlg:onShowKeyboard()
+end
+
+--- Work / school networks: username and password (WPA-Enterprise, EAP).
+local function askLogin(dd, n)
+    local EAP = require("infra/kbo_wifi_eap")
+    local MultiInputDialog = require("ui/widget/multiinputdialog")
+    local login = EAP.savedLogin(n.ssid) or {}
+    local dlg
+    dlg = MultiInputDialog:new{
+        title = n.ssid,
+        fields = {
+            { text = n.kbo_identity or login.identity or "", hint = _("Username") },
+            { text = n.kbo_eap_password or login.password or "", hint = _("Password"), text_type = "password" },
+        },
+        buttons = { {
+            { text = _("Cancel"), id = "close", callback = function() UIManager:close(dlg) end },
+            { text = _("Connect"), is_enter_default = true, callback = function()
+                local f = dlg:getFields()
+                local user, pw = f[1], f[2]
+                if not user or user == "" or not pw or pw == "" then return end
+                UIManager:close(dlg)
+                EAP.saveLogin(n, user, pw, login.method)
+                doConnect(dd, n)
+            end },
+        } },
+    }
+    UIManager:show(dlg)
+    dlg:onShowKeyboard()
+end
+
+local function connectTo(dd, n, ask)
+    if (n.connected and not ask) or _wifi.state == "connecting" then return true end
+    if tostring(n.flags or ""):find("WEP") then
+        show(dd, "failed", n.ssid, _("Networks with WEP encryption are not supported."))
+        return true
+    end
+    local EAP = require("infra/kbo_wifi_eap")
+    if EAP.isEnterprise(n) then
+        if not ask and not _failed[n.ssid] and (n.kbo_identity or EAP.savedLogin(n.ssid)) then
+            doConnect(dd, n)
+        else
+            askLogin(dd, n)
+        end
+    elseif not isLocked(n) then
+        n.password = n.password or ""
+        doConnect(dd, n)
+    elseif ask or not n.password or _failed[n.ssid] then
+        askPassword(dd, n)
+    else
+        doConnect(dd, n)
+    end
+    return true
+end
+
 local function wifiRows(dd)
     local rows = {}
     local on = wifiOn()
+    local st = _wifi.state
     rows[#rows + 1] = D.switchHeader{
         label_on = _("WI-FI: ENABLED"), label_off = _("WI-FI: DISABLED"),
-        get = wifiOn,
-        set = function()
-            UIManager:broadcastEvent(Event:new("ToggleWifi"))
-            _nets = nil
-            UIManager:scheduleIn(1.5, function() if not dd._closed then dd:refresh() end end)
-            UIManager:scheduleIn(6, function() if not dd._closed then scan(dd) end end)
+        get = function() return st == "turning_on" or wifiOn() end,
+        set = function(v)
+            if _wifi.state == "turning_on" or _wifi.state == "scanning" or _wifi.state == "connecting" then return end
+            if v then turnOn(dd) else turnOff(dd) end
         end,
     }
-    if on then
+    local function status(text)
+        rows[#rows + 1] = D.itemRow{ text = text, face = "italic", dim = true }
+    end
+    local T = require("ffi/util").template
+    if st == "turning_on" then
+        status(_("Turning on Wi-Fi…"))
+    elseif on then
+        if st == "scanning" or _scanning then
+            status(_("Looking for networks…"))
+        elseif st == "connecting" then
+            status(_wifi.target and T(_("Connecting to %1…"), _wifi.target) or _("Connecting…"))
+        elseif st == "failed" then
+            rows[#rows + 1] = D.textRow(_wifi.target
+                and T(_("Couldn't connect to %1. %2"), _wifi.target, _wifi.msg or "")
+                or (_wifi.msg or _("Connection failed")),
+                { face = "italic", color = require("ffi/blitbuffer").COLOR_GRAY_5, sep = true,
+                  pad_top = S(14), pad_bot = S(14) })
+        end
         local cur = currentSSID()
         local shown, seen = 0, {}
-        local function add(ssid, quality, locked, connected)
-            if not ssid or seen[ssid] or shown >= 5 then return end
+        local BB = require("ffi/blitbuffer")
+        local function add(n, connected)
+            local ssid = n.ssid
+            if not ssid or ssid == "" or seen[ssid] or shown >= 6 then return end
             seen[ssid] = true
             shown = shown + 1
             rows[#rows + 1] = D.itemRow{
-                text = ssid, icon = "wifi", lock = locked, bold = connected,
-                icon_color = (quality or 100) >= 40 and require("ffi/blitbuffer").COLOR_BLACK
-                    or require("ffi/blitbuffer").COLOR_GRAY_9,
+                text = ssid, icon = "wifi", lock = isLocked(n), bold = connected,
+                icon_color = (n.signal_quality or 100) >= 40 and BB.COLOR_BLACK or BB.COLOR_GRAY_9,
                 right = connected and "\u{2713}" or nil,
-                tap = function(d)
-                    if connected then return true end
-                    return closeThen(d, function()
-                        local nm = NM()
-                        if _nets and #_nets > 0 then
-                            UIManager:show(require("ui/widget/networksetting"):new{
-                                network_list = _nets,
-                                connect_callback = function()
-                                    local Topbar = require("screens/sui_topbar")
-                                    pcall(Topbar.invalidateDimCache)
-                                end,
-                            })
-                        elseif nm then
-                            nm:reconnectOrShowNetworkMenu(nil, true)
-                        end
-                    end)
-                end,
+                tap = function(d) return connectTo(d, n) end,
+                -- long-press: type the password again (e.g. it changed)
+                hold = isLocked(n) and function(d) return connectTo(d, n, true) end or nil,
             }
-        end
-        local function isLocked(n)
-            local f = n and n.flags and tostring(n.flags) or ""
-            return f:find("WPA") ~= nil or f:find("WEP") ~= nil or f:find("SAE") ~= nil
         end
         if cur then
             local cn
             for _i, n in ipairs(_nets or {}) do if n.ssid == cur then cn = n end end
-            add(cur, cn and cn.signal_quality or 100, cn and isLocked(cn) or false, true)
+            add(cn or { ssid = cur, signal_quality = 100 }, true)
         end
-        for _i, n in ipairs(_nets or {}) do
-            add(n.ssid, n.signal_quality, isLocked(n), n.connected or n.ssid == cur)
-        end
-        if _scanning then
-            rows[#rows + 1] = D.itemRow{ text = _("Looking for networks…"), face = "italic", dim = true, sep = false }
-        elseif shown == 0 then
-            rows[#rows + 1] = D.itemRow{ text = _("No networks found"), face = "italic", dim = true, sep = false }
+        for _i, n in ipairs(_nets or {}) do add(n, n.connected or n.ssid == cur) end
+        if shown == 0 and not (st == "scanning" or _scanning or st == "connecting") then
+            rows[#rows + 1] = D.itemRow{ text = _("No networks found. Tap to look again."),
+                face = "italic", tap = function(d) scan(d); return true end }
         end
     end
     rows[#rows].sep = true
@@ -344,7 +619,13 @@ function M.spec(key)
             end }
     elseif key == "wifi" then
         return { width = math.floor(w * 0.62), build = wifiRows,
-            on_open = function(dd) if not _nets then scan(dd) end end,
+            on_open = function(dd)
+                local st = _wifi.state
+                if st ~= "turning_on" and st ~= "scanning" and st ~= "connecting" then
+                    _wifi.state, _wifi.target, _wifi.msg = nil, nil, nil
+                end
+                if not _nets then scan(dd) end
+            end,
             on_close = function()
                 pcall(function() require("screens/sui_topbar").scheduleRefreshAll() end)
             end }

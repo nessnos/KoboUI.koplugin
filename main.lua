@@ -63,6 +63,12 @@ do
     if not ok_lo then logger.err("kindleui: last opened sort install failed:", tostring(err_lo)) end
 end
 
+-- Library: "Status" sort method (Reading, Unread, Finished).
+do
+    local ok_ss, err_ss = pcall(function() require("features/library/kui_status_sort").install() end)
+    if not ok_ss then logger.err("koboui: status sort install failed:", tostring(err_ss)) end
+end
+
 -- Collections: "Shuffle" sort method.
 do
     local ok_cs, err_cs = pcall(function() require("features/library/kui_collection_shuffle").install() end)
@@ -166,6 +172,11 @@ function SimpleUIPlugin:init()
         end
         if SUISettings:readSetting("koboui_statusbar") == false then
             SUISettings:saveSetting("koboui_statusbar", true)
+        end
+        -- v1.1.29: the Series bookshelf was removed; drop its settings.
+        for _i, k in ipairs{ "kindleui_series_style", "kindleui_series_shelf_rows",
+                             "kindleui_series_shelf_covers", "kindleui_series_shelf_numbers" } do
+            if SUISettings:readSetting(k) ~= nil then SUISettings:delSetting(k) end
         end
     end)
     -- Conflicting plugins/patches: disable or block before UI setup.

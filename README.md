@@ -41,9 +41,8 @@ Made for Kobo e-readers (colour screens included), and works on any device KORea
 - **Home screen modules:** Currently Reading, Recent, To Be Read, Featured Collection, Author / Series
   Collection, Two Columns, Reading Calendar, Year in Books, Monthly TBR, Quote, Clock, Reading Goals,
   Reading Stats, Heatmap and more.
-- **Library extras:** vertical scrolling with Kobo's scrollbar, a Series bookshelf view, series
-  grouping, "last opened" sort, authors sorted by last name, collection shuffle, back to the page you
-  were on.
+- **Library extras:** vertical scrolling with Kobo's scrollbar, series grouping, "last opened" sort,
+  authors sorted by last name, collection shuffle, back to the page you were on.
 - **Kobo-style settings pages** (serif titles, italic rows).
 - **Two fonts, like Kobo:** details in capitals — time left, pages, book counts, module subtitles —
   plus the navigation bar and the Library tabs use a sans-serif **Label Font**; everything else uses
@@ -117,11 +116,11 @@ entries if you use a Bluetooth plugin.
 - **Filter:** multiple choice — tick any of Unread, Reading, Finished (e.g. Unread + Reading for
   everything not finished), or All; with counts, like Kobo: *Finished* = marked Finished,
   *Reading* = started (or On hold), *Unread* = never started. It applies to every tab and is
-  remembered (the Series bookshelf always shows everything).
-- **Sort:** Recent, Date added, Title, Author, Series, File size, File type. On Authors: Last name or
+  remembered.
+- **Sort:** Recent, Status (Reading, then Unread, then Finished; most recently opened first in each), Date added, Title, Author, Series, File size, File type. On Authors: Last name or
   First name.
 - **…:** Cover view / List view (remembered **per tab**: e.g. a list for Authors, covers for Books), Titles
-  under covers (per tab), Group series, Reverse order, Bookshelf / Folder view (Series), Manage
+  under covers (per tab), Group series, Reverse order, Manage
   collections (Collections), Show / Hide Tags tab.
 - **Kobo list view:** books show the cover, title, pages, series, author, and on the right Unread /
   "19% Read" / Finished, the time left, and the file type and size (long-press a book for its menu). Authors, Series,
@@ -132,9 +131,7 @@ entries if you use a Bluetooth plugin.
 - **Titles under covers** (Settings → Library → *Titles Under Covers*): choose the tabs that show the
   title or name under each cover — by default Authors, Series, Collections and Tags, not Books.
 - **Vertical scrolling** (on by default; Settings → Library): swipe up and down; Kobo's scrollbar on
-  the right. The Series bookshelf scrolls sideways.
-- **Series bookshelf** (Settings → Library → *Series View Style*): spines on wooden shelves, coloured
-  from each cover, the first book of a series face-out.
+  the right.
 - **Group series in Books**, **"last opened" sort**, **authors by last name**, **collection shuffle**,
   **back to the page you were on**.
 
@@ -209,8 +206,6 @@ KoboUI is built on KindleUI (same author), which is built on SimpleUI. The Kobo 
 
 - **[SimpleUI](https://github.com/doctorhetfield-cmd)** by doctorhetfield-cmd — the Home screen,
   modules, bars, library features and settings window KoboUI is built on (MIT).
-- The Series bookshelf look was inspired by **[Bookshelf](https://github.com/AndyHazz/bookshelf.koplugin)**
-  by AndyHazz. KoboUI's shelf is its own code.
 - Icon font: Nerd Fonts Symbols, bundled with KOReader.
 - **KOReader** and its contributors.
 

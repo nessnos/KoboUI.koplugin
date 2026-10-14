@@ -97,9 +97,9 @@ local _BASE_COVER_W  = Screen:scaleBySize(122)
 local _BASE_COVER_H  = math_floor(Screen:scaleBySize(122) * 3 / 2)
 local _BASE_RECENT_W = Screen:scaleBySize(75)
 local _BASE_RECENT_H = Screen:scaleBySize(112)
-local _BASE_RB_GAP1    = Screen:scaleBySize(4)
+local _BASE_RB_GAP1    = Screen:scaleBySize(10) -- KoboUI: same space under the cover as My Books
 local _BASE_RB_BAR_H   = Screen:scaleBySize(5)
-local _BASE_RB_GAP2    = Screen:scaleBySize(3)
+local _BASE_RB_GAP2    = Screen:scaleBySize(6)
 local _BASE_RB_LABEL_H = Screen:scaleBySize(14)
 
 -- Flat aliases kept for any call-site that reads SH.COVER_W etc. directly

@@ -161,6 +161,8 @@ function M.getStatusTextSize()
     return math.max(M.STATUS_FS_MIN, math.min(M.STATUS_FS_MAX, math.floor(v)))
 end
 function M.setStatusTextSize(v) SUISettings:saveSetting("koboui_cover_status_fs", v) end
+-- KoboUI: space between a cover and the text under it (every Library view).
+function M.statusGap() return require("device").screen:scaleBySize(10) end
 
 function M.getProgressMode() return SUISettings:readSetting(SK.progress_mode) or "banner" end
 function M.setProgressMode(v)
@@ -1044,7 +1046,7 @@ local function _installStripPatch(MosaicMenuItem, BookInfoManager, _STRIP_H,
                         else label = _("Unread") end
                         local row = M._barRow and M._barRow() or Screen_s:scaleBySize(30)
                         local bar_h = M._BAR_H or 3
-                        local ry = _STRIP_H - row + PAD_S
+                        local ry = _STRIP_H - row + M.statusGap()
                         local cover_w
                         pcall(function() cover_w = self._underline_container[1][1]:getSize().w end)
                         cover_w = math.min(cover_w or self.width, self.width - 2 * PAD_H_S)
@@ -1126,7 +1128,7 @@ local function _installStripPatch(MosaicMenuItem, BookInfoManager, _STRIP_H,
                     max_width = math.max(cw, x + self.width - cx - Screen_s:scaleBySize(2)),
                     truncate_with_ellipsis = true,
                 }
-                local ty = math.min(cbot + PAD_S, y + self.height - tw:getSize().h)
+                local ty = math.min(cbot + M.statusGap(), y + self.height - tw:getSize().h)
                 tw:paintTo(bb, cx, ty)
                 tw:free()
             end
@@ -1228,7 +1230,7 @@ function M.install()
         if not _bar_rows[fs] then
             local tw = require("ui/widget/textwidget"):new{ text = "Ag",
                 face = require("ui/font"):getFace(SUIStyle.FACE_REGULAR, fs), padding = 0 }
-            _bar_rows[fs] = _STRIP_PAD + tw:getSize().h + _STRIP_PAD
+            _bar_rows[fs] = M.statusGap() + tw:getSize().h + _STRIP_PAD
             tw:free()
         end
         return _bar_rows[fs]

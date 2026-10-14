@@ -717,8 +717,6 @@ local function _installPatches()
         _orig_genItemTableFromPath = FileChooser.genItemTableFromPath
         local orig = _orig_genItemTableFromPath
         FileChooser.genItemTableFromPath = function(fc, path)
-            -- KoboUI: Series as a bookshelf (on/off for this path).
-            pcall(function() require("features/library/kui_series_shelf").attach(fc, path) end)
             if VirtualPath.isVirtual(path) then
                 local collate = fc:getCollate()
                 local dirs, fls = _getVirtualList(fc, path, collate)

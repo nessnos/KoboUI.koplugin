@@ -8,15 +8,13 @@
 --
 -- It drives KOReader's own file-browser status filter
 -- (FileChooser.show_filter.status, also in File browser → Book status), so
--- every Library view follows it: folders, All books, Authors, Series
--- (folders and bookshelf), Collections and Tags, through
+-- every Library view follows it: folders, All books, Authors, Series,
+-- Collections and Tags, through
 -- FileChooser:show_file(). The choice is kept like KOReader's.
 --
 -- Layout: the chip row is put at the top of the file chooser's item group,
 -- and the item area is laid out that much shorter (instance-level wraps
 -- of _recalculateDimen and updateItems, like the vertical scrollbar).
--- The Series bookshelf, which lays out its own pages, calls
--- M.reservedHeight / M.decorate itself.
 --
 -- Setting: kindleui_status_chips (default on).
 
@@ -166,14 +164,7 @@ function ChipRow:onTapChip(_args, ges)
             local fc = self.fc
             pcall(function() require("features/library/sui_foldercovers").invalidateItemTableCache() end)
             pcall(function() require("features/library/sui_metadata_source").clearCache() end)
-            if fc then
-                if fc._kui_shelf_on then
-                    -- the bookshelf builds its shelves on path changes
-                    pcall(function() fc:changeToPath(fc.path) end)
-                else
-                    pcall(fc.refreshPath, fc)
-                end
-            end
+            if fc then pcall(fc.refreshPath, fc) end
             return true
         end
     end
@@ -183,9 +174,8 @@ end
 -- ---------------------------------------------------------------------------
 -- Hooks
 -- ---------------------------------------------------------------------------
--- Not on the Series bookshelf: it shows the whole bookcase, unfiltered.
 local function wanted(fc)
-    return fc and fc.name == "filemanager" and M.isEnabled() and not fc._kui_shelf_on
+    return fc and fc.name == "filemanager" and M.isEnabled()
 end
 
 local function KH()

@@ -68,10 +68,9 @@ local function kindleScrollWidgets()
     local InputContainer = require("ui/widget/container/inputcontainer")
     local Screen         = Device.screen
 
-    -- dir: "up" / "down" (vertical bar) or "left" / "right" (horizontal
-    -- bar, Series bookshelf). `up` is kept for the vertical ones.
+    -- `up`: the chevron points up (else down).
     local Triangle = InputContainer:extend{
-        up = true, dir = nil, tri_w = 0, tri_h = 0, pad = 0,
+        up = true, tri_w = 0, tri_h = 0, pad = 0,
         enabled = true, callback = nil, hidden = false,
     }
     function Triangle:init()
@@ -81,7 +80,7 @@ local function kindleScrollWidgets()
         }
     end
     function Triangle:getSize() return Geom:new{ w = self.tri_w + 2 * self.pad, h = self.tri_h + 2 * self.pad } end
-    -- KoboUI: a thin open chevron (^ v ‹ ›) like Kobo's library, grey
+    -- KoboUI: a thin open chevron (^ v) like Kobo's library, grey
     -- when you can't go further that way.
     function Triangle:paintTo(bb, x, y)
         self.dimen = Geom:new{ x = x, y = y, w = self.tri_w + 2 * self.pad, h = self.tri_h + 2 * self.pad }
@@ -89,17 +88,6 @@ local function kindleScrollWidgets()
         if self.hidden then return end
         local x0, y0, w, h = x + self.pad, y + self.pad, self.tri_w, self.tri_h
         local t = math.max(2, math.floor(math.min(w, h) * 0.16 + 0.5))
-        if self.dir == "left" or self.dir == "right" then
-            -- column-wise: two strokes meeting at the tip (h is the long side)
-            local half = math.floor(h / 2)
-            for j = 0, h - 1 do
-                local d = math.abs(j - half) / math.max(1, half)       -- 0 at the tip row
-                local cx = math.floor(d * (w - t) + 0.5)
-                local rx = self.dir == "left" and (x0 + cx) or (x0 + w - t - cx)
-                bb:paintRect(rx, y0 + j, t, 1, color)
-            end
-            return
-        end
         local half = math.floor(w / 2)
         for i = 0, w - 1 do
             local d = math.abs(i - half) / math.max(1, half)           -- 0 at the tip column
@@ -120,7 +108,7 @@ local function kindleScrollWidgets()
         width = 0, height = 0,
         track_w = 2, thumb_w = 6, min_thumb = 12,
         scroll_callback = nil,
-        horizontal = false, hidden = false,
+        hidden = false,
     }
     function ScrollBar:init()
         if Device:isTouchDevice() then
@@ -139,11 +127,7 @@ local function kindleScrollWidgets()
     function ScrollBar:onTapScroll(_arg, ges)
         if self.hidden then return false end
         if self.enable and self.scroll_callback and self.touch_dimen then
-            if self.horizontal then
-                self.scroll_callback((ges.pos.x - self.touch_dimen.x) / self.width)
-            else
-                self.scroll_callback((ges.pos.y - self.touch_dimen.y) / self.height)
-            end
+            self.scroll_callback((ges.pos.y - self.touch_dimen.y) / self.height)
             return true
         end
     end
@@ -162,19 +146,6 @@ local function kindleScrollWidgets()
     function ScrollBar:paintTo(bb, x, y)
         if self.hidden or not self.enable then return end
         local b = math.max(2, Screen:scaleBySize(1.2))
-        if self.horizontal then
-            self.touch_dimen = Geom:new{ x = x, y = y - self.height, w = self.width, h = self.height * 3 }
-            local cy = y + math.floor(self.height / 2)
-            bb:paintRect(x, cy - math.floor(self.track_w / 2), self.width, self.track_w, Blitbuffer.COLOR_BLACK)
-            local tw = math.max(self.min_thumb, math.floor(self.width * (self.high - self.low) + 0.5))
-            local tx = x + math.floor(self.low * self.width + 0.5)
-            if tx + tw > x + self.width then tx = x + self.width - tw end
-            local th = self.thumb_w
-            local r = math.floor(th / 2)
-            bb:paintRoundedRect(tx, cy - r, tw, th, Blitbuffer.COLOR_BLACK, r)
-            bb:paintRoundedRect(tx + b, cy - r + b, tw - 2 * b, th - 2 * b, Blitbuffer.COLOR_WHITE, math.max(0, r - b))
-            return
-        end
         self.touch_dimen = Geom:new{ x = x - self.width, y = y, w = self.width * 3, h = self.height }
         local cx = x + math.floor(self.width / 2)
         bb:paintRect(cx - math.floor(self.track_w / 2), y, self.track_w, self.height, Blitbuffer.COLOR_BLACK)
@@ -307,42 +278,6 @@ if ok_guard and FileChooser and not FileChooser._vlibscroll_patch_installed then
         return 0
     end
 
-    -- KoboUI: the Series bookshelf scrolls sideways, like walking along
-    -- a bookcase — the same bar lies along the bottom, with ‹ › arrows.
-    local function isHorizontal(fc)
-        return fc and fc._kui_shelf_on and true or false
-    end
-    M.isHorizontal = isHorizontal
-
-    local function hideWidget(w, hidden)
-        if not w then return end
-        w.hidden = hidden
-        if w._kui_frame then w._kui_frame._kui_hidden = hidden end
-    end
-
-    -- How far the navigation bar's Current Book cover rises into the list
-    -- area (the horizontal bar sits above it).
-    local function coverRise()
-        local ok, r = pcall(function()
-            local BB = require("screens/sui_bottombar")
-            local Config = require("infra/sui_config")
-            local tabs = Config.loadTabConfig()
-            local has = false
-            for _i, t in ipairs(tabs or {}) do if t == "current_book" then has = true end end
-            if not has then return 0 end
-            local _cw, _ch, _bp, protrude = BB.currentBookCoverGeometry()
-            return protrude or 0
-        end)
-        return ok and r or 0
-    end
-
-    -- Height kept free at the bottom for the horizontal bar.
-    local function getReservedHeight(fc)
-        local _u, _d, margin, bar_w = buildArrowButtons(fc)
-        return bar_w + 2 * Screen:scaleBySize(6) + margin + coverRise()
-    end
-    M.getReservedHeight = getReservedHeight
-
     -- Applies the current page/page_num state of `menu_self` (a
     -- FileChooser instance we've decorated) to our overlay widgets, and
     -- forces the stock horizontal pager (chevrons + "Page X of Y") to
@@ -355,20 +290,9 @@ if ok_guard and FileChooser and not FileChooser._vlibscroll_patch_installed then
             local page = menu_self.page or 1
             local page_num = menu_self.page_num or 1
 
-            -- vertical bar on the right, or (Series bookshelf) the
-            -- horizontal one along the bottom
-            local horiz = isHorizontal(menu_self) and menu_self._kui_hbar ~= nil
-            local bar   = horiz and menu_self._kui_hbar   or menu_self._vlibscroll_bar
-            local prev  = horiz and menu_self._kui_hleft  or menu_self._vlibscroll_up
-            local nextb = horiz and menu_self._kui_hright or menu_self._vlibscroll_down
-            if menu_self._vlibscroll_frame then menu_self._vlibscroll_frame._kui_hidden = horiz end
-            hideWidget(menu_self._vlibscroll_bar, horiz)
-            hideWidget(menu_self._vlibscroll_up, horiz)
-            hideWidget(menu_self._vlibscroll_down, horiz)
-            if menu_self._kui_hframe then menu_self._kui_hframe._kui_hidden = not horiz end
-            hideWidget(menu_self._kui_hbar, not horiz)
-            hideWidget(menu_self._kui_hleft, not horiz)
-            hideWidget(menu_self._kui_hright, not horiz)
+            local bar   = menu_self._vlibscroll_bar
+            local prev  = menu_self._vlibscroll_up
+            local nextb = menu_self._vlibscroll_down
 
             if page_num > 1 then
                 bar.enable = true
@@ -410,9 +334,6 @@ if ok_guard and FileChooser and not FileChooser._vlibscroll_patch_installed then
 
     -- Re-applies the hidden pager after something rebuilt its buttons.
     M.sync = syncOverlayState
-    -- Width kept free on the right for the scrollbar (used by the Series
-    -- bookshelf, which lays out its own pages).
-    M.getReservedWidth = getReservedWidth
 
     -- Builds the [up-arrow / scrollbar / down-arrow] overlay and appends
     -- it to `fc`'s own widget tree (fc[1][1] is the OverlapGroup
@@ -451,61 +372,7 @@ if ok_guard and FileChooser and not FileChooser._vlibscroll_patch_installed then
         fc._vlibscroll_up = up_btn
         fc._vlibscroll_down = down_btn
 
-        local function hideable(f)
-            local orig_paint = f.paintTo
-            f.paintTo = function(self, ...)
-                if self._kui_hidden then return end
-                return orig_paint(self, ...)
-            end
-        end
-        hideable(frame)
         table.insert(fc[1][1], frame)
-
-        -- The horizontal version, for the Series bookshelf (file browser
-        -- only): ‹ bar › along the bottom of the list area.
-        if fc.name == "filemanager" then
-            local pad = Screen:scaleBySize(6)
-            local function harrow(dir, cb)
-                return KTriangle:new{
-                    dir = dir, up = false,
-                    tri_w = math.floor(bar_w * 0.5 + 0.5), tri_h = bar_w,
-                    pad = pad, callback = cb,
-                }
-            end
-            local left_btn  = harrow("left",  function() fc:onPrevPage() end)
-            local right_btn = harrow("right", function() fc:onNextPage() end)
-            local HorizontalGroup = require("ui/widget/horizontalgroup")
-            local HorizontalSpan  = require("ui/widget/horizontalspan")
-            local full_w = fc.inner_dimen.w
-            local track_w = full_w - 2 * margin - left_btn:getSize().w - right_btn:getSize().w - 2 * span_h
-            local hbar = KScrollBar:new{
-                horizontal = true,
-                width = math.max(Screen:scaleBySize(60), track_w),
-                height = bar_w,
-                track_w = math.max(1, Screen:scaleBySize(0.8)),
-                thumb_w = math.max(8, Screen:scaleBySize(7)),
-                min_thumb = Screen:scaleBySize(16),
-                scroll_callback = scrollbar.scroll_callback,
-            }
-            local hframe = FrameContainer:new{
-                bordersize = 0, padding = 0, margin = 0,
-                HorizontalGroup:new{
-                    align = "center",
-                    left_btn, HorizontalSpan:new{ width = span_h },
-                    hbar, HorizontalSpan:new{ width = span_h },
-                    right_btn,
-                },
-            }
-            local hs = hframe:getSize()
-            hframe.overlap_offset = { math.floor((full_w - hs.w) / 2),
-                top_height + avail_h - hs.h - math.floor(margin / 2) - coverRise() }
-            hideable(hframe)
-            hframe._kui_hidden = true
-            fc._kui_hframe, fc._kui_hbar = hframe, hbar
-            fc._kui_hleft, fc._kui_hright = left_btn, right_btn
-            hideWidget(hbar, true); hideWidget(left_btn, true); hideWidget(right_btn, true)
-            table.insert(fc[1][1], hframe)
-        end
 
         syncOverlayState(fc)
     end
@@ -704,12 +571,6 @@ if ok_guard and FileChooser and not FileChooser._vlibscroll_patch_installed then
             if fc and fc._vlibscroll_bar and isEnabled() then
                 local ok, handled = pcall(function()
                     local direction = BD.flipDirectionIfMirroredUILayout(ges.direction)
-                    if isHorizontal(fc) then
-                        -- Series bookshelf: sideways, like a bookcase
-                        if direction == "west" then fc:onNextPage() return true end
-                        if direction == "east" then fc:onPrevPage() return true end
-                        return direction == "north" or direction == "south"
-                    end
                     if direction == "north" then
                         fc:onNextPage()
                         return true
@@ -752,13 +613,6 @@ if ok_guard and FileChooser and not FileChooser._vlibscroll_patch_installed then
                             -- still pulls down the quick-settings menu.
                             if direction == "south" and ges.pos and ges.pos.y < topZoneHeight() then
                                 return false
-                            end
-                            if isHorizontal(fc) then
-                                -- Series bookshelf: swipe left/right walks
-                                -- along the shelves; up/down does nothing.
-                                if direction == "west" then fc:onNextPage() return true end
-                                if direction == "east" then fc:onPrevPage() return true end
-                                return direction == "north" or direction == "south"
                             end
                             if direction == "north" then
                                 fc:onNextPage()

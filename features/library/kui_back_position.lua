@@ -5,7 +5,7 @@
 -- Works for every kind of folder the Library has: real folders, the
 -- Authors / Series / Tags / Collections lists (virtual paths), series
 -- stacks in All books ("Group series", which stays on the same path and
--- swaps the list), and the Series bookshelf.
+-- swaps the list).
 --
 -- How: the file browser's navigation entry points (opening an item, going
 -- up, changing path) are wrapped on the Library's own FileChooser

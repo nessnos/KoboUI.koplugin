@@ -11,12 +11,11 @@ The top of the Library, like Kobo's "My Books":
     if you switch them on). The current one is bold, in the accent colour
     (Kobo red on a colour screen) and underlined.
   * Filter opens a menu: All / Unread / Reading / Finished, with counts. It
-    drives KOReader's file-browser status filter, so every view follows it
-    (the Series bookshelf always shows everything).
+    drives KOReader's file-browser status filter, so every view follows it.
   * Sort opens: Recent, Date added, Title, Author, Series, File size, File
     type (KOReader's sort methods). On Authors: Last name / First name.
   * … opens the view options: Grid / List view, Group series, Reverse
-    order, Bookshelf / Folders for Series, Manage collections.
+    order, Manage collections.
 
 Only at the top of a view: inside an author, a series, a collection or a
 folder, the normal title bar (with its back button) comes back.
@@ -268,7 +267,7 @@ function M.classify(fp)
 end
 
 M.FILTER_KEY = "koboui_lib_filter"
-M._filter_off = 0   -- > 0 while something needs every book (counts, bookshelf)
+M._filter_off = 0   -- > 0 while something needs every book (counts)
 
 -- KoboUI: the filter is multiple choice — any of Unread / Reading /
 -- Finished can be ticked (none or all three = All). Stored as a list,
@@ -313,11 +312,7 @@ local function refreshLibrary(fc)
     pcall(function() require("features/library/sui_foldercovers").invalidateItemTableCache() end)
     pcall(function() require("features/library/sui_metadata_source").clearCache() end)
     if not fc then return end
-    if fc._kui_shelf_on then
-        pcall(function() fc:changeToPath(fc.path) end)
-    else
-        pcall(fc.refreshPath, fc)
-    end
+    pcall(fc.refreshPath, fc)
 end
 
 local function applyFilterSet(set)
@@ -481,6 +476,7 @@ end
 -- Sort methods offered (KOReader collate ids), in Kobo's order.
 local SORTS = {
     { id = "last_opened", label = _("Recent") },
+    { id = "koboui_status", label = _("Status") },
     { id = "date",        label = _("Date added") },
     { id = "title",       label = _("Title") },
     { id = "authors",     label = _("Author") },
@@ -509,10 +505,7 @@ end
 -- What the controls row holds for a view.
 local function controlsFor(view, fc)
     local ctl = {}
-    local shelf = fc and fc._kui_shelf_on
-    if not shelf then
-        ctl[#ctl + 1] = { id = "filter", text = string.format(_("Filter: %s"), M.filterLabel()) }
-    end
+    ctl[#ctl + 1] = { id = "filter", text = string.format(_("Filter: %s"), M.filterLabel()) }
     if view == "normal" then
         ctl[#ctl + 1] = { id = "sort", text = string.format(_("Sort: %s"), currentSort().label) }
     elseif view == "author" then
@@ -715,16 +708,8 @@ local function moreRows(row)
             end }
     end
     local view = row.view
-    if view == "series" then
-        local Shelf = require("features/library/kui_series_shelf")
-        act(Shelf.isEnabled() and _("Folder view") or _("Bookshelf view"), function()
-            Shelf.setEnabled(not Shelf.isEnabled())
-            refreshLibrary(fm and fm.file_chooser)
-            if fm and fm.file_chooser then pcall(function() fm.file_chooser:changeToPath(fm.file_chooser.path) end) end
-        end)
-    end
     local ok_bim, bim = pcall(require, "bookinfomanager")
-    if ok_bim and fm and fm.coverbrowser and not (fm.file_chooser and fm.file_chooser._kui_shelf_on) then
+    if ok_bim and fm and fm.coverbrowser then
         local mode = bim:getSetting("filemanager_display_mode")
         local grid = mode and mode:find("^mosaic") ~= nil
         act(grid and _("List view") or _("Cover view"), function()
@@ -764,7 +749,7 @@ local function moreRows(row)
         local kind = (view == "normal") and "books" or view
         local grid_ok, bim2 = pcall(require, "bookinfomanager")
         local mode2 = grid_ok and bim2:getSetting("filemanager_display_mode") or ""
-        if FCv.showTitlesIn and mode2:find("^mosaic") and not (fm and fm.file_chooser and fm.file_chooser._kui_shelf_on) then
+        if FCv.showTitlesIn and mode2:find("^mosaic") then
             act(_("Titles under covers"), function()
                 FCv.setShowTitlesIn(kind, not FCv.showTitlesIn(kind))
                 refreshLibrary(fm and fm.file_chooser)

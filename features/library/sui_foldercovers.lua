@@ -1058,10 +1058,16 @@ local function _installStripPatch(MosaicMenuItem, BookInfoManager, _STRIP_H,
                             -- the cover's right edge, up to the cell's
                             max_width = math.max(cover_w, self.width - x0 - Screen_s:scaleBySize(2)), truncate_with_ellipsis = true,
                         }
-                        local tsz = tw:getSize()
-                        -- reading: under the bar; Unread / Finished: in the bar's place
-                        local ty = ry
-                        tw:paintTo(strip_bb, x0, ty)
+                        if _show_title_strip then
+                            -- under the title: at the bottom of the strip
+                            tw:paintTo(strip_bb, x0, ry)
+                            self._kbo_status_label = nil
+                        else
+                            -- KoboUI: painted right under the cover itself
+                            -- (see below), so it sits as close to the cover
+                            -- in every view, whatever the cover's height.
+                            self._kbo_status_label = label
+                        end
                         tw:free()
                     end
 
@@ -1094,6 +1100,35 @@ local function _installStripPatch(MosaicMenuItem, BookInfoManager, _STRIP_H,
                         x, y + self.height - _STRIP_H,
                         0, 0, self.width, _STRIP_H)
                 end
+            end
+
+            -- KoboUI: "19% Read" / "Unread" / "Finished" just under the
+            -- cover, left-aligned with it. The cover may be shorter than
+            -- its slot (wide cells: inside a series, an author…), so it is
+            -- placed from where the cover really ends, not from the slot.
+            local label = self._kbo_status_label
+            if label and not self.is_directory then
+                local cov
+                pcall(function() cov = self._underline_container[1][1] end)
+                local d = cov and cov.dimen
+                local cx, cbot, cw
+                if d and d.w and d.w > 0 and d.h and d.h > 0 then
+                    cx, cbot, cw = d.x, d.y + d.h, d.w
+                else
+                    cw = math.min(self.width, self.width - 2 * PAD_H_S)
+                    cx, cbot = x + math.floor((self.width - cw) / 2), y + self.height - _STRIP_H
+                end
+                local tw = TextWidget_s:new{
+                    text = label,
+                    face = Font_s:getFace(SUIStyle.FACE_REGULAR, M.getStatusTextSize()),
+                    padding = 0,
+                    fgcolor = Blitbuffer_s.COLOR_BLACK,
+                    max_width = math.max(cw, x + self.width - cx - Screen_s:scaleBySize(2)),
+                    truncate_with_ellipsis = true,
+                }
+                local ty = math.min(cbot + PAD_S, y + self.height - tw:getSize().h)
+                tw:paintTo(bb, cx, ty)
+                tw:free()
             end
         end -- MosaicMenuItem:paintTo (strip wrapper)
     end -- FileManager_strip.setupLayout
@@ -1253,6 +1288,7 @@ function M.install()
     function MosaicMenuItem:update(...)
         -- Invalidate the strip cache on every cover reload.
         self._simpleui_strip_data = nil
+        self._kbo_status_label = nil
         if self._simpleui_strip_bb then
             self._simpleui_strip_bb:free(); self._simpleui_strip_bb = nil
         end

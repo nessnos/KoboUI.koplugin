@@ -48,6 +48,7 @@ local WidgetContainer = require("ui/widget/container/widgetcontainer")
 local LineWidget      = require("ui/widget/linewidget")
 local OverlapGroup    = require("ui/widget/overlapgroup")
 local CenterContainer = require("ui/widget/container/centercontainer")
+local LeftContainer   = require("ui/widget/container/leftcontainer")
 local VerticalGroup   = require("ui/widget/verticalgroup")
 local VerticalSpan    = require("ui/widget/verticalspan")
 local _ = require("infra/sui_i18n").translate
@@ -962,13 +963,17 @@ function GridRenderer.build(w, ctx, opts)
                 text      = opts.labelForItem and opts.labelForItem(bd)
                             or string.format(_("%d%% Read"), math.floor((bd.percent or 0) * 100 + 0.5)),
                 face      = pct_face,
-                bold      = true,
+                bold      = false, -- KoboUI: regular, like My Books
                 fgcolor   = _pct_fg,
                 max_width = cw,
                 truncate_with_ellipsis = true,
-                alignment = "center",
+                alignment = "left",
             }
-            cell[#cell+1] = pct_w
+            -- KoboUI: left-aligned under the cover, like the Library.
+            cell[#cell+1] = LeftContainer:new{
+                dimen = Geom:new{ w = cw, h = pct_w:getSize().h },
+                pct_w,
+            }
             _update_text = function(nd)
                 UI.updateColoredText(pct_w,
                     opts.labelForItem and opts.labelForItem(nd)
